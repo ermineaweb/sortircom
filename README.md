@@ -58,14 +58,6 @@ bin/console make:auth
 bin/console make:registration-form
 ```
 
-## Manually
-
-#### 1. Your User entity must implements UserInterface
-
-#### 2. 
-
-// TODO
-
 ---------------------------------------------------------------------------
 ## Form
 [Top](#Index)
