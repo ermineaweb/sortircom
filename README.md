@@ -14,7 +14,7 @@
 - [Flash Messages](#Flash)
 
 ---------------------------------------------------------------------------
-## Git Commands
+## Git
 [Top](#Index)
 
 #### Clone project
