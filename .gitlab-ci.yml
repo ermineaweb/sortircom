@@ -16,7 +16,7 @@ stages:
 
 variables:
   # Configure mysql service (https://hub.docker.com/_/mysql/)
-  MYSQL_DATABASE: sandbox
+  MYSQL_DATABASE: sortircom
   MYSQL_USER: sortircom
   MYSQL_ROOT_PASSWORD: abc
   MYSQL_PASSWORD: abc
