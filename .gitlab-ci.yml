@@ -1,0 +1,67 @@
+image: php:7.2-cli
+# mysql 5.6 est stable pour ce que l'on veut faire
+# mysql > 8 entraine un bug a resoudre
+services:
+  - mysql:5.6
+# on envoie les vendors en cache
+cache:
+  paths:
+    - vendor/
+    - bin/.phpunit/
+
+stages:
+  - build
+  - test
+  - deploy
+
+variables:
+  # Configure mysql service (https://hub.docker.com/_/mysql/)
+  MYSQL_DATABASE: sandbox
+  MYSQL_USER: sortircom
+  MYSQL_ROOT_PASSWORD: abc
+  MYSQL_PASSWORD: abc
+
+before_script:
+  # yqq = "oui" a tout, "qq" pour mute le systeme completement
+  - apt-get update -yqq && apt-get install -yqq git zlib1g-dev
+  # driver mysql
+  - docker-php-ext-install pdo_mysql zip
+  # on installe des outils pour avoir des messages d'erreur
+  #- pecl install xdebug
+  #- docker-php-ext-enable xdebug
+  # installer composer en mode silence (-s)
+  - curl -sS https://getcomposer.org/installer | php
+  # installe les vendors sans messages (-q)
+  - php composer.phar install -q
+  # on passe en environnement de test
+  - cp .env.gitlab .env
+
+build:
+  stage: build
+  script:
+    # drop la base si elle existe
+    - php bin/console doctrine:database:drop -q --force
+    # création de la base
+    - php bin/console doctrine:database:create
+    # force l'update de la base
+    - php bin/console doctrine:schema:update -q --force
+    # envoie les fixtures
+    - php bin/console doctrine:fixture:load -q --no-interaction
+
+test:
+  # pour tester sur une version spécifique de php, ajouter les images
+  #image: php:5.6
+  stage: test
+  script:
+    - php bin/phpunit
+
+deploy:
+  stage: deploy
+  script:
+    - echo "deploy work !"
+  when: manual
+#         - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+#         - eval $(ssh-agent -s)
+#         - ssh-add <(echo "$SSH_PRIVATE_KEY")
+#         - mkdir -p ~/.ssh
+#         - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
