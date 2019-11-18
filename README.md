@@ -1,7 +1,7 @@
 # Symfony project
 
-
 ## Index
+- [Git Commands](Git)
 - [Security](#Security)
 - [Form](#Form)
 - [Listener Subscriber](#Listener-Subscriber)
@@ -9,12 +9,28 @@
 - [API-Platform](#API-Platform)
 - [Tests PHPUnit](#PHPUnit)
 - [GitLab CI/CD](#GitLab)
-- [Sonata](#Sonata)
 - [Fixtures and Faker](#Fixtures)
 - [Pagination](#Pagination)
 - [Flash Messages](#Flash)
-- [React](#React)
-- [Angular](#Angular)
+
+---------------------------------------------------------------------------
+## Git Commands
+[Top](#Index)
+
+#### Clone project
+```
+git clone https://github.com/ermineaweb/sortircom && cd sortircom
+```
+#### Pull
+```
+git pull
+```
+#### Push
+```
+git add .
+git commit -m "un court message pour s'y retrouver"
+git push
+```
 
 ---------------------------------------------------------------------------
 ## Security
@@ -269,12 +285,6 @@ DATABASE_URL=mysql://romain:rom@mysql/sandbox
 ```
 
 ---------------------------------------------------------------------------
-## Sonata
-[Top](#Index)
-
-// TODO
-
----------------------------------------------------------------------------
 ## Fixtures
 [Top](#Index)
 
@@ -446,17 +456,3 @@ public function users(Request $request, UserRepository $repository, $page = 1)
     {% endfor %}
 {% endfor %}
 ```
-
----------------------------------------------------------------------------
-## React
-[Top](#Index)
-
-// TODO
-
----------------------------------------------------------------------------
-## Angular
-[Top](#Index)
-
-// TODO
-
-
