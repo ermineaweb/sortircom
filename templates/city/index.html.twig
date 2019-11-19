@@ -10,7 +10,6 @@
             <tr>
                 <th>Nom</th>
                 <th>Code postal</th>
-                <th>actions</th>
             </tr>
         </thead>
         <tbody>
@@ -18,9 +17,6 @@
             <tr>
                 <td><a href="{{ path('city_show', {'id': city.id}) }}">{{ city.name }}</a></td>
                 <td>{{ city.zipcode }}</td>
-                <td>
-                    <a href="{{ path('city_edit', {'id': city.id}) }}">edit</a>
-                </td>
             </tr>
         {% else %}
             <tr>
