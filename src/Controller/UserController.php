@@ -20,9 +20,8 @@ class UserController extends AbstractController
 
     public function __construct(EntityManagerInterface $entityManager)
     {
-       $this->$entityManager = $entityManager;
+       $this->entityManager = $entityManager;
     }
-
 
     /**
      * @Route("/", name="user_index", methods={"GET"})
@@ -37,15 +36,15 @@ class UserController extends AbstractController
     /**
      * @Route("/new", name="user_new", methods={"GET","POST"})
      */
-    public function new(Request $request,EntityManagerInterface $entityManager ): Response
+    public function new(Request $request): Response
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($user);
-            $entityManager->flush();
+            $this->entityManager->persist($user);
+			$this->entityManager->flush();
 
             return $this->redirectToRoute('user_index');
         }
@@ -75,7 +74,7 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+			$this->entityManager->flush();
 
             return $this->redirectToRoute('user_index');
         }
@@ -92,9 +91,8 @@ class UserController extends AbstractController
     public function delete(Request $request, User $user): Response
     {
         if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($user);
-            $entityManager->flush();
+			$this->entityManager->remove($user);
+			$this->entityManager->flush();
         }
 
         return $this->redirectToRoute('user_index');
