@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\School;
 use App\Form\SchoolType;
 use App\Repository\SchoolRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,6 +16,13 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class SchoolController extends AbstractController
 {
+    private $entityManager;
+
+    public function __construct(EntityManagerInterface $entityManager)
+    {
+        $this->entityManager = $entityManager;
+    }
+
     /**
      * Cette fonction permet d'afficher la liste des écoles existantes
      * et propose d'en ajouter une
@@ -27,9 +35,8 @@ class SchoolController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($school);
-            $entityManager->flush();
+            $this->entityManager->persist($school);
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('school_index');
         }
@@ -60,7 +67,7 @@ class SchoolController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('school_index');
         }
@@ -77,9 +84,8 @@ class SchoolController extends AbstractController
     public function delete(Request $request, School $school): Response
     {
         if ($this->isCsrfTokenValid('delete'.$school->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($school);
-            $entityManager->flush();
+            $this->entityManager->remove($school);
+            $this->entityManager->flush();
         }
 
         return $this->redirectToRoute('school_index');

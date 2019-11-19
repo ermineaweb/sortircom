@@ -222,6 +222,14 @@ class User implements UserInterface
     public function setAdmin(bool $admin): self
     {
         $this->admin = $admin;
+        
+        /*
+         * lors de la création de l'user,
+         * s'il est admin on vient ajouter ce role
+         */
+        if ($admin === true) {
+			$this->roles[] = 'ROLE_ADMIN';
+		}
 
         return $this;
     }
