@@ -21,9 +21,14 @@
 ## Git
 [Top](#Index)
 
-#### Clone project
+#### Start project
 ```
 git clone https://github.com/ermineaweb/sortircom && cd sortircom
+dans la racine du projet
+php bin/console d:d:c
+php bin/console make:migration
+php bin/console d:m:m
+
 ```
 #### Push
 ```
