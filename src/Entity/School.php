@@ -26,6 +26,7 @@ class School
      *     max = "55",
      *     maxMessage="Aucune ville ne contient plus de 45 caracteres en France ?? 'Saint-Remy-en-Bouzemont-Saint-Genest-et-Isson'"
      * )
+     * @Assert\Regex("^Ecole ENI ")
      */
     private $name;
 
