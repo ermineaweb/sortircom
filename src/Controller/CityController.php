@@ -75,7 +75,7 @@ class CityController extends AbstractController
             $entityManager->flush();
             $this->addFlash('success', "La ville a bien été modifiée.");
 
-            return $this->redirectToRoute('city_index');
+            return $this->redirectToRoute('city_show', ['id' => $city->getId()]);
         }
 
         return $this->render('city/edit.html.twig', [

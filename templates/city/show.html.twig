@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}City{% endblock %}
+{% block title %}{{ city.name }}{% endblock %}
 
 {% block body %}
-    <h1>Modifier {{ city.name }}</h1>
+    <h1>{{ city.name }}</h1>
 
     <table class="table">
         <tbody>
@@ -18,18 +18,21 @@
         </tbody>
     </table>
 
-    <a href="{{ path('city_index') }}">Annuler</a>
-
-    <a href="{{ path('city_edit', {'id': city.id}) }}">Enregistrer</a>
+    <a href="{{ path('city_edit', {'id': city.id}) }}" class="btn btn-info">Modifier</a>
 
 
 
 {#{{ include('city/_delete_form.html.twig') }}#}
 
-    <form method="post" action="{{ path('city_delete', {'id': city.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprmer cette ville ?');">
+    <div>
+    <form method="post" action="{{ path('city_delete', {'id': city.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette ville ?');">
         <input type="hidden" name="_method" value="DELETE">
         <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ city.id) }}">
-        <button class="btn">Supprimer</button>
+        <button class="btn btn-info" style="margin-top: 1rem">Supprimer</button>
     </form>
+    </div>
 
+    <div>
+    <a href="{{ path('city_index') }}" class="btn btn-info" style="margin-top: 1rem">Retour à la liste des villes</a>
+    </div>
 {% endblock %}
