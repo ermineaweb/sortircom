@@ -9,13 +9,20 @@ use App\Entity\Status;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AppFixtures extends Fixture
 {
+	private $encoder;
+	
+	public function __construct(UserPasswordEncoderInterface $passwordEncoder)
+	{
+		$this->encoder = $passwordEncoder;
+	}
+	
 	public function load(ObjectManager $manager)
 	{
 		$faker = \Faker\Factory::create('fr_FR');
-		
 		
 		// Cities
 		$quimper = new City();
@@ -99,7 +106,7 @@ class AppFixtures extends Fixture
 		$etudiant1->setLastname($faker->lastName);
 		$etudiant1->setFirstname($faker->firstName);
 		$etudiant1->setEmail($faker->email);
-		$etudiant1->setPassword("abc");
+		$etudiant1->setPassword($this->encoder->encodePassword($etudiant1, "abc"));
 		$etudiant1->setPhone($faker->phoneNumber);
 		$etudiant1->setAvatar("avatar.jpg");
 		$etudiant1->setAdmin(false);
@@ -112,7 +119,7 @@ class AppFixtures extends Fixture
 		$etudiant2->setLastname($faker->lastName);
 		$etudiant2->setFirstname($faker->firstName);
 		$etudiant2->setEmail($faker->email);
-		$etudiant2->setPassword("abc");
+		$etudiant2->setPassword($this->encoder->encodePassword($etudiant2, "abc"));
 		$etudiant2->setPhone($faker->phoneNumber);
 		$etudiant2->setAvatar("avatar.jpg");
 		$etudiant2->setAdmin(false);
@@ -125,7 +132,7 @@ class AppFixtures extends Fixture
 		$etudiant3->setLastname($faker->lastName);
 		$etudiant3->setFirstname($faker->firstName);
 		$etudiant3->setEmail($faker->email);
-		$etudiant3->setPassword("abc");
+		$etudiant3->setPassword($this->encoder->encodePassword($etudiant3, "abc"));
 		$etudiant3->setPhone($faker->phoneNumber);
 		$etudiant3->setAvatar("avatar.jpg");
 		$etudiant3->setAdmin(false);
@@ -138,7 +145,7 @@ class AppFixtures extends Fixture
 		$etudiant4->setLastname($faker->lastName);
 		$etudiant4->setFirstname($faker->firstName);
 		$etudiant4->setEmail($faker->email);
-		$etudiant4->setPassword("abc");
+		$etudiant4->setPassword($this->encoder->encodePassword($etudiant4, "abc"));
 		$etudiant4->setPhone($faker->phoneNumber);
 		$etudiant4->setAvatar("avatar.jpg");
 		$etudiant4->setAdmin(false);
@@ -151,7 +158,7 @@ class AppFixtures extends Fixture
 		$etudiant5->setLastname($faker->lastName);
 		$etudiant5->setFirstname($faker->firstName);
 		$etudiant5->setEmail($faker->email);
-		$etudiant5->setPassword("abc");
+		$etudiant5->setPassword($this->encoder->encodePassword($etudiant5, "abc"));
 		$etudiant5->setPhone($faker->phoneNumber);
 		$etudiant5->setAvatar("avatar.jpg");
 		$etudiant5->setAdmin(false);
@@ -164,7 +171,7 @@ class AppFixtures extends Fixture
 		$admin->setLastname("admin");
 		$admin->setFirstname("admin");
 		$admin->setEmail("admin@mail.com");
-		$admin->setPassword("123");
+		$admin->setPassword($this->encoder->encodePassword($admin, "123"));
 		$admin->setPhone($faker->phoneNumber);
 		$admin->setAvatar("avatar.jpg");
 		$admin->setAdmin(true);

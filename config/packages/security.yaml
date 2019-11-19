@@ -13,7 +13,7 @@ security:
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
-            security: true
+            security: false
         main:
             anonymous: true
             guard:
