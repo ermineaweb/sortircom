@@ -16,7 +16,7 @@ class UserFixtures extends Fixture
         for ($i = 0; $i < 50; $i++)
         {
             $user = new User();
-            $user->school_id($faker->)
+
             $user->setFirstName($faker->firstName);
             $user->setLastname($faker->lastName);
             $user->setAdress($faker->address);
@@ -25,4 +25,5 @@ class UserFixtures extends Fixture
 
         $manager->flush();
     }
+    
 }
