@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des villes{% endblock %}
+
+{% block body %}
+    <h1>Gérer les villes</h1>
+
+    <h2>Filtrer les villes</h2>
+    <div>
+        <form action="" method="get">
+            <label for="search"> Le nom contient :</label>
+                <input type="text" name="search" id="search">
+            <button class="btn btn-info" type="submit" name="Rechercher"> Filtrer</button>
+        </form>
+    </div>
+
+    <div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Code postal</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for city in cities %}
+            <tr>
+                <td>{{ city.name }}</td>
+                <td>{{ city.zipcode }}</td>
+                <td>
+                    <a href="{{ path('city_edit', {'id': city.id}) }}">Modifier</a>
+                    <form method="post" action="{{ path('city_delete', {'id': city.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette ville ?');">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ city.id) }}">
+                        <button class="btn" >Supprimer</button>
+                    </form>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+{{ form_start(form) }}
+        <td>
+            {{ form_label(form.name) }}
+            {{ form_widget(form.name) }}
+            {{ form_help(form.name) }}
+        </td>
+        <td>
+            {{ form_label(form.zipcode) }}
+            {{ form_widget(form.zipcode) }}
+            {{ form_help(form.zipcode) }}
+        </td>
+        <td><button class="button btn btn-info">{{ button_label|default('Enregistrer') }}</button></td>
+        {{ form_end(form) }}
+        </tbody>
+    </table>
+    </div>
+{% endblock %}
