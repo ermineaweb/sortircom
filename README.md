@@ -25,6 +25,7 @@
 ```
 git clone https://github.com/ermineaweb/sortircom && cd sortircom
 dans la racine du projet
+composer install
 php bin/console d:d:c
 php bin/console make:migration
 php bin/console d:m:m
@@ -32,9 +33,9 @@ php bin/console d:m:m
 ```
 #### Push
 ```
-git pull
 git add .
 git commit -m "un court message pour s'y retrouver"
+git pull
 git push
 ```
 
