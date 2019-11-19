@@ -159,6 +159,19 @@ class AppFixtures extends Fixture
 		$etudiant5->setSchool($enirennes);
 		$manager->persist($etudiant5);
 		
+		$admin = new User();
+		$admin->setUsername("admin");
+		$admin->setLastname("admin");
+		$admin->setFirstname("admin");
+		$admin->setEmail("admin@mail.com");
+		$admin->setPassword("123");
+		$admin->setPhone($faker->phoneNumber);
+		$admin->setAvatar("avatar.jpg");
+		$admin->setAdmin(true);
+		$admin->setActive(true);
+		$admin->setSchool($enirennes);
+		$manager->persist($admin);
+		
 		// Events
 		
 		$manager->flush();
