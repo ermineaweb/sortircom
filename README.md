@@ -25,12 +25,9 @@
 ```
 git clone https://github.com/ermineaweb/sortircom && cd sortircom
 ```
-#### Pull
-```
-git pull
-```
 #### Push
 ```
+git pull
 git add .
 git commit -m "un court message pour s'y retrouver"
 git push
