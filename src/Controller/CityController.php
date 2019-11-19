@@ -20,22 +20,51 @@ class CityController extends AbstractController
     public function __construct(EntityManagerInterface $entityManager) {
         $this->entityManager = $entityManager;
     }
+/*
 
     /**
      * @Route("/", name="index", methods={"GET"})
      */
-    public function index(CityRepository $cityRepository): Response
+    /*public function index(CityRepository $cityRepository): Response
     {
         return $this->render('city/index.html.twig', [
             'cities' => $cityRepository->findAll(),
         ]);
+    }*/
+
+    /**
+     * @Route("/", name="index", methods={"GET"})
+     */
+    public function index(CityRepository $cityRepository, Request $request, $search = null): Response
+    {
+        $value = $request->query->get('search');
+        if (!$value==null) {
+            $cities = $cityRepository->findByName($value);
+        } else {
+            $cities  = $cityRepository->findAll();
+        }
+        //
+        return $this->render('city/managerCity.html.twig', [
+            'cities' => $cities,
+        ]);
     }
 
     /**
-     * @Route("/ajouter", name="add", methods={"GET","POST"})
+     * @Route("/", name="index", methods={"GET","POST"})
      */
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(
+        Request $request,
+        CityRepository $cityRepository,
+        EntityManagerInterface $entityManager,
+        $search = null): Response
     {
+        $value = $request->query->get('search');
+        if (!$value==null) {
+            $cities = $cityRepository->findByName($value);
+        } else {
+            $cities  = $cityRepository->findAll();
+        }
+
         $city = new City();
         $form = $this->createForm(CityType::class, $city);
         $form->handleRequest($request);
@@ -47,9 +76,10 @@ class CityController extends AbstractController
             return $this->redirectToRoute('city_index');
         }
 
-        return $this->render('city/add.html.twig', [
+        return $this->render('city/managerCity.html.twig', [
             'city' => $city,
             'form' => $form->createView(),
+            'cities' => $cities,
         ]);
     }
 
@@ -75,7 +105,7 @@ class CityController extends AbstractController
             $entityManager->flush();
             $this->addFlash('success', "La ville a bien été modifiée.");
 
-            return $this->redirectToRoute('city_index');
+            return $this->redirectToRoute('city_show', ['id' => $city->getId()]);
         }
 
         return $this->render('city/edit.html.twig', [

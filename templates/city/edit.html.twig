@@ -1,13 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit City{% endblock %}
+{% block title %}Modifier{% endblock %}
 
 {% block body %}
-    <h1>Edit City</h1>
+    <h1>Modifier {{ city.name }}</h1>
 
-    {{ include('city/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button class="btn btn-info" style="margin-top: 1rem">{{ button_label|default('Enregistrer') }}</button>
+    {{ form_end(form) }}
 
-    <a href="{{ path('city_index') }}">back to list</a>
+    <a href="{{ path('city_show', {'id': city.id}) }}" class="btn btn-info" style="margin-top: 1rem">Retour</a>
 
-    {{ include('city/_delete_form.html.twig') }}
 {% endblock %}

@@ -16,19 +16,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class SchoolController extends AbstractController
 {
     /**
-     * @Route("/", name="school_index", methods={"GET"})
+     * Cette fonction permet d'afficher la liste des écoles existantes
+     * et propose d'en ajouter une
+     * @Route("/", name="school_index", methods={"GET","POST"})
      */
-    public function index(SchoolRepository $schoolRepository): Response
-    {
-        return $this->render('school/index.html.twig', [
-            'schools' => $schoolRepository->findAll(),
-        ]);
-    }
-
-    /**
-     * @Route("/new", name="school_new", methods={"GET","POST"})
-     */
-    public function new(Request $request): Response
+    public function new(Request $request, SchoolRepository $schoolRepository): Response
     {
         $school = new School();
         $form = $this->createForm(SchoolType::class, $school);
@@ -42,14 +34,15 @@ class SchoolController extends AbstractController
             return $this->redirectToRoute('school_index');
         }
 
-        return $this->render('school/new.html.twig', [
+        return $this->render('school/manage.html.twig', [
             'school' => $school,
             'form' => $form->createView(),
+            'schools' => $schoolRepository->findAll(),
         ]);
     }
 
     /**
-     * @Route("/{id}", name="school_show", methods={"GET"})
+     * @Route("/{id}", name="school_show", methods={"GET"}, requirements={"id":"\d+"})
      */
     public function show(School $school): Response
     {
@@ -59,7 +52,7 @@ class SchoolController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="school_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="school_edit", methods={"GET","POST"}, requirements={"id":"\d+"})
      */
     public function edit(Request $request, School $school): Response
     {
@@ -79,7 +72,7 @@ class SchoolController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="school_delete", methods={"DELETE"})
+     * @Route("/{id}", name="school_delete", methods={"DELETE"}, requirements={"id":"\d+"})
      */
     public function delete(Request $request, School $school): Response
     {

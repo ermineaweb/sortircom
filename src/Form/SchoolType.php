@@ -12,7 +12,9 @@ class SchoolType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
+            ->add('name', null, [
+                'help'=>"Ecole ENI nouvelle ville",
+            ])
         ;
     }
 
