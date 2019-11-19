@@ -108,7 +108,12 @@
       <path value="$PROJECT_DIR$/vendor/fig/link-util" />
       <path value="$PROJECT_DIR$/vendor/composer" />
       <path value="$PROJECT_DIR$/vendor/doctrine/data-fixtures" />
+<<<<<<< HEAD
       <path value="$PROJECT_DIR$/vendor/doctrine/doctrine-fixtures-bundle" />
+=======
+      <path value="$PROJECT_DIR$/vendor/symfony/apache-pack" />
+      <path value="$PROJECT_DIR$/vendor/fzaninotto/faker" />
+>>>>>>> 5c38fb93a8bb0f996bbaf511d7cf48ea3200ad70
     </include_path>
   </component>
 </project>
