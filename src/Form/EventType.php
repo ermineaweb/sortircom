@@ -2,26 +2,33 @@
 
 namespace App\Form;
 
-use App\Entity\School;
+use App\Entity\Event;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class SchoolType extends AbstractType
+class EventType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', null, [
-                'help'=>"Ecole ENI nouvelle ville",
-            ])
+            ->add('name')
+            ->add('start')
+            ->add('end')
+            ->add('limitdate')
+            ->add('maxsize')
+            ->add('description')
+            ->add('users')
+            ->add('creator')
+            ->add('status')
+            ->add('place')
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => School::class,
+            'data_class' => Event::class,
         ]);
     }
 }

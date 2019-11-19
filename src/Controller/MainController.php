@@ -12,8 +12,6 @@ class MainController extends AbstractController
      */
     public function index()
     {
-        return $this->render('index.html.twig', [
-            'controller_name' => 'MainController',
-        ]);
+        return $this->redirectToRoute('event_index');
     }
 }

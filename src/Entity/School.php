@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\SchoolRepository")
@@ -20,6 +21,11 @@ class School
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Vous devez renseigner un nom d'école")
+     * @Assert\Length(
+     *     max = "55",
+     *     maxMessage="Aucune ville ne contient plus de 45 caracteres en France ?? 'Saint-Remy-en-Bouzemont-Saint-Genest-et-Isson'"
+     * )
      */
     private $name;
 
