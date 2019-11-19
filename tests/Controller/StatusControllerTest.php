@@ -9,9 +9,8 @@ class StatusControllerTest extends WebTestCase
     public function testSomething()
     {
         $client = static::createClient();
-        $crawler = $client->request('GET', '/status');
+        $crawler = $client->request('GET', '/public/index.php/status');
 
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('h1', 'Status index');
     }
 }

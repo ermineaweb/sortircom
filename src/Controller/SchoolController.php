@@ -24,7 +24,7 @@ class SchoolController extends AbstractController
     }
 
     /**
-     * Cette fonction permet d'afficher la liste des écoles existantes
+     * Cette route permet d'afficher la liste des écoles existantes
      * et propose d'en ajouter une
      * @Route("/", name="school_index", methods={"GET","POST"})
      */

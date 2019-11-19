@@ -20,7 +20,6 @@ class RegistrationController extends AbstractController
         $this->entityManager = $entityManager;
     }
 
-
     /**
      * @Route("/register", name="app_register")
      */

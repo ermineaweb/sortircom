@@ -1,6 +1,8 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Event index{% endblock %}
+{% block title %}Liste des sorties ENI{% endblock %}
+
+{% block h1 %}Les sorties ENI{% endblock %}
 
 {% block body %}
     <h1>Event index</h1>
@@ -8,7 +10,6 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Name</th>
                 <th>Start</th>
                 <th>End</th>
@@ -21,7 +22,6 @@
         <tbody>
         {% for event in events %}
             <tr>
-                <td>{{ event.id }}</td>
                 <td>{{ event.name }}</td>
                 <td>{{ event.start ? event.start|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ event.end ? event.end|date('Y-m-d H:i:s') : '' }}</td>

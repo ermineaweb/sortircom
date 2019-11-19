@@ -90,10 +90,9 @@ class StatusController extends AbstractController
      */
     public function delete(Request $request, Status $status): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$status->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->entityManager;
-            $entityManager->remove($status);
-            $entityManager->flush();
+        if ($this->isCsrfTokenValid('delete' . $status->getId(), $request->request->get('_token'))) {
+            $this->entityManager->remove($status);
+            $this->entityManager->flush();
         }
 
         return $this->redirectToRoute('status_index');

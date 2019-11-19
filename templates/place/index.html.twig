@@ -2,13 +2,12 @@
 
 {% block title %}Place index{% endblock %}
 
-{% block body %}
-    <h1>Place index</h1>
+{% block h1 %}Liste des écoles ENI{% endblock %}
 
+{% block body %}
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Name</th>
                 <th>Address</th>
                 <th>Longitude</th>
@@ -19,7 +18,6 @@
         <tbody>
         {% for place in places %}
             <tr>
-                <td>{{ place.id }}</td>
                 <td>{{ place.name }}</td>
                 <td>{{ place.address }}</td>
                 <td>{{ place.longitude }}</td>

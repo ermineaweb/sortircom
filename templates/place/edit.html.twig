@@ -2,9 +2,9 @@
 
 {% block title %}Edit Place{% endblock %}
 
-{% block body %}
-    <h1>Edit Place</h1>
+{% block h1 %}Modifier l'école {{ place.name }}{% endblock %}
 
+{% block body %}
     {{ include('place/_form.html.twig', {'button_label': 'Update'}) }}
 
     <a href="{{ path('place_index') }}">back to list</a>

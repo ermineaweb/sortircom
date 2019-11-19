@@ -16,15 +16,17 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class CityController extends AbstractController
 {
+    private $entityManager;
 
-    public function __construct(EntityManagerInterface $entityManager) {
+    public function __construct(EntityManagerInterface $entityManager)
+    {
         $this->entityManager = $entityManager;
     }
-/*
+    /*
 
-    /**
-     * @Route("/", name="index", methods={"GET"})
-     */
+        /**
+         * @Route("/", name="index", methods={"GET"})
+         */
     /*public function index(CityRepository $cityRepository): Response
     {
         return $this->render('city/index.html.twig', [
@@ -38,13 +40,13 @@ class CityController extends AbstractController
     public function index(CityRepository $cityRepository, Request $request, $search = null): Response
     {
         $value = $request->query->get('search');
-        if (!$value==null) {
+        if (!$value == null) {
             $cities = $cityRepository->findByName($value);
         } else {
-            $cities  = $cityRepository->findAll();
+            $cities = $cityRepository->findAll();
         }
-        //
-        return $this->render('city/managerCity.html.twig', [
+
+        return $this->render('city/manager.html.twig', [
             'cities' => $cities,
         ]);
     }
@@ -58,11 +60,12 @@ class CityController extends AbstractController
         EntityManagerInterface $entityManager,
         $search = null): Response
     {
+        // TODO : refactoriser le code dans un service de recherche
         $value = $request->query->get('search');
-        if (!$value==null) {
+        if (!$value == null) {
             $cities = $cityRepository->findByName($value);
         } else {
-            $cities  = $cityRepository->findAll();
+            $cities = $cityRepository->findAll();
         }
 
         $city = new City();
@@ -76,7 +79,7 @@ class CityController extends AbstractController
             return $this->redirectToRoute('city_index');
         }
 
-        return $this->render('city/managerCity.html.twig', [
+        return $this->render('city/manager.html.twig', [
             'city' => $city,
             'form' => $form->createView(),
             'cities' => $cities,
@@ -119,7 +122,7 @@ class CityController extends AbstractController
      */
     public function delete(Request $request, EntityManagerInterface $entityManager, City $city): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$city->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $city->getId(), $request->request->get('_token'))) {
             $entityManager->remove($city);
             $entityManager->flush();
         }

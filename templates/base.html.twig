@@ -8,10 +8,17 @@
     {% block stylesheets %}{% endblock %}
 </head>
 <body>
-{% include '_menu.html.twig' %}
-{% include '_flash.html.twig' %}
+{% include 'technical/_menu.html.twig' %}
+{% include 'technical/_flash.html.twig' %}
 
-{% block body %}{% endblock %}
+<div class="jumbotron">
+    <h1>{% block h1 %}{% endblock %}</h1>
+</div>
+
+<div class="container">
+    {% block body %}{% endblock %}
+</div>
+
 {% block javascripts %}{% endblock %}
 </body>
 </html>
