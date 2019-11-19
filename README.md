@@ -33,9 +33,9 @@ php bin/console d:m:m
 ```
 #### Push
 ```
-git pull
 git add .
 git commit -m "un court message pour s'y retrouver"
+git pull
 git push
 ```
 
