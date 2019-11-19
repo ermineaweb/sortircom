@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}City{% endblock %}
+
+{% block body %}
+    <h1>Modifier {{ city.name }}</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Nom</th>
+                <td>{{ city.name }}</td>
+            </tr>
+            <tr>
+                <th>Code postal</th>
+                <td>{{ city.zipcode }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('city_index') }}">Annuler</a>
+
+    <a href="{{ path('city_edit', {'id': city.id}) }}">Enregistrer</a>
+
+
+
+{#{{ include('city/_delete_form.html.twig') }}#}
+
+    <form method="post" action="{{ path('city_delete', {'id': city.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprmer cette ville ?');">
+        <input type="hidden" name="_method" value="DELETE">
+        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ city.id) }}">
+        <button class="btn">Supprimer</button>
+    </form>
+
+{% endblock %}
