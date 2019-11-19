@@ -22,11 +22,11 @@ class CityController extends AbstractController
     }
 
     /**
-     * @Route("/", name="all", methods={"GET"})
+     * @Route("/", name="index", methods={"GET"})
      */
     public function index(CityRepository $cityRepository): Response
     {
-        return $this->render('city/all.html.twig', [
+        return $this->render('city/index.html.twig', [
             'cities' => $cityRepository->findAll(),
         ]);
     }
@@ -44,7 +44,7 @@ class CityController extends AbstractController
             $entityManager->persist($city);
             $entityManager->flush();
             $this->addFlash('success', "La ville a bien été ajoutée");
-            return $this->redirectToRoute('city_all');
+            return $this->redirectToRoute('city_index');
         }
 
         return $this->render('city/add.html.twig', [
@@ -75,7 +75,7 @@ class CityController extends AbstractController
             $entityManager->flush();
             $this->addFlash('success', "La ville a bien été modifiée.");
 
-            return $this->redirectToRoute('city_all');
+            return $this->redirectToRoute('city_index');
         }
 
         return $this->render('city/edit.html.twig', [
@@ -94,6 +94,6 @@ class CityController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('city_all');
+        return $this->redirectToRoute('city_index');
     }
 }
