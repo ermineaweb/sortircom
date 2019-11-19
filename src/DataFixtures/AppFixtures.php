@@ -3,10 +3,12 @@
 namespace App\DataFixtures;
 
 use App\Entity\City;
+use App\Entity\Event;
 use App\Entity\Place;
 use App\Entity\School;
 use App\Entity\Status;
 use App\Entity\User;
+use Cassandra\Date;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -72,20 +74,24 @@ class AppFixtures extends Fixture
 		$manager->persist($place4);
 		
 		// Statuses
-		$statutes = [
-			'Créée',
-			'Ouverte',
-			'Clôturée',
-			'EnCours',
-			'Passée',
-			'Annulée',
-		];
-		
-		foreach ($statutes as $name) {
-			$status = new Status();
-			$status->setName($name);
-			$manager->persist($status);
-		}
+		$status1 = new Status();
+		$status1->setName("Créée");
+		$manager->persist($status1);
+		$status2 = new Status();
+		$status2->setName("Ouverte");
+		$manager->persist($status2);
+		$status3 = new Status();
+		$status3->setName("Clôturée");
+		$manager->persist($status3);
+		$status4 = new Status();
+		$status4->setName("EnCours");
+		$manager->persist($status4);
+		$status5 = new Status();
+		$status5->setName("Passée");
+		$manager->persist($status5);
+		$status6 = new Status();
+		$status6->setName("Annulée");
+		$manager->persist($status6);
 		
 		// Schools
 		$eniquimper = new School();
@@ -180,6 +186,41 @@ class AppFixtures extends Fixture
 		$manager->persist($admin);
 		
 		// Events
+		$sortie1 = new Event();
+		$sortie1->setName("Une super sortie au cinéma");
+		$sortie1->setDescription("Nous irons voir un film au cinéma");
+		$sortie1->setMaxsize(10);
+		$sortie1->setStart($faker->dateTime);
+		$sortie1->setEnd($faker->dateTime);
+		$sortie1->setLimitdate($faker->dateTime);
+		$sortie1->setCreator($etudiant1);
+		$sortie1->setPlace($place1);
+		$sortie1->setStatus($status1);
+		$manager->persist($sortie1);
+		
+		$sortie2 = new Event();
+		$sortie2->setName("Une super sortie au cinéma");
+		$sortie2->setDescription("Nous irons voir un film au cinéma");
+		$sortie2->setMaxsize(10);
+		$sortie2->setStart($faker->dateTime);
+		$sortie2->setEnd($faker->dateTime);
+		$sortie2->setLimitdate($faker->dateTime);
+		$sortie2->setCreator($etudiant2);
+		$sortie2->setPlace($place1);
+		$sortie2->setStatus($status1);
+		$manager->persist($sortie2);
+		
+		$sortie3 = new Event();
+		$sortie3->setName("Une super sortie au cinéma");
+		$sortie3->setDescription("Nous irons voir un film au cinéma");
+		$sortie3->setMaxsize(10);
+		$sortie3->setStart($faker->dateTime);
+		$sortie3->setEnd($faker->dateTime);
+		$sortie3->setLimitdate($faker->dateTime);
+		$sortie3->setCreator($etudiant1);
+		$sortie3->setPlace($place1);
+		$sortie3->setStatus($status2);
+		$manager->persist($sortie3);
 		
 		$manager->flush();
 	}
