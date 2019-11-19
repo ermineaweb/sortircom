@@ -9,9 +9,16 @@
 
     <h2>Filtrer les sites</h2>
 
-    Le nom contient : <input type="text" name="schoolname"/>
-    <button type="submit" class="btn btn-primary">Rechercher</button>
+    <div>
+        <form action="" method="get">
+            <label for="search"> Le nom contient :</label>
+            <input type="text" name="search" id="search">
+            <button class="btn btn-info" type="submit" name="Rechercher">Rechercher</button>
+        </form>
+    </div>
 
+
+    <div>
     <table class="table">
         <thead>
         <tr>
@@ -26,7 +33,7 @@
                 <td>
                     <a href="{{ path('school_edit', {'id': school.id}) }}">Modifier -</a>
                     <a href="{{ path('school_delete', {'id': school.id}) }}"
-                       onsubmit="return confirm('Are you sure you want to delete this item?');">Supprimer</a>
+                       onsubmit="return confirm('Etes-vous sûr de vouloir supprimer l\'école ?');">Supprimer</a>
                 </td>
             </tr>
         {% else %}
@@ -47,6 +54,7 @@
         </tr>
         </tbody>
     </table>
+    </div>
 
 {% endblock %}
 

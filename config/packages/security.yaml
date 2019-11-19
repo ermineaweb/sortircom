@@ -13,7 +13,7 @@ security:
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
-            security: true
+            security: false
         main:
             anonymous: true
             guard:
@@ -36,3 +36,7 @@ security:
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
+
+        # Mathieu : proposition de path (à activer si OK)
+        # Seul l'administrateur à acces à l'écran d'edition et de CRUD des écoles
+        # - { path: ^/school, roles: ROLE_ADMIN }
