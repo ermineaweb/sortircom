@@ -7,6 +7,7 @@ use App\Entity\Event;
 use App\Entity\Place;
 use App\Entity\School;
 use App\Entity\Status;
+use App\Entity\StatusEnum;
 use App\Entity\User;
 use Cassandra\Date;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -75,22 +76,22 @@ class AppFixtures extends Fixture
 		
 		// Statuses
 		$status1 = new Status();
-		$status1->setName("Créée");
+		$status1->setName(StatusEnum::CREE);
 		$manager->persist($status1);
 		$status2 = new Status();
-		$status2->setName("Ouverte");
+		$status2->setName(StatusEnum::OUVERTE);
 		$manager->persist($status2);
 		$status3 = new Status();
-		$status3->setName("Clôturée");
+		$status3->setName(StatusEnum::CLOTURE);
 		$manager->persist($status3);
 		$status4 = new Status();
-		$status4->setName("EnCours");
+		$status4->setName(StatusEnum::EN_COURS);
 		$manager->persist($status4);
 		$status5 = new Status();
-		$status5->setName("Passée");
+		$status5->setName(StatusEnum::PASSEE);
 		$manager->persist($status5);
 		$status6 = new Status();
-		$status6->setName("Annulée");
+		$status6->setName(StatusEnum::ANNULEE);
 		$manager->persist($status6);
 		
 		// Schools

@@ -31,8 +31,25 @@
         </tbody>
     </table>
 
+
+    <table>
+        <tr><th>Participants</th></tr>
+        {% for user in event.users %}
+            <tr>
+                <th>
+                    {{ user.username }}
+                </th>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    <!-- Si l'utilisateur est connecté et qu'il n'est pas inscrit, il peut s'inscrire -->
     {% if app.user %}
-        <a href="{{ path('event_inscription', {id : event.id }) }">S'inscrire à la sortie</a>
+        <a href="{{ path('event_inscription', {id : event.id }) }}">S'inscrire à la sortie</a>
     {% endif %}
 
     <a href="{{ path('event_index') }}">Revenir à la liste des sorties</a>

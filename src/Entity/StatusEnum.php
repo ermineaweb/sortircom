@@ -5,12 +5,10 @@ namespace App\Entity;
 
 abstract class StatusEnum
 {
-	private const statuses = [
-		CREE => "Créée",
-		OUVERTE => "Ouverte",
-		CLOTURE => "Clôturée",
-		EN_COURS => "En cours",
-		PASSEE => "Passée",
-		ANNULEE => "Annulée",
-	];
+	public const CREE = "Créée";
+	public const OUVERTE = "Ouverte";
+	public const CLOTURE = "Clôturée";
+	public const EN_COURS = "En cours";
+	public const PASSEE = "Passée";
+	public const ANNULEE = "Annulée";
 }
