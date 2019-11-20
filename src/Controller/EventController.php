@@ -31,7 +31,7 @@ class EventController extends AbstractController
     }
 
     /**
-     * @Route("/{page}", name="index", methods={"GET","POST"})
+     * @Route("/{page}", name="index", methods={"GET","POST"}, requirements={"page"="\d+"})
      */
     public function index(
         EventRepository $eventRepository,
@@ -87,7 +87,7 @@ class EventController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="show", methods={"GET"})
+     * @Route("/show/{id}", name="show", methods={"GET"})
      */
     public function show(Event $event): Response
     {
