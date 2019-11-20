@@ -21,6 +21,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class EventController extends AbstractController
 {
+
     private $entityManager;
     private $eventRepository;
 
