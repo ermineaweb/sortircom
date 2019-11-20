@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Event;
+use App\Entity\StatusEnum;
 use App\Form\EventType;
 use App\Repository\CityRepository;
 use App\Repository\EventRepository;
