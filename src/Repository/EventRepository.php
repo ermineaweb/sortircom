@@ -27,7 +27,6 @@ class EventRepository extends ServiceEntityRepository
     public function findByFilters($search = null, $start = null, $end = null, $school = null)
     {
         $queryBuilder = $this->createQueryBuilder('e');
-        $queryBuilder->addSelect('s');
 
         $queryBuilder->orderBy('e.start', 'ASC');
         if ($school !=null){
