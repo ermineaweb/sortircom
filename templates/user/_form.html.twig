@@ -1,4 +1,44 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+
+    {{ form_label(form.username) }}
+    {{ form_widget(form.username) }}
+    {{ form_help(form.username) }}
+
+    {{ form_label(form.lastname) }}
+    {{ form_widget(form.lastname) }}
+    {{ form_help(form.lastname) }}
+
+    {{ form_label(form.firstname) }}
+    {{ form_widget(form.firstname) }}
+    {{ form_help(form.firstname) }}
+
+    {{ form_label(form.password) }}
+    {{ form_widget(form.password) }}
+    {{ form_help(form.password) }}
+
+    {{ form_label(form.phone) }}
+    {{ form_widget(form.phone) }}
+    {{ form_help(form.phone) }}
+
+    {{ form_label(form.email) }}
+    {{ form_widget(form.email) }}
+    {{ form_help(form.email) }}
+
+    {{ form_label(form.school) }}
+    {{ form_widget(form.school) }}
+    {{ form_help(form.school) }}
+
+    {{ form_label(form.avatar) }}
+    {{ form_widget(form.avatar) }}
+    {{ form_help(form.avatar) }}
+
+    {{ form_label(form.admin) }}
+    {{ form_widget(form.admin) }}
+    {{ form_help(form.admin) }}
+
+    {{ form_label(form.active) }}
+    {{ form_widget(form.active) }}
+    {{ form_help(form.active) }}
+
+<button class="button">{{ button_label|default('Enregistrer') }}</button>
 {{ form_end(form) }}
