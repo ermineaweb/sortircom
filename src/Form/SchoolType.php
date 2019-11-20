@@ -13,9 +13,13 @@ class SchoolType extends AbstractType
     {
         $builder
             ->add('name', null, [
-                'help'=>"Ecole ENI nouvelle ville",
+                'help'=>"Nom de l'école à ajouter",
+                'attr' => [
+                    'placeholder'=>"Ajouter une nouvelle école ENI",
+                ],
             ])
         ;
+
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -1,42 +1,47 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{% endblock %}
+{% block title %}Liste des villes{% endblock %}
 
-{% block h1 %}Gérer les écoles{% endblock %}
+{% block h1 %}Gestion des villes{% endblock %}
 
 {% block body %}
     <div>
-        <label for="search">Recherche</label>
+        <label for="search">Rechercher :</label>
         <input type="text" name="search" id="search" class="form-control">
         <hr>
         {{ form_start(form) }}
         {{ form_label(form.name) }}
         {{ form_widget(form.name) }}
         {{ form_help(form.name) }}
-        <button class="btn btn-primary">{{ button_label|default('Enregistrer') }}</button>
+        {{ form_label(form.zipcode) }}
+        {{ form_widget(form.zipcode) }}
+        {{ form_help(form.zipcode) }}
+        <button class="button btn btn-info">{{ button_label|default('Enregistrer') }}</button>
         {{ form_end(form) }}
     </div>
+
     <div>
         <table class="table">
             <thead>
             <tr>
-                <th>Ecole ENI</th>
-                <th>actions</th>
+                <th>Nom</th>
+                <th>Code postal</th>
+                <th>Actions</th>
             </tr>
             </thead>
             <tbody id="table">
-            {% for school in schools %}
+            {% for city in cities %}
                 <tr>
-                    <td>{{ school.name }}</td>
+                    <td>{{ city.name }}</td>
+                    <td>{{ city.zipcode }}</td>
                     <td>
-                        <a href="{{ path('school_edit', {'id': school.id}) }}">Modifier -</a>
-                        <a href="{{ path('school_delete', {'id': school.id}) }}"
-                           onsubmit="return confirm('Etes-vous sûr de vouloir supprimer l\'école ?');">Supprimer</a>
+                        <a href="{{ path('city_edit', {'id': city.id}) }}">Modifier</a>
+                        {% include 'city/_delete_form.html.twig' %}
                     </td>
                 </tr>
             {% else %}
                 <tr>
-                    <td colspan="2">Aucune école enregistrée</td>
+                    <td colspan="3">Aucune ville n'est enregistrée</td>
                 </tr>
             {% endfor %}
             </tbody>
@@ -48,4 +53,3 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="{{ asset('assets/js/search.js') }}"></script>
 {% endblock %}
-

@@ -22,17 +22,6 @@ class CityController extends AbstractController
     {
         $this->entityManager = $entityManager;
     }
-    /*
-
-        /**
-         * @Route("/", name="index", methods={"GET"})
-         */
-    /*public function index(CityRepository $cityRepository): Response
-    {
-        return $this->render('city/index.html.twig', [
-            'cities' => $cityRepository->findAll(),
-        ]);
-    }*/
 
     /**
      * @Route("/", name="index", methods={"GET"})
@@ -40,13 +29,13 @@ class CityController extends AbstractController
     public function index(CityRepository $cityRepository, Request $request, $search = null): Response
     {
         $value = $request->query->get('search');
-        if (!$value == null) {
+        if ($value) {
             $cities = $cityRepository->findByName($value);
         } else {
             $cities = $cityRepository->findAll();
         }
 
-        return $this->render('city/manager.html.twig', [
+        return $this->render('city/manage.html.twig', [
             'cities' => $cities,
         ]);
     }
@@ -79,7 +68,7 @@ class CityController extends AbstractController
             return $this->redirectToRoute('city_index');
         }
 
-        return $this->render('city/manager.html.twig', [
+        return $this->render('city/manage.html.twig', [
             'city' => $city,
             'form' => $form->createView(),
             'cities' => $cities,

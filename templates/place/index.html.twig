@@ -1,8 +1,8 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Place index{% endblock %}
+{% block title %}Liste des lieux de sortie{% endblock %}
 
-{% block h1 %}Liste des places{% endblock %}
+{% block h1 %}Liste des lieux de sortie{% endblock %}
 
 {% block body %}
     <table class="table">
@@ -31,7 +31,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="6">no records found</td>
+                <td colspan="6">Aucun lieu de sortie enregistré</td>
             </tr>
         {% endfor %}
         </tbody>

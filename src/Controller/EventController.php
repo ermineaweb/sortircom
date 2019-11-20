@@ -56,7 +56,7 @@ class EventController extends AbstractController
         $school = $request->request->get('school');
         $paginator = $eventRepository->findByFilters($value, $start, $end, $school, $page);
         dump($school);
-        return $this->render('event/manager.html.twig', [
+        return $this->render('event/manage.html.twig', [
             'paginator' => $paginator,
             'schools'=> $schoolRepository->findAll(),
             'page' => $page

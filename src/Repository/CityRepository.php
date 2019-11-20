@@ -32,10 +32,7 @@ class CityRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult()
         ;
-
     }
-
-
 
     // /**
     //  * @return City[] Returns an array of City objects

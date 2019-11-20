@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use phpDocumentor\Reflection\Types\Integer;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\EventRepository")
@@ -74,6 +75,15 @@ class Event
     {
         $this->users = new ArrayCollection();
         $this->start = new \DateTime();
+    }
+
+    /*
+     * La durée est un attribut calculée non stocké en BDD
+     */
+    public function getDuration(): String
+    {
+        // TODO améliorer la fonction
+        return $this->start->diff($this->end, true)->format("%a heures");
     }
 
     public function getId(): ?int

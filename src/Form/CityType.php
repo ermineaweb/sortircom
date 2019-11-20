@@ -13,13 +13,18 @@ class CityType extends AbstractType
     {
         $builder
             ->add('name', null, [
-                'label' => 'Nom'
-                ])
+                'label' => 'Nom',
+                'attr' => [
+                    "placeholder" => "Nom de la ville...",
+                ],
+            ])
             ->add('zipcode', null, [
-        'label' => 'Code postal',
-        'help' => "Le code postal doit contenir 5 chiffres."
-    ])
-        ;
+                'label' => 'Code postal',
+                'help' => "Le code postal doit contenir 5 chiffres.",
+                'attr' => [
+                    "placeholder" => "Code postal...",
+                ],
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

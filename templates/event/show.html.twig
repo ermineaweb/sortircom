@@ -10,15 +10,15 @@
         <tbody>
         <tr>
             <th>Début</th>
-            <td>{{ event.start ? event.start|date('H:i d-m-Y') : '' }}</td>
+            <td>Le {{ event.start ? event.start|date('d/m/Y à H:i') : '' }}</td>
         </tr>
         <tr>
-            <th>Fin</th>
-            <td>{{ event.end ? event.end|date('Y-m-d H:i:s') : '' }}</td>
+            <th>Durée prévue</th>
+            <td>{{ event.duration }}</td>
         </tr>
         <tr>
             <th>Date limite d'inscription</th>
-            <td>{{ event.limitdate ? event.limitdate|date('Y-m-d') : '' }}</td>
+            <td>{{ event.limitdate ? event.limitdate|date('d/m/Y') : '' }}</td>
         </tr>
         <tr>
             <th>Places disponibles</th>
@@ -28,26 +28,24 @@
             <th>Description</th>
             <td>{{ event.description }}</td>
         </tr>
+        <tr>
+            <th>
+                Participants
+            </th>
+            <td>
+                <ul>
+                    {% for user in event.users %}
+                        <li>{{ user.username }}</li>
+                    {% else %}
+                        <li>Aucun participant pour le moment :(</li>
+                    {% endfor %}
+                </ul>
+            </td>
+        </tr>
         </tbody>
     </table>
 
-
-    <table>
-        <tr><th>Participants</th></tr>
-        {% for user in event.users %}
-            <tr>
-                <th>
-                    {{ user.username }}
-                </th>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="8">no records found</td>
-            </tr>
-        {% endfor %}
-    </table>
-
-    <!-- Si l'utilisateur est connecté et qu'il n'est pas inscrit, il peut s'inscrire -->
+    <!-- Si l'utilisateur est connecté et qu'il n'est pas déjà inscrit, il peut s'inscrire -->
     {% if app.user %}
         <a href="{{ path('event_inscription', {id : event.id }) }}">S'inscrire à la sortie</a>
     {% endif %}

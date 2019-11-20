@@ -2,9 +2,19 @@
 
 {% block title %}Liste des villes{% endblock %}
 
-{% block body %}
-    <h1>Liste des villes</h1>
+{% block h1 %}Gérer les villes{% endblock %}
 
+{% block body %}
+    <div>
+        <label for="search">Recherche</label>
+        <input type="text" name="search" id="search" class="form-control">
+        <hr>
+        {{ form_start(form) }}
+        {{ form_widget(form.name) }}
+        {{ form_help(form.name) }}
+        <button class="btn btn-primary">{{ button_label|default('Enregistrer') }}</button>
+        {{ form_end(form) }}
+    </div>
     <table class="table">
         <thead>
             <tr>
