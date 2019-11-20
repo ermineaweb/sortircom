@@ -18,10 +18,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class EventController extends AbstractController
 {
     private $entityManager;
+    private $eventRepository;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, EventRepository $eventRepository)
     {
         $this->entityManager = $entityManager;
+        $this->eventRepository = $eventRepository;
     }
 
     /**
@@ -98,4 +100,15 @@ class EventController extends AbstractController
 
         return $this->redirectToRoute('event_index');
     }
+
+	/**
+	 * @Route("/inscription", name="inscription", methods={"GET"})
+	 */
+	public function inscription(Request $request, Event $event): Response
+	{
+		
+		$event = $this->eventRepository->find($this->getParameter("id"))->setStatus();
+		
+		return $this->render('event/show.html.twig');
+	}
 }
