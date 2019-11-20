@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Symfony2PluginSettings">
-<<<<<<< HEAD
-=======
     <option name="pathToTranslation" value="var/cache/dev/translations" />
     <option name="directoryToWeb" value="public" />
->>>>>>> b51f839b48d200dd443fb2bb7375edffa85bf518
     <option name="pluginEnabled" value="true" />
   </component>
 </project>
