@@ -185,6 +185,19 @@ class AppFixtures extends Fixture
 		$admin->setSchool($enirennes);
 		$manager->persist($admin);
 		
+		$user = new User();
+		$user->setUsername("rom");
+		$user->setLastname("romain");
+		$user->setFirstname("amichaud");
+		$user->setEmail("rom@mail.com");
+		$user->setPassword($this->encoder->encodePassword($user, "123"));
+		$user->setPhone($faker->phoneNumber);
+		$user->setAvatar("avatar.jpg");
+		$user->setAdmin(false);
+		$user->setActive(true);
+		$user->setSchool($eniquimper);
+		$manager->persist($user);
+		
 		// Events
 		$sortie1 = new Event();
 		$sortie1->setName("Une super sortie au cinéma");
