@@ -55,6 +55,11 @@ class EventController extends AbstractController
 		$form->handleRequest($request);
 		
 		if ($form->isSubmitted() && $form->isValid()) {
+		    //Attribution statut par défaut
+		    $event->setStatus(StatusEnum::CREE);
+		    // On hydrate l'organisateur de l'event
+            $event->setCreator($this->getUser());
+
 			$this->entityManager->persist($event);
 			$this->entityManager->flush();
 			

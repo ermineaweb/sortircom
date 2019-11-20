@@ -5,57 +5,86 @@
 {% block h1 %}Créer une sortie{% endblock %}
 
 {% block body %}
+    <form action="">
+        <div>
+            <label for="idcity"> Ville :</label>
+            <select name="city" class="form-control" id="idcity">
+                {% for city in cities %}
+                    <option value="{{ city.id }}">{{ city.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </form>
+
+
+
     <div>
-        <form action="" method="get">
+        {{ form_start(form) }}
 
-            {{ form_start(form) }}
+        {{ form_label(form.name) }}
+        {{ form_widget(form.name) }}
+        {{ form_help(form.name) }}
 
-            {{ form_label(form.name) }}
-            {{ form_widget(form.name) }}
-            {{ form_help(form.name) }}
+        {#
+        {% if app.user  %}
+            <label for="idschool"> Ville organisatrice :</label>
+            <input type="text" disabled value=" {{ app.user.school.name }}" class="form-control" id="idschool" />
+        {% endif %}
 
-            {{ form_label(form.start) }}
-            {{ form_widget(form.start) }}
-            {{ form_help(form.start) }}
+        {% if place.address %}
+            <label for="idstreet">Rue :</label>
+            <input type="text" disabled value="{{ app.user.place.address }}" class="form-control" id="idstreet" />
+        {% endif %}
 
-            {{ form_label(form.end) }}
-            {{ form_widget(form.end) }}
-            {{ form_help(form.end) }}
+        {% if city.zipcode %}
+            <label for="idzipcode">Code postal :</label>
+            <input type="text" disabled value="{{ app.user.city.zipcode }}" class="form-control" id="idzipcode" />
+        {% endif %}
 
-            {{ form_label(form.limitdate) }}
-            {{ form_widget(form.limitdate) }}
-            {{ form_help(form.limitdate) }}
+        {% if place.latitude %}
+            <label for="idlatitude">Latitude :</label>
+            <input type="text" disabled value="{{ app.user.place.latitude }}" class="form-control" id="idlatitude" />
+        {% endif %}
 
-            {{ form_label(form.maxsize) }}
-            {{ form_widget(form.maxsize) }}
-            {{ form_help(form.maxsize) }}
+        {% if place.longitude %}
+            <label for="idlongitude">longitude :</label>
+            <input type="text" disabled value="{{ app.user.place.longitude }}" class="form-control" id="idlongitude" />
+        {% endif %}
+        #}
 
-            {{ form_label(form.description) }}
-            {{ form_widget(form.description) }}
-            {{ form_help(form.description) }}
+        {{ form_label(form.start) }}
+        {{ form_widget(form.start) }}
+        {{ form_help(form.start) }}
 
-            <div>
-                <label for="city"> Ville :</label>
-                <select name="city" class="form-control">
-                    {% for city in cities %}
-                        <option value="{{ city.id }}">{{ city.name }}</option>
-                    {% endfor %}
-                </select>
-            </div>
+        {{ form_label(form.end) }}
+        {{ form_widget(form.end) }}
+        {{ form_help(form.end) }}
 
-            {{ form_label(form.place) }}
-            {{ form_widget(form.place) }}
-            {{ form_help(form.place) }}
+        {{ form_label(form.limitdate) }}
+        {{ form_widget(form.limitdate) }}
+        {{ form_help(form.limitdate) }}
 
-            {{ form_end(form) }}
+        {{ form_label(form.maxsize) }}
+        {{ form_widget(form.maxsize) }}
+        {{ form_help(form.maxsize) }}
+
+        {{ form_label(form.description) }}
+        {{ form_widget(form.description) }}
+        {{ form_help(form.description) }}
+
+        {{ form_label(form.place) }}
+        {{ form_widget(form.place) }}
+        {{ form_help(form.place) }}
+
+        <button class="btn btn-info">{{ button_label|default('Enregistrer') }}</button>
+        <button class="btn btn-info" type="reset" name="Annuler">Annuler</button>
+        {{ form_end(form) }}
 
         <div>
-            <button class="btn btn-info" type="submit" name="Enregistrer"> Enregistrer </button>
             <button class="btn btn-info" href="">Publier la sorite</button>
-            <button class="btn btn-info" type="reset" name="Annuler">Annuler</button>
+
         </div>
 
-        </form>
     </div>
     {#<a href="{{ path('event_index') }}">back to list</a>#}
 {% endblock %}
