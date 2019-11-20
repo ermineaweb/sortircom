@@ -3,19 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}Bienvenue sur Sortir.com !{% endblock %}</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    {% include 'technical/_assets.html.twig' %}
     {% block stylesheets %}{% endblock %}
 </head>
 <body>
 {% include 'technical/_menu.html.twig' %}
-{% include 'technical/_flash.html.twig' %}
 
 <div class="jumbotron bg-dark">
     <h1>{% block h1 %}{% endblock %}</h1>
 </div>
 
 <div class="container">
+{% include 'technical/_flash.html.twig' %}
     {% block body %}{% endblock %}
 </div>
 
