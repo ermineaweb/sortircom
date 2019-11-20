@@ -14,107 +14,121 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @Route("/sortie", name="event_")
  */
 class EventController extends AbstractController
 {
-	private $entityManager;
-	private $eventRepository;
-	
-	public function __construct(EntityManagerInterface $entityManager, EventRepository $eventRepository)
-	{
-		$this->entityManager = $entityManager;
-		$this->eventRepository = $eventRepository;
-	}
-	
-	/**
-	 * @Route("/", name="index", methods={"GET","POST"})
-	 */
-	public function index(EventRepository $eventRepository, SchoolRepository $schoolRepository, Request $request): Response
-	{
-		$value = $request->request->get('search');
-		$start = $request->request->get('start');
-		$end = $request->request->get('end');
-		$school = $request->request->get('school');
-		return $this->render('event/manager.html.twig', [
-			'events' => $eventRepository->findByFilters($value, $start, $end, $school),
-			'schools' => $schoolRepository->findAll()
-		
-		]);
-	}
-	
-	/**
-	 * @Route("/creer", name="new", methods={"GET","POST"})
-	 */
-	public function new(Request $request, CityRepository $cityRepository): Response
-	{
-		$event = new Event();
-		$form = $this->createForm(EventType::class, $event);
-		$form->handleRequest($request);
-		
-		if ($form->isSubmitted() && $form->isValid()) {
-		    //Attribution statut par défaut
-		    $event->setStatus(StatusEnum::CREE);
-		    // On hydrate l'organisateur de l'event
-            $event->setCreator($this->getUser());
 
-			$this->entityManager->persist($event);
-			$this->entityManager->flush();
-			
-			return $this->redirectToRoute('event_index');
-		}
-		
-		return $this->render('event/new.html.twig', [
-			'event' => $event,
-			'form' => $form->createView(),
-			'cities' => $cityRepository->findAll(),
-		]);
-	}
-	
-	/**
-	 * @Route("/{id}", name="show", methods={"GET"})
-	 */
-	public function show(Event $event): Response
-	{
-		return $this->render('event/show.html.twig', [
-			'event' => $event,
-		]);
-	}
-	
-	/**
-	 * @Route("/{id}/edit", name="edit", methods={"GET","POST"})
-	 */
-	public function edit(Request $request, Event $event): Response
-	{
-		$form = $this->createForm(EventType::class, $event);
-		$form->handleRequest($request);
-		
-		if ($form->isSubmitted() && $form->isValid()) {
-			$this->entityManager->flush();
-			return $this->redirectToRoute('event_index');
-		}
-		
-		return $this->render('event/edit.html.twig', [
-			'event' => $event,
-			'form' => $form->createView(),
-		]);
-	}
-	
-	/**
-	 * @Route("/{id}", name="delete", methods={"DELETE"})
-	 */
-	public function delete(Request $request, Event $event): Response
-	{
-		if ($this->isCsrfTokenValid('delete' . $event->getId(), $request->request->get('_token'))) {
-			$this->entityManager->remove($event);
-			$this->entityManager->flush();
-		}
-		
-		return $this->redirectToRoute('event_index');
-	}
-	
+    private $entityManager;
+    private $eventRepository;
+
+    public function __construct(EntityManagerInterface $entityManager, EventRepository $eventRepository)
+    {
+        $this->entityManager = $entityManager;
+        $this->eventRepository = $eventRepository;
+    }
+
+    /**
+     * @Route("/{page}", name="index", methods={"GET","POST"})
+     */
+    public function index(
+        EventRepository $eventRepository,
+        SchoolRepository $schoolRepository,
+        Request $request,
+        $page = 1): Response
+    {
+        $value = $request->request->get('search');
+        $start = $request->request->get('start');
+        $end = $request->request->get('end');
+        // TODO : Lorsqu'un user affiche la page la 1re fois, la school par défaut est la sienne
+        /*if ($request->isMethod('get')) {
+            $user = $this->getUser();
+            dump($user);
+           $school = $user->getSchool;
+
+        } else {
+            $school = $request->request->get('school');
+        }*/
+        // TODO : filtrer par school
+        $school = $request->request->get('school');
+        $paginator = $eventRepository->findByFilters($value, $start, $end, $school, $page);
+        dump($school);
+        return $this->render('event/manager.html.twig', [
+            'paginator' => $paginator,
+            'schools'=> $schoolRepository->findAll(),
+            'page' => $page
+
+        ]);
+    }
+
+    /**
+     * @Route("/creer", name="new", methods={"GET","POST"})
+     */
+    public function new(Request $request, CityRepository $cityRepository): Response
+    {
+        $event = new Event();
+        $form = $this->createForm(EventType::class, $event);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->entityManager->persist($event);
+            $this->entityManager->flush();
+
+            return $this->redirectToRoute('event_index');
+        }
+
+        return $this->render('event/new.html.twig', [
+            'event' => $event,
+            'form' => $form->createView(),
+            'cities' => $cityRepository->findAll(),
+        ]);
+    }
+
+    /**
+     * @Route("/{id}", name="show", methods={"GET"})
+     */
+    public function show(Event $event): Response
+    {
+        return $this->render('event/show.html.twig', [
+            'event' => $event,
+        ]);
+    }
+
+    /**
+     * @Route("/{id}/edit", name="edit", methods={"GET","POST"})
+     */
+    public function edit(Request $request, Event $event): Response
+    {
+        $form = $this->createForm(EventType::class, $event);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->entityManager->flush();
+            return $this->redirectToRoute('event_index');
+        }
+
+        return $this->render('event/edit.html.twig', [
+            'event' => $event,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/{id}", name="delete", methods={"DELETE"})
+     */
+    public function delete(Request $request, Event $event): Response
+    {
+        if ($this->isCsrfTokenValid('delete' . $event->getId(), $request->request->get('_token'))) {
+            $this->entityManager->remove($event);
+            $this->entityManager->flush();
+        }
+
+        return $this->redirectToRoute('event_index');
+    }
+
 	/**
 	 * @Route("/inscription/{id}", name="inscription", methods={"GET"})
 	 */

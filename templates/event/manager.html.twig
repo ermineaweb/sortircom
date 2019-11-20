@@ -5,13 +5,19 @@
 {% block h1 %}Les sorties ENI{% endblock %}
 
 {% block body %}
+    {% block main %}
     <h2>Filtrer les sorties</h2>
     <div>
         <form action="" method="post">
-
+            <label for="school"> Sélectionner un site :</label>
             <select name="school" id="school">
                 {% for school in schools %}
-                <option value="school.name">{{ school.name }}</option>
+                    {% set selected = '' %}
+                    {% if (app.user) and (app.user.school.id == school.id) %}
+                        {% set selected = 'selected' %}
+
+                    {% endif %}
+                 <option value="school.name" {{ selected }}>{{ school.name }}</option>
                 {% endfor %}
             </select>
 
@@ -27,11 +33,7 @@
             </div>
             <button class="btn btn-info" type="submit" name="Rechercher"> Rechercher</button>
         </form>
-
-
     </div>
-
-
 
 
     <table class="table">
@@ -48,7 +50,7 @@
             </tr>
         </thead>
         <tbody>
-        {% for event in events %}
+        {% for event in paginator %}
             <tr>
                 <td>{{ event.name }}</td>
                 <td>{{ event.start ? event.start|date('Y-m-d H:i:s') : '' }}</td>
@@ -56,7 +58,7 @@
                 <td>{{ event.maxsize }}</td>
                 <td>Etat</td>
                 <td>Inscrit</td>
-                <td>Organisateur</td>
+                <td>{{ event.creator }}</td>
                 <td>
                     <a href="{{ path('event_show', {'id': event.id}) }}">Afficher</a>
                     <a href="{{ path('event_edit', {'id': event.id}) }}">Modifier</a>
@@ -70,5 +72,27 @@
         </tbody>
     </table>
 
-    <a href="{{ path('event_new') }}">Create new</a>
+{% endblock %}
+{% if paginator|length>0 %}
+    <div class="center">
+        <nav aria-label="paginator">
+            <ul class="pagination pagination-lg">
+                {% set nbPages = ((paginator|length)/constant('App\\Repository\\EventRepository::PAGINATION')) |round(0, 'ceil') %}
+                {% for i in 1..nbPages %}
+                    <li class="page-item {% if (page == i) %}disabled{% endif %}">
+                        <a
+                            class="page-link"
+                            href="{{ path('event_index', {'page' : i}) }}">
+                            {{ i }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </nav>
+    </div>
+    {% endif %}
+
+
+    <a href="{{ path('event_new') }}">Créer une sortie</a>
+
 {% endblock %}
