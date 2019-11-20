@@ -7,22 +7,55 @@
 {% block body %}
     <div>
         <form action="" method="get">
-            <label for="city"> Ville :</label>
 
-            <select name="city">
-                {% for city in cities %}
-                <option value="{{ city.id }}">{{ city.name }}</option>
-                {% endfor %}
-            </select>
+            {{ form_start(form) }}
+
+            {{ form_label(form.name) }}
+            {{ form_widget(form.name) }}
+            {{ form_help(form.name) }}
+
+            {{ form_label(form.start) }}
+            {{ form_widget(form.start) }}
+            {{ form_help(form.start) }}
+
+            {{ form_label(form.end) }}
+            {{ form_widget(form.end) }}
+            {{ form_help(form.end) }}
+
+            {{ form_label(form.limitdate) }}
+            {{ form_widget(form.limitdate) }}
+            {{ form_help(form.limitdate) }}
+
+            {{ form_label(form.maxsize) }}
+            {{ form_widget(form.maxsize) }}
+            {{ form_help(form.maxsize) }}
+
+            {{ form_label(form.description) }}
+            {{ form_widget(form.description) }}
+            {{ form_help(form.description) }}
+
+            <div>
+                <label for="city"> Ville :</label>
+                <select name="city" class="form-control">
+                    {% for city in cities %}
+                        <option value="{{ city.id }}">{{ city.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            {{ form_label(form.place) }}
+            {{ form_widget(form.place) }}
+            {{ form_help(form.place) }}
+
+            {{ form_end(form) }}
+
+        <div>
+            <button class="btn btn-info" type="submit" name="Enregistrer"> Enregistrer </button>
+            <button class="btn btn-info" href="">Publier la sorite</button>
+            <button class="btn btn-info" type="reset" name="Annuler">Annuler</button>
+        </div>
+
         </form>
     </div>
-    {{ form_start(form) }}
-        {{ form_label(form.name) }}
-        {{ form_widget(form.name) }}
-        {{ form_help(form.name) }}
-    {{ form_end(form) }}
-    <a href="">Enregistrer</a>
-    <a href="">Publier la sortie</a>
-    <a href="">Annuler</a>
     {#<a href="{{ path('event_index') }}">back to list</a>#}
 {% endblock %}

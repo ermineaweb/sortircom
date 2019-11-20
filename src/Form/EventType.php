@@ -19,13 +19,15 @@ class EventType extends AbstractType
                 'label' => 'Nom de la sortie : '
             ])
             ->add('start', DateTimeType::class, [
-                    'label' => 'Date et heure de la sortie :',
-                    'widget' => 'single_text',
-                    'format' => 'yyyy-MM-dd  HH:mm'
-
+                    'label' => 'Date et heure début de la sortie :',
+                    //'widget' => 'single_text',
+                    //'format' => 'yyyy-MM-dd  HH:mm',
+                    //'attr' => [
+                     //   'type' => 'dateTime-local'
+                   // ]
                 ])
             ->add('end', DateTimeType::class, [
-                    'label' => 'Date et heure de fin de la sortie :'
+                    'label' => 'Date et heure fin de la sortie :'
             ])
             ->add('limitdate', DateType::class, [
                     'label' => 'Date limite d\'inscription :',

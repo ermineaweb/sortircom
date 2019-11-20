@@ -3,10 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Event;
+use App\Entity\StatusEnum;
 use App\Form\EventType;
 use App\Repository\CityRepository;
 use App\Repository\EventRepository;
 use App\Repository\SchoolRepository;
+use App\Services\Inscription;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -127,13 +129,28 @@ class EventController extends AbstractController
     }
 
 	/**
-	 * @Route("/inscription", name="inscription", methods={"GET"})
+	 * @Route("/inscription/{id}", name="inscription", methods={"GET"})
 	 */
-	public function inscription(Request $request, Event $event): Response
+	public function inscription(Event $event, EntityManagerInterface $userManager, Inscription $inscription): Response
 	{
+		$inscription->setUser($this->getUser());
+		$inscription->setEvent($event);
 		
-		$event = $this->eventRepository->find($this->getParameter("id"))->setStatus();
+		if (!$inscription->eventOpen()) {
+			// si l'évènement n'est pas ouvert
+			$this->addFlash("danger", "L'évènement n'est pas ouvert, votre inscription est refusée");
+		} elseif (!$inscription->limitDate()) {
+			// si la date d'inscription est dépassée
+			$this->addFlash("danger", "La date limite d'inscription est dépassée, votre inscription est refusée");
+		} else {
+			// si tout est ok, on enregistre l'inscription
+			$event->addUser($this->getUser());
+			$userManager->persist($this->getUser());
+			$userManager->flush();
+		}
 		
-		return $this->render('event/show.html.twig');
+		return $this->render('event/show.html.twig', [
+			'event' => $event,
+		]);
 	}
 }
