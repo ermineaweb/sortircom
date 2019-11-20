@@ -185,6 +185,19 @@ class AppFixtures extends Fixture
 		$admin->setSchool($enirennes);
 		$manager->persist($admin);
 		
+		$user = new User();
+		$user->setUsername("rom");
+		$user->setLastname("romain");
+		$user->setFirstname("amichaud");
+		$user->setEmail("rom@mail.com");
+		$user->setPassword($this->encoder->encodePassword($user, "123"));
+		$user->setPhone($faker->phoneNumber);
+		$user->setAvatar("avatar.jpg");
+		$user->setAdmin(false);
+		$user->setActive(true);
+		$user->setSchool($eniquimper);
+		$manager->persist($user);
+		
 		// Events
 		$sortie1 = new Event();
 		$sortie1->setName("Une super sortie au cinéma");
@@ -199,9 +212,9 @@ class AppFixtures extends Fixture
 		$manager->persist($sortie1);
 		
 		$sortie2 = new Event();
-		$sortie2->setName("Une super sortie au cinéma");
-		$sortie2->setDescription("Nous irons voir un film au cinéma");
-		$sortie2->setMaxsize(10);
+		$sortie2->setName("Une super sortie à la plage");
+		$sortie2->setDescription("Nous irons à la plage");
+		$sortie2->setMaxsize(5);
 		$sortie2->setStart($faker->dateTime);
 		$sortie2->setEnd($faker->dateTime);
 		$sortie2->setLimitdate($faker->dateTime);
@@ -211,14 +224,14 @@ class AppFixtures extends Fixture
 		$manager->persist($sortie2);
 		
 		$sortie3 = new Event();
-		$sortie3->setName("Une super sortie au cinéma");
-		$sortie3->setDescription("Nous irons voir un film au cinéma");
-		$sortie3->setMaxsize(10);
+		$sortie3->setName("Une super sortie à la piscine");
+		$sortie3->setDescription("Nous irons nager avec les poissons");
+		$sortie3->setMaxsize(2);
 		$sortie3->setStart($faker->dateTime);
 		$sortie3->setEnd($faker->dateTime);
 		$sortie3->setLimitdate($faker->dateTime);
 		$sortie3->setCreator($etudiant1);
-		$sortie3->setPlace($place1);
+		$sortie3->setPlace($place2);
 		$sortie3->setStatus($status2);
 		$manager->persist($sortie3);
 		

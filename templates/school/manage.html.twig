@@ -1,60 +1,56 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}
+{% block title %}{% endblock %}
+
+{% block h1 %}Gérer les écoles{% endblock %}
+
+{% block body %}
+    <label for="search">Recherche</label>
+    <input type="text" name="search" id="search" class="form-control">
+    <div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Ecole ENI</th>
+                <th>actions</th>
+            </tr>
+            </thead>
+            <tbody id="table">
+            {% for school in schools %}
+                <tr>
+                    <td>{{ school.name }}</td>
+                    <td>
+                        <a href="{{ path('school_edit', {'id': school.id}) }}">Modifier -</a>
+                        <a href="{{ path('school_delete', {'id': school.id}) }}"
+                           onsubmit="return confirm('Etes-vous sûr de vouloir supprimer l\'école ?');">Supprimer</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="3">no records found</td>
+                </tr>
+            {% endfor %}
+            <tr>
+                {{ form_start(form) }}
+                <td>
+                    {{ form_widget(form.name) }}
+                    {{ form_help(form.name) }}
+                </td>
+                <td>
+                    <button class="button">{{ button_label|default('Enregistrer') }}</button>
+                </td>
+
+
+                {{ form_end(form) }}
+            </tr>
+            </tbody>
+        </table>
+    </div>
 
 {% endblock %}
 
-{% block body %}
-    <h1>Gérer les sites</h1>
-
-    <h2>Filtrer les sites</h2>
-
-    <div>
-        <form action="" method="get">
-            <label for="search"> Le nom contient :</label>
-            <input type="text" name="search" id="search">
-            <button class="btn btn-info" type="submit" name="Rechercher">Rechercher</button>
-        </form>
-    </div>
-
-
-    <div>
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Ville</th>
-            <th>actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for school in schools %}
-            <tr>
-                <td>{{ school.name }}</td>
-                <td>
-                    <a href="{{ path('school_edit', {'id': school.id}) }}">Modifier -</a>
-                    <a href="{{ path('school_delete', {'id': school.id}) }}"
-                       onsubmit="return confirm('Etes-vous sûr de vouloir supprimer l\'école ?');">Supprimer</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="3">no records found</td>
-            </tr>
-        {% endfor %}
-        <tr>
-            {{ form_start(form) }}
-            <td>
-                {{ form_widget(form.name) }}
-                {{ form_help(form.name) }}
-            </td>
-            <td><button class="button">{{ button_label|default('Enregistrer') }}</button></td>
-
-
-            {{ form_end(form) }}
-        </tr>
-        </tbody>
-    </table>
-    </div>
-
+{% block javascripts %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="{{ asset('assets/js/search.js') }}"></script>
 {% endblock %}
 

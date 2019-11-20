@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Event;
 use App\Form\EventType;
+use App\Repository\CityRepository;
 use App\Repository\EventRepository;
+use App\Repository\SchoolRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,26 +19,34 @@ use Symfony\Component\Routing\Annotation\Route;
 class EventController extends AbstractController
 {
     private $entityManager;
+    private $eventRepository;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, EventRepository $eventRepository)
     {
         $this->entityManager = $entityManager;
+        $this->eventRepository = $eventRepository;
     }
 
     /**
-     * @Route("/", name="index", methods={"GET"})
+     * @Route("/", name="index", methods={"GET","POST"})
      */
-    public function index(EventRepository $eventRepository): Response
+    public function index(EventRepository $eventRepository, SchoolRepository $schoolRepository, Request $request): Response
     {
-        return $this->render('event/index.html.twig', [
-            'events' => $eventRepository->findAll(),
+        $value = $request->request->get('search');
+        $start = $request->request->get('start');
+        $end = $request->request->get('end');
+        $school = $request->request->get('school');
+        return $this->render('event/manager.html.twig', [
+            'events' => $eventRepository->findByFilters($value, $start, $end, $school),
+            'schools'=> $schoolRepository->findAll()
+
         ]);
     }
 
     /**
      * @Route("/creer", name="new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, CityRepository $cityRepository): Response
     {
         $event = new Event();
         $form = $this->createForm(EventType::class, $event);
@@ -52,6 +62,7 @@ class EventController extends AbstractController
         return $this->render('event/new.html.twig', [
             'event' => $event,
             'form' => $form->createView(),
+            'cities' => $cityRepository->findAll(),
         ]);
     }
 
@@ -96,4 +107,15 @@ class EventController extends AbstractController
 
         return $this->redirectToRoute('event_index');
     }
+
+	/**
+	 * @Route("/inscription", name="inscription", methods={"GET"})
+	 */
+	public function inscription(Request $request, Event $event): Response
+	{
+		
+		$event = $this->eventRepository->find($this->getParameter("id"))->setStatus();
+		
+		return $this->render('event/show.html.twig');
+	}
 }

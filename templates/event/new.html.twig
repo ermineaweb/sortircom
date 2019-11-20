@@ -1,14 +1,28 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Nouvelle évènement{% endblock %}
+{% block title %}Nouvel évènement{% endblock %}
 
-{% block h1 %}Organiser un évènement{% endblock %}
+{% block h1 %}Créer une sortie{% endblock %}
 
 {% block body %}
+    <div>
+        <form action="" method="get">
+            <label for="city"> Ville :</label>
+
+            <select name="city">
+                {% for city in cities %}
+                <option value="{{ city.id }}">{{ city.name }}</option>
+                {% endfor %}
+            </select>
+        </form>
+    </div>
     {{ form_start(form) }}
         {{ form_label(form.name) }}
         {{ form_widget(form.name) }}
         {{ form_help(form.name) }}
     {{ form_end(form) }}
-    <a href="{{ path('event_index') }}">back to list</a>
+    <a href="">Enregistrer</a>
+    <a href="">Publier la sortie</a>
+    <a href="">Annuler</a>
+    {#<a href="{{ path('event_index') }}">back to list</a>#}
 {% endblock %}
