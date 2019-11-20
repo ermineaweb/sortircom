@@ -12,6 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @Route("/sortie", name="event_")
@@ -28,17 +29,34 @@ class EventController extends AbstractController
     }
 
     /**
-     * @Route("/", name="index", methods={"GET","POST"})
+     * @Route("/{page}", name="index", methods={"GET","POST"})
      */
-    public function index(EventRepository $eventRepository, SchoolRepository $schoolRepository, Request $request): Response
+    public function index(
+        EventRepository $eventRepository,
+        SchoolRepository $schoolRepository,
+        Request $request,
+        $page = 1): Response
     {
         $value = $request->request->get('search');
         $start = $request->request->get('start');
         $end = $request->request->get('end');
+        // TODO : Lorsqu'un user affiche la page la 1re fois, la school par défaut est la sienne
+        /*if ($request->isMethod('get')) {
+            $user = $this->getUser();
+            dump($user);
+           $school = $user->getSchool;
+
+        } else {
+            $school = $request->request->get('school');
+        }*/
+        // TODO : filtrer par school
         $school = $request->request->get('school');
+        $paginator = $eventRepository->findByFilters($value, $start, $end, $school, $page);
+        dump($school);
         return $this->render('event/manager.html.twig', [
-            'events' => $eventRepository->findByFilters($value, $start, $end, $school),
-            'schools'=> $schoolRepository->findAll()
+            'paginator' => $paginator,
+            'schools'=> $schoolRepository->findAll(),
+            'page' => $page
 
         ]);
     }
