@@ -19,18 +19,29 @@ class EventType extends AbstractType
                 'label' => 'Nom de la sortie : '
             ])
             ->add('start', DateTimeType::class, [
-                'label' => 'Début : ',
-                'widget' => 'choice'
+                    'label' => 'Date et heure début de la sortie :',
+                    //'widget' => 'single_text',
+                    //'format' => 'yyyy-MM-dd  HH:mm',
+                    //'attr' => [
+                     //   'type' => 'dateTime-local'
+                   // ]
+                ])
+            ->add('end', DateTimeType::class, [
+                    'label' => 'Date et heure fin de la sortie :'
             ])
-            ->add('end')
-            ->add('limitdate')
-            ->add('maxsize')
-            ->add('description')
-            ->add('users')
-            ->add('creator')
-            ->add('status')
-            ->add('place')
-        ;
+            ->add('limitdate', DateType::class, [
+                    'label' => 'Date limite d\'inscription :',
+                    'widget' => 'single_text'
+            ])
+            ->add('maxsize', null, [
+                    'label' => 'Nombre de places :'
+            ])
+            ->add('description', null, [
+                    'label' => 'Description et infos :'
+            ])
+            ->add('place', null, [
+                    'label' => 'Lieu :'
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

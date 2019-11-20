@@ -3,40 +3,71 @@
 namespace App\Controller;
 
 use App\Entity\Event;
+use App\Entity\StatusEnum;
 use App\Form\EventType;
+use App\Repository\CityRepository;
 use App\Repository\EventRepository;
+use App\Repository\SchoolRepository;
+use App\Services\Inscription;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @Route("/sortie", name="event_")
  */
 class EventController extends AbstractController
 {
-    private $entityManager;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    private $entityManager;
+    private $eventRepository;
+
+    public function __construct(EntityManagerInterface $entityManager, EventRepository $eventRepository)
     {
         $this->entityManager = $entityManager;
+        $this->eventRepository = $eventRepository;
     }
 
     /**
-     * @Route("/", name="index", methods={"GET"})
+     * @Route("/{page}", name="index", methods={"GET","POST"}, requirements={"page"="\d+"})
      */
-    public function index(EventRepository $eventRepository): Response
+    public function index(
+        EventRepository $eventRepository,
+        SchoolRepository $schoolRepository,
+        Request $request,
+        $page = 1): Response
     {
-        return $this->render('event/index.html.twig', [
-            'events' => $eventRepository->findAll(),
+        $value = $request->request->get('search');
+        $start = $request->request->get('start');
+        $end = $request->request->get('end');
+        // TODO : Lorsqu'un user affiche la page la 1re fois, la school par défaut est la sienne
+        /*if ($request->isMethod('get')) {
+            $user = $this->getUser();
+            dump($user);
+           $school = $user->getSchool;
+
+        } else {
+            $school = $request->request->get('school');
+        }*/
+        // TODO : filtrer par school
+        $school = $request->request->get('school');
+        $paginator = $eventRepository->findByFilters($value, $start, $end, $school, $page);
+        dump($school);
+        return $this->render('event/manager.html.twig', [
+            'paginator' => $paginator,
+            'schools'=> $schoolRepository->findAll(),
+            'page' => $page
+
         ]);
     }
 
     /**
      * @Route("/creer", name="new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, CityRepository $cityRepository): Response
     {
         $event = new Event();
         $form = $this->createForm(EventType::class, $event);
@@ -52,11 +83,12 @@ class EventController extends AbstractController
         return $this->render('event/new.html.twig', [
             'event' => $event,
             'form' => $form->createView(),
+            'cities' => $cityRepository->findAll(),
         ]);
     }
 
     /**
-     * @Route("/{id}", name="show", methods={"GET"})
+     * @Route("/show/{id}", name="show", methods={"GET"})
      */
     public function show(Event $event): Response
     {
@@ -96,4 +128,30 @@ class EventController extends AbstractController
 
         return $this->redirectToRoute('event_index');
     }
+
+	/**
+	 * @Route("/inscription/{id}", name="inscription", methods={"GET"})
+	 */
+	public function inscription(Event $event, EntityManagerInterface $userManager, Inscription $inscription): Response
+	{
+		$inscription->setUser($this->getUser());
+		$inscription->setEvent($event);
+		
+		if (!$inscription->eventOpen()) {
+			// si l'évènement n'est pas ouvert
+			$this->addFlash("danger", "L'évènement n'est pas ouvert, votre inscription est refusée");
+		} elseif (!$inscription->limitDate()) {
+			// si la date d'inscription est dépassée
+			$this->addFlash("danger", "La date limite d'inscription est dépassée, votre inscription est refusée");
+		} else {
+			// si tout est ok, on enregistre l'inscription
+			$event->addUser($this->getUser());
+			$userManager->persist($this->getUser());
+			$userManager->flush();
+		}
+		
+		return $this->render('event/show.html.twig', [
+			'event' => $event,
+		]);
+	}
 }

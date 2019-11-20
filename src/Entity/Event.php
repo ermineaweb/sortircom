@@ -73,6 +73,7 @@ class Event
     public function __construct()
     {
         $this->users = new ArrayCollection();
+        $this->start = new \DateTime();
     }
 
     public function getId(): ?int

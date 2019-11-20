@@ -9,7 +9,7 @@ security:
         app_user_provider:
             entity:
                 class: App\Entity\User
-                property: username
+                property: username, email
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -43,6 +43,6 @@ security:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
 
-        # Mathieu : proposition de path (à activer si OK)
+        # TODO Mathieu : proposition de path (à activer si OK)
         # Seul l'administrateur à acces à l'écran d'edition et de CRUD des écoles
         # - { path: ^/school, roles: ROLE_ADMIN }
