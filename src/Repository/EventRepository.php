@@ -19,6 +19,36 @@ class EventRepository extends ServiceEntityRepository
         parent::__construct($registry, Event::class);
     }
 
+
+    /**
+    //  * @return Event[] Returns an array of Event objects
+    //  */
+
+    public function findByFilters($search = null, $start = null, $end = null, $school = null)
+    {
+        $queryBuilder = $this->createQueryBuilder('e');
+        $queryBuilder->addSelect('s');
+
+        $queryBuilder->orderBy('e.start', 'ASC');
+        if ($school !=null){
+
+        }
+            if ($search !=null) {
+                $queryBuilder->andWhere('e.name like :val');
+                $queryBuilder->setParameter('val', '%'.$search.'%');
+            }
+            if ($start !=null && $end !=null) {
+                $queryBuilder->andWhere('e.start BETWEEN :start AND :end');
+                $queryBuilder->setParameter('start', \DateTime::createFromFormat('Y-m-d', $start));
+                $queryBuilder->setParameter('end', \DateTime::createFromFormat('Y-m-d', $end));
+            }
+        $queryBuilder->setMaxResults(20);
+        $query = $queryBuilder->getQuery();
+        dump($query);
+        return $query->getResult();
+    }
+
+
     // /**
     //  * @return Event[] Returns an array of Event objects
     //  */

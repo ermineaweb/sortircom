@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Event;
 use App\Form\EventType;
 use App\Repository\EventRepository;
+use App\Repository\SchoolRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,12 +25,18 @@ class EventController extends AbstractController
     }
 
     /**
-     * @Route("/", name="index", methods={"GET"})
+     * @Route("/", name="index", methods={"GET","POST"})
      */
-    public function index(EventRepository $eventRepository): Response
+    public function index(EventRepository $eventRepository, SchoolRepository $schoolRepository, Request $request): Response
     {
-        return $this->render('event/index.html.twig', [
-            'events' => $eventRepository->findAll(),
+        $value = $request->request->get('search');
+        $start = $request->request->get('start');
+        $end = $request->request->get('end');
+        $school = $request->request->get('school');
+        return $this->render('event/manager.html.twig', [
+            'events' => $eventRepository->findByFilters($value, $start, $end, $school),
+            'schools'=> $schoolRepository->findAll()
+
         ]);
     }
 
