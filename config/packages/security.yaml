@@ -9,7 +9,7 @@ security:
         app_user_provider:
             entity:
                 class: App\Entity\User
-                #property: username
+                #property: email
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -18,7 +18,8 @@ security:
             anonymous: true
             guard:
                 authenticators:
-                    - App\Security\AppCustomAuthenticator
+                    - App\Security\AppAuthenticator
+                entry_point: App\Security\AppAuthenticator
 
             logout:
                 path: app_logout
