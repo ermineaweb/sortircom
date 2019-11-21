@@ -130,21 +130,9 @@ class EventController extends AbstractController
 	/**
 	 * @Route("/inscription/{id}", name="inscription", methods={"GET"})
 	 */
-	public function inscription(Event $event, EntityManagerInterface $userManager, Inscription $inscription): Response
+	public function inscription(Event $event, Inscription $inscription): Response
 	{
-		
-		if (!$inscription->eventOpen($event)) {
-			// si l'évènement n'est pas ouvert
-			$this->addFlash("danger", "L'évènement n'est pas ouvert, votre inscription est refusée");
-		} elseif (!$inscription->limitDate($event)) {
-			// si la date d'inscription est dépassée
-			$this->addFlash("danger", "La date limite d'inscription est dépassée, votre inscription est refusée");
-		} else {
-			// si tout est ok, on enregistre l'inscription
-			$event->addUser($this->getUser());
-			$userManager->persist($this->getUser());
-			$userManager->flush();
-		}
+		$inscription->inscrire();
 		
 		return $this->render('event/show.html.twig', [
 			'event' => $event,

@@ -87,7 +87,7 @@ class Event
     public function getDuration(): String
     {
         // TODO améliorer la fonction
-        return $this->start->diff($this->end, true)->format("%a heures");
+        return $this->start->diff($this->end, true)->format("%a Jours");
     }
 
     public function getId(): ?int
