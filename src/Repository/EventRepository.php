@@ -48,7 +48,7 @@ class EventRepository extends ServiceEntityRepository
                 $queryBuilder->setParameter('end', \DateTime::createFromFormat('Y-m-d', $end));
             }
             if ($pastevents !=null) {
-                //$queryBuilder->andWhere('')
+                $queryBuilder->andWhere("DATE_DIFF(CURRENT_DATE(), event.start) <= 31");
             }
         $queryBuilder->setFirstResult(($page-1)*EventRepository::PAGINATION);
             $queryBuilder->setMaxResults(EventRepository::PAGINATION);
