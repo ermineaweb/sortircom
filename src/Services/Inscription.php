@@ -8,56 +8,15 @@ use App\Entity\User;
 
 class Inscription
 {
-	private $user;
-	private $event;
 	
-	public function __construct(User $user, Event $event)
+	public function limitDate($event): bool
 	{
-		$this->user = $user;
-		$this->event = $event;
+		return $event->getLimitdate()->diff(new \DateTime()) > 0;
 	}
 	
-	public function limitDate(): bool
+	public function eventOpen($event): bool
 	{
-		return $this->event->getLimitdate()->diff(new \DateTime()) > 0;
+		return $event->getStatus() == StatusEnum::OUVERTE;
 	}
-	
-	public function eventOpen(): bool
-	{
-		return $this->event->getStatus() == StatusEnum::OUVERTE;
-	}
-	
-	/**
-	 * @return User
-	 */
-	public function getUser(): User
-	{
-		return $this->user;
-	}
-	
-	/**
-	 * @param User $user
-	 */
-	public function setUser(User $user): void
-	{
-		$this->user = $user;
-	}
-	
-	/**
-	 * @return Event
-	 */
-	public function getEvent(): Event
-	{
-		return $this->event;
-	}
-	
-	/**
-	 * @param Event $event
-	 */
-	public function setEvent(Event $event): void
-	{
-		$this->event = $event;
-	}
-	
 	
 }
