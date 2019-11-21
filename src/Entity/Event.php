@@ -89,6 +89,13 @@ class Event
         // TODO améliorer la fonction
         return $this->start->diff($this->end, true)->format("%a Jours");
     }
+    
+    /*
+     * Le nombre de personne inscrite à l'event
+     */
+    public function getActualSize() : int {
+    	return $this->users->count();
+	}
 
     public function getId(): ?int
     {

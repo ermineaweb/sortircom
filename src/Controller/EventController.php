@@ -130,11 +130,15 @@ class EventController extends AbstractController
     }
 
 	/**
+	 * Inscription d'un utilisateur à une sortie
+	 *
 	 * @Route("/inscription/{id}", name="inscription", methods={"GET"})
 	 */
-	public function inscription(Event $event, Inscription $inscription): Response
+	public function register(Event $event, Inscription $inscription): Response
 	{
-		$inscription->inscrire();
+		$inscription->setEvent($event);
+		$inscription->setUser($this->getUser());
+		$inscription->register();
 		
 		return $this->render('event/show.html.twig', [
 			'event' => $event,

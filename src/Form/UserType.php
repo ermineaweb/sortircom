@@ -22,7 +22,6 @@ class UserType extends AbstractType
             ->add('email')
             ->add('admin')
             ->add('active')
-            ->add('avatar')
             ->add('school')
             ->add('avatar', FileType::class, [
                 'label' => 'Télécharger une image',
