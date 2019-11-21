@@ -20,11 +20,11 @@ class UserType extends AbstractType
             ->add('firstname')
             ->add('phone')
             ->add('email')
-            ->add('admin')
-            ->add('active')
             ->add('school')
             ->add('avatar', FileType::class, [
                 'label' => 'Télécharger une image',
+                'mapped' => false,
+                'required' => false,
                 'constraints' => [
                     new File([
                         'maxSize' => '1024k',
@@ -32,6 +32,7 @@ class UserType extends AbstractType
                             'application/png',
                             'application/jpg',
                         ],
+						'mimeTypesMessage' => 'Les avatars peuvent être uniquement des fichiers JPG ou PNG',
                     ])
                 ]
             ])

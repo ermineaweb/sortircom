@@ -262,6 +262,18 @@ class AppFixtures extends Fixture
 		$sortie5->setStatus(StatusEnum::ANNULEE);
 		$manager->persist($sortie5);
 		
+		$sortie5 = new Event();
+		$sortie5->setName("sortie annulée");
+		$sortie5->setDescription("Nous irons nager avec les poissons");
+		$sortie5->setMaxsize(2);
+		$sortie5->setStart($faker->dateTime);
+		$sortie5->setEnd($faker->dateTime);
+		$sortie5->setLimitdate($faker->dateTime);
+		$sortie5->setCreator($etudiant1);
+		$sortie5->setPlace($place2);
+		$sortie5->setStatus(StatusEnum::OUVERTE);
+		$manager->persist($sortie5);
+		
 		$manager->flush();
 	}
 }
