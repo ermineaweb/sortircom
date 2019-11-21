@@ -22,21 +22,20 @@ class UserType extends AbstractType
             ->add('email')
             ->add('admin')
             ->add('active')
-            ->add('avatar')
             ->add('school')
-            ->add('avatar', FileType::class, [
+            ->add('avatar', FileType::class, array(
                 'label' => 'Télécharger une image',
-                'constraints' => [
+                //'mapped' => false,
+                'required' => false));
+                /*'constraints' => [
                     new File([
                         'maxSize' => '1024k',
                         'mimeTypes' => [
-                            'application/gif',
-                            'application/png',
-                            'application/jpeg',
+                            'image/png',
                         ],
                     ])
-                ]
-            ])
+                ]*/
+
         ;
     }
 
