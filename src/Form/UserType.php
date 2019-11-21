@@ -30,8 +30,9 @@ class UserType extends AbstractType
                     new File([
                         'maxSize' => '1024k',
                         'mimeTypes' => [
+                            'application/gif',
                             'application/png',
-                            'application/jpg',
+                            'application/jpeg',
                         ],
                     ])
                 ]
