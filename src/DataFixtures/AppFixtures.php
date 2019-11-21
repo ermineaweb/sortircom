@@ -72,8 +72,6 @@ class AppFixtures extends Fixture
 		$place4->setLatitude($faker->latitude);
 		$manager->persist($place4);
 		
-
-		
 		// Schools
 		$eniquimper = new School();
 		$eniquimper->setName("ENI " . $quimper->getName());
@@ -180,8 +178,32 @@ class AppFixtures extends Fixture
 		$manager->persist($user);
 		
 		// Events
+		$sortieValide = new Event();
+		$sortieValide->setName("sortie ouverte");
+		$sortieValide->setDescription("Nous irons voir un film au cinéma");
+		$sortieValide->setMaxsize(10);
+		$sortieValide->setStart(new \DateTime("2019-12-01T15:03:01.012345Z"));
+		$sortieValide->setEnd(new \DateTime("2019-12-02T15:03:01.012345Z"));
+		$sortieValide->setLimitdate(new \DateTime("2019-11-28T15:03:01.012345Z"));
+		$sortieValide->setCreator($etudiant1);
+		$sortieValide->setPlace($place1);
+		$sortieValide->setStatus(StatusEnum::OUVERTE);
+		$manager->persist($sortieValide);
+		
+		$sortie = new Event();
+		$sortie->setName("sortie ouverte passée");
+		$sortie->setDescription("Nous irons voir un film au cinéma");
+		$sortie->setMaxsize(10);
+		$sortie->setStart(new \DateTime("2019-12-01T15:03:01.012345Z"));
+		$sortie->setEnd(new \DateTime("2019-12-02T15:03:01.012345Z"));
+		$sortie->setLimitdate(new \DateTime("2019-11-19T15:03:01.012345Z"));
+		$sortie->setCreator($etudiant1);
+		$sortie->setPlace($place1);
+		$sortie->setStatus(StatusEnum::OUVERTE);
+		$manager->persist($sortie);
+		
 		$sortie1 = new Event();
-		$sortie1->setName("Une super sortie au cinéma");
+		$sortie1->setName("sortie cloturée");
 		$sortie1->setDescription("Nous irons voir un film au cinéma");
 		$sortie1->setMaxsize(10);
 		$sortie1->setStart($faker->dateTime);
@@ -189,11 +211,11 @@ class AppFixtures extends Fixture
 		$sortie1->setLimitdate($faker->dateTime);
 		$sortie1->setCreator($etudiant1);
 		$sortie1->setPlace($place1);
-		$sortie1->setStatus(StatusEnum::OUVERTE);
+		$sortie1->setStatus(StatusEnum::CLOTURE);
 		$manager->persist($sortie1);
 		
 		$sortie2 = new Event();
-		$sortie2->setName("Une super sortie à la plage");
+		$sortie2->setName("sortie créée");
 		$sortie2->setDescription("Nous irons à la plage");
 		$sortie2->setMaxsize(5);
 		$sortie2->setStart($faker->dateTime);
@@ -205,7 +227,7 @@ class AppFixtures extends Fixture
 		$manager->persist($sortie2);
 		
 		$sortie3 = new Event();
-		$sortie3->setName("Une super sortie à la piscine");
+		$sortie3->setName("sortie en cours");
 		$sortie3->setDescription("Nous irons nager avec les poissons");
 		$sortie3->setMaxsize(2);
 		$sortie3->setStart($faker->dateTime);
@@ -213,8 +235,32 @@ class AppFixtures extends Fixture
 		$sortie3->setLimitdate($faker->dateTime);
 		$sortie3->setCreator($etudiant1);
 		$sortie3->setPlace($place2);
-		$sortie3->setStatus(StatusEnum::OUVERTE);
+		$sortie3->setStatus(StatusEnum::EN_COURS);
 		$manager->persist($sortie3);
+		
+		$sortie4 = new Event();
+		$sortie4->setName("sortie passée");
+		$sortie4->setDescription("Nous irons nager avec les poissons");
+		$sortie4->setMaxsize(2);
+		$sortie4->setStart($faker->dateTime);
+		$sortie4->setEnd($faker->dateTime);
+		$sortie4->setLimitdate($faker->dateTime);
+		$sortie4->setCreator($etudiant1);
+		$sortie4->setPlace($place2);
+		$sortie4->setStatus(StatusEnum::PASSEE);
+		$manager->persist($sortie4);
+		
+		$sortie5 = new Event();
+		$sortie5->setName("sortie annulée");
+		$sortie5->setDescription("Nous irons nager avec les poissons");
+		$sortie5->setMaxsize(2);
+		$sortie5->setStart($faker->dateTime);
+		$sortie5->setEnd($faker->dateTime);
+		$sortie5->setLimitdate($faker->dateTime);
+		$sortie5->setCreator($etudiant1);
+		$sortie5->setPlace($place2);
+		$sortie5->setStatus(StatusEnum::ANNULEE);
+		$manager->persist($sortie5);
 		
 		$manager->flush();
 	}
