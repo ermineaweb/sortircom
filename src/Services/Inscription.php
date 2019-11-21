@@ -5,11 +5,17 @@ namespace App\Services;
 use App\Entity\Event;
 use App\Entity\StatusEnum;
 use App\Entity\User;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Security\Core\Security;
 
+/*
+ * Inscription d'un utilisateur à une sortie
+ * - l'utilisateur ne doit pas être déjà inscrit à la sortie
+ * - l'évènement doit être ouvert
+ * - la date d'inscription doit être inférieure à la date limite d'inscription
+ * - il doit rester des places libres dans l'event
+ */
 class Inscription
 {
 	private $event;
@@ -24,15 +30,19 @@ class Inscription
 		$this->user = $security->getUser();
 	}
 	
-	public function inscrire()
+	public function register()
 	{
-		
-		if (!$this->eventOpen()) {
+		if ($this->alreadyRegistered()) {
+			$this->flashBag->add("danger", "Vous êtes déjà inscrit à cet évènement");
+		} elseif (!$this->eventOpen()) {
 			// si l'évènement n'est pas ouvert
-			$this->flashBag->addFlash("danger", "L'évènement n'est pas ouvert, votre inscription est refusée");
+			$this->flashBag->add("danger", "L'évènement n'est pas ouvert, votre inscription est refusée");
 		} elseif ($this->limitDate()) {
 			// si la date d'inscription est dépassée
-			$this->flashBag->addFlash("danger", "La date limite d'inscription est dépassée, votre inscription est refusée");
+			$this->flashBag->add("danger", "La date limite d'inscription est dépassée, votre inscription est refusée");
+		} elseif ($this->isFull()) {
+			// l'event est complet pour le moment
+			$this->flashBag->add("danger", "Il n'y a plus de place pour le moment, un désistement peut avoir lieu, sait on jamais...");
 		} else {
 			// si tout est ok, on enregistre l'inscription
 			$this->event->addUser($this->user);
@@ -41,44 +51,52 @@ class Inscription
 		}
 	}
 	
+	/*
+	 * Vérifie si la date d'inscription n'est pas passée
+	 */
 	private function limitDate(): bool
 	{
-		return $this->event->getLimitdate()->diff(new \DateTime(), false)->format("%d") > 0;
+		return $this->event->getLimitdate()->diff(new \DateTime(), false)->format("%d") < 0;
 	}
 	
+	/*
+	 * Vérifie que l'event est bien en status ouvert
+	 */
 	private function eventOpen(): bool
 	{
 		return $this->event->getStatus() == StatusEnum::OUVERTE;
 	}
 	
-	/**
-	 * @return mixed
+	/*
+	 * Vérifie que l'user n'est pas déjà inscrit
 	 */
-	public function getEvent()
+	private function alreadyRegistered(): bool
+	{
+		// on cherche si l'utilisateur est présent dans les inscriptions de la sortie
+		return $this->event->getUsers()->contains($this->user);
+	}
+	
+	private function isFull() : bool {
+		return false;
+	}
+	
+	
+	public function getEvent(): ?Event
 	{
 		return $this->event;
 	}
 	
-	/**
-	 * @param mixed $event
-	 */
 	public function setEvent($event): void
 	{
 		$this->event = $event;
 	}
 	
-	/**
-	 * @return \Symfony\Component\Security\Core\User\UserInterface|null
-	 */
-	public function getUser(): ?\Symfony\Component\Security\Core\User\UserInterface
+	public function getUser(): ?User
 	{
 		return $this->user;
 	}
 	
-	/**
-	 * @param \Symfony\Component\Security\Core\User\UserInterface|null $user
-	 */
-	public function setUser(?\Symfony\Component\Security\Core\User\UserInterface $user): void
+	public function setUser(User $user): void
 	{
 		$this->user = $user;
 	}

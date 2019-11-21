@@ -20,23 +20,22 @@ class SecurityControllerTest extends WebTestCase
 		// on prépare le formulaire de login
 		$form = $crawler->selectButton("Connexion")
 			->form([
-			'username' => 'mauvaislogin',
+			'email' => 'mauvaislogin',
 			'password' => 'mauvaspass',
 		]);
 		// on soumet le formulaire
 		$client->submit($form);
 		// le formulaire doit renvoyer une 302 vers la meme route
 		$this->assertResponseRedirects("/login", 302);
-		//TODO : on ne doit pas etre connecté (mauvais identifiants
-		
-		
+		//TODO : on ne doit pas etre connecté (mauvais identifiants)
 		
 		/*
+		 * TODO identifiants valides
 		 * IDENTIFIANTS VALIDES
 		 */
 		$form = $crawler->selectButton("Connexion")
 			->form([
-				'username' => 'mauvaislogin',
+				'email' => 'mauvaislogin',
 				'password' => 'mauvaspass',
 			]);
 		// on soumet le formulaire
