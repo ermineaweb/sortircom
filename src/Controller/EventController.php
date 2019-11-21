@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Event;
+use App\Entity\StatusEnum;
 use App\Form\EventType;
 use App\Repository\CityRepository;
 use App\Repository\EventRepository;
@@ -13,6 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use vendor\project\StatusTest;
 
 /**
  * @Route("/sortie", name="event_")
@@ -140,4 +142,17 @@ class EventController extends AbstractController
 			'event' => $event,
 		]);
 	}
+
+    /**
+     * @Route("/publish/{id}", name="publish", methods={"GET"})
+     */
+    public function publish(Event $event): Response
+    {
+       $event->setStatus(StatusEnum::OUVERTE);
+
+        return $this->render('event/show.html.twig', [
+            'event' => $event,
+    ]);
+    }
+
 }

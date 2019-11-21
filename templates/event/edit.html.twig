@@ -20,6 +20,9 @@
     {{ include('event/_form.html.twig', {'button_label': 'Enregistrer'}) }}
 
    <a href="{{ path('event_index') }}">Annuler</a>
+<!--TODO  Definir le path de publication-->
+   <a href="{{ path('event_publish', { id: event.id }) }}">Publier</a>
+
 
     {{ include('event/_delete_form.html.twig') }}
 {% endblock %}

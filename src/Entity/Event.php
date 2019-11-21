@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use phpDocumentor\Reflection\Types\Integer;
 
 /**
@@ -20,26 +21,35 @@ class Event
     private $id;
 
     /**
+     * @Assert\NotBlank(message="Vous devez renseigner un nom de sortie")
+     * @Assert\Length(
+     *      max="50",
+     *      maxMessage="Un nom de sortie de plus de 50 caractères ?? Utilisez le champ description pour renseigner les détails"
+     * )
      * @ORM\Column(type="string", length=255)
      */
     private $name;
 
     /**
+     * @Assert\NotBlank(message="Vous devez renseigner une date de début de la sortie")
      * @ORM\Column(type="datetime")
      */
     private $start;
 
     /**
+     * @Assert\NotBlank(message="Vous devez renseigner une date de fin de la sortie")
      * @ORM\Column(type="datetime")
      */
     private $end;
 
     /**
+     * @Assert\NotBlank(message="Vous devez renseigner une date limite d'inscription")
      * @ORM\Column(type="date")
      */
     private $limitdate;
 
     /**
+     * @Assert\NotBlank(message="Vous devez renseigner un nombre maximum de participants")
      * @ORM\Column(type="integer", nullable=true)
      */
     private $maxsize;
@@ -71,6 +81,7 @@ class Event
     private $place;
 
     /**
+     * @Assert\NotBlank(message="Vous devez renseigner un motif d'annulation de la sortie")
      * @ORM\Column(type="text", nullable=true)
      */
     private $cancel;
