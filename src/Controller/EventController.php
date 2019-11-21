@@ -14,7 +14,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use vendor\project\StatusTest;
 
 /**
  * @Route("/sortie", name="event_")
@@ -58,7 +57,7 @@ class EventController extends AbstractController
         dump($school);
         return $this->render('event/manage.html.twig', [
             'paginator' => $paginator,
-            'schools'=> $schoolRepository->findAll(),
+            'schools' => $schoolRepository->findAll(),
             'page' => $page
 
         ]);
@@ -74,6 +73,9 @@ class EventController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            //L'utilisateur connecté qui crée l'event devient le creator
+            $event->setCreator($this->getUser());
+
             $this->entityManager->persist($event);
             $this->entityManager->flush();
 
@@ -106,7 +108,7 @@ class EventController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->addFlash('success','Modification de la sortie '.$event->getName().' effectuée');
+            $this->addFlash('success', 'Modification de la sortie ' . $event->getName() . ' effectuée');
             $this->entityManager->flush();
             return $this->redirectToRoute('event_index');
         }
@@ -123,7 +125,12 @@ class EventController extends AbstractController
      */
     public function delete(Request $request, Event $event): Response
     {
-        if ($this->isCsrfTokenValid('delete' . $event->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $event->getId(), $request->request->get('_token'))
+            && $this->getUser() == $event->getCreator()
+            && $event->getStart() > new \DateTime()
+            && ($event->getStatus() == StatusEnum::CREE))
+        {
+
             $this->entityManager->remove($event);
             $this->entityManager->flush();
         }
@@ -131,32 +138,50 @@ class EventController extends AbstractController
         return $this->redirectToRoute('event_index');
     }
 
-	/**
-	 * Inscription d'un utilisateur à une sortie
-	 *
-	 * @Route("/inscription/{id}", name="inscription", methods={"GET"})
-	 */
-	public function register(Event $event, Inscription $inscription): Response
-	{
-		$inscription->setEvent($event);
-		$inscription->setUser($this->getUser());
-		$inscription->register();
-		
-		return $this->render('event/show.html.twig', [
-			'event' => $event,
-		]);
-	}
+    /**
+     * @Route("/cancel/{id}", name="cancel", methods={"GET"})
+     */
+    public function cancel(Event $event): Response
+    {
+        if ($this->getUser() == $event->getCreator()
+            && $event->getStart() > new \DateTime()
+            && $event->getCancel() != null
+        && $event->getStatus() == StatusEnum::OUVERTE)
+        {
+            $event->setStatus(StatusEnum::ANNULEE);
+        }
+
+        return $this->render('event/show.html.twig', [
+            'event' => $event,
+        ]);
+    }
+
+    /**
+     * Inscription d'un utilisateur à une sortie
+     *
+     * @Route("/inscription/{id}", name="inscription", methods={"GET"})
+     */
+    public function register(Event $event, Inscription $inscription): Response
+    {
+        $inscription->setEvent($event);
+        $inscription->setUser($this->getUser());
+        $inscription->register();
+
+        return $this->render('event/show.html.twig', [
+            'event' => $event,
+        ]);
+    }
 
     /**
      * @Route("/publish/{id}", name="publish", methods={"GET"})
      */
     public function publish(Event $event): Response
     {
-       $event->setStatus(StatusEnum::OUVERTE);
+        $event->setStatus(StatusEnum::OUVERTE);
 
         return $this->render('event/show.html.twig', [
             'event' => $event,
-    ]);
+        ]);
     }
 
 }
