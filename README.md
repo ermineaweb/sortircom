@@ -191,10 +191,6 @@ ressources
 
 https://gitlab.com/help/ci/examples/php.md
 
-#### token ssh
-```
-63c7a295edf1fd4b3208c9493b94053e3a96d2b9
-```
 
 #### 1. create project CI/CD and bind to the git repository
 
