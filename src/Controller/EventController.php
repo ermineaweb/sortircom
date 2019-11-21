@@ -98,12 +98,13 @@ class EventController extends AbstractController
     /**
      * @Route("/{id}/edit", name="edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Event $event): Response
+    public function edit(Request $request, Event $event, CityRepository $cityRepository): Response
     {
         $form = $this->createForm(EventType::class, $event);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $this->addFlash('success','Modification de la sortie '.$event->getName().' effectuée');
             $this->entityManager->flush();
             return $this->redirectToRoute('event_index');
         }
@@ -111,6 +112,7 @@ class EventController extends AbstractController
         return $this->render('event/edit.html.twig', [
             'event' => $event,
             'form' => $form->createView(),
+            'cities' => $cityRepository->findAll(),
         ]);
     }
 
