@@ -29,8 +29,7 @@ security:
             # permet a l'utilisateur de choisir que l'on se souvienne de lui
             remember_me:
                 secret:   '%kernel.secret%'
-                lifetime: 604800 # 1 week in seconds
-                path:     /
+                lifetime: 600 # 1 week in seconds
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication

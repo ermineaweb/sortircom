@@ -16,7 +16,7 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
 class EventRepository extends ServiceEntityRepository
 {
 
-    const PAGINATION = 1;
+    const PAGINATION = 10;
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Event::class);

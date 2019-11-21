@@ -18,7 +18,7 @@ class EventType extends AbstractType
             ->add('name', TextType::class, [
                 'label' => 'Nom de la sortie : '
             ])
-            ->add('start', DateTimeType::class, [
+            ->add('start',null, [
                     'label' => 'Date et heure début de la sortie :',
                     //'widget' => 'single_text',
                     //'format' => 'yyyy-MM-dd  HH:mm',

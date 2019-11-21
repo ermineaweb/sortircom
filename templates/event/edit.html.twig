@@ -6,9 +6,23 @@
 
 {% block body %}
 
+    <form action="">
+        <div>
+            <label for="idcity"> Ville :</label>
+            <select name="city" class="form-control" id="idcity">
+                {% for city in cities %}
+                    <option value="{{ city.id }}">{{ city.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </form>
+
     {{ include('event/_form.html.twig', {'button_label': 'Enregistrer'}) }}
 
    <a href="{{ path('event_index') }}">Annuler</a>
+<!--TODO  Definir le path de publication-->
+   <a href="{{ path('event_publish', { id: event.id }) }}">Publier</a>
+
 
     {{ include('event/_delete_form.html.twig') }}
 {% endblock %}

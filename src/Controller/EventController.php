@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Event;
+use App\Entity\StatusEnum;
 use App\Form\EventType;
 use App\Repository\CityRepository;
 use App\Repository\EventRepository;
@@ -13,6 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use vendor\project\StatusTest;
 
 /**
  * @Route("/sortie", name="event_")
@@ -98,12 +100,13 @@ class EventController extends AbstractController
     /**
      * @Route("/{id}/edit", name="edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Event $event): Response
+    public function edit(Request $request, Event $event, CityRepository $cityRepository): Response
     {
         $form = $this->createForm(EventType::class, $event);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $this->addFlash('success','Modification de la sortie '.$event->getName().' effectuée');
             $this->entityManager->flush();
             return $this->redirectToRoute('event_index');
         }
@@ -111,6 +114,7 @@ class EventController extends AbstractController
         return $this->render('event/edit.html.twig', [
             'event' => $event,
             'form' => $form->createView(),
+            'cities' => $cityRepository->findAll(),
         ]);
     }
 
@@ -128,26 +132,31 @@ class EventController extends AbstractController
     }
 
 	/**
+	 * Inscription d'un utilisateur à une sortie
+	 *
 	 * @Route("/inscription/{id}", name="inscription", methods={"GET"})
 	 */
-	public function inscription(Event $event, EntityManagerInterface $userManager, Inscription $inscription): Response
+	public function register(Event $event, Inscription $inscription): Response
 	{
-		
-		if (!$inscription->eventOpen($event)) {
-			// si l'évènement n'est pas ouvert
-			$this->addFlash("danger", "L'évènement n'est pas ouvert, votre inscription est refusée");
-		} elseif (!$inscription->limitDate($event)) {
-			// si la date d'inscription est dépassée
-			$this->addFlash("danger", "La date limite d'inscription est dépassée, votre inscription est refusée");
-		} else {
-			// si tout est ok, on enregistre l'inscription
-			$event->addUser($this->getUser());
-			$userManager->persist($this->getUser());
-			$userManager->flush();
-		}
+		$inscription->setEvent($event);
+		$inscription->setUser($this->getUser());
+		$inscription->register();
 		
 		return $this->render('event/show.html.twig', [
 			'event' => $event,
 		]);
 	}
+
+    /**
+     * @Route("/publish/{id}", name="publish", methods={"GET"})
+     */
+    public function publish(Event $event): Response
+    {
+       $event->setStatus(StatusEnum::OUVERTE);
+
+        return $this->render('event/show.html.twig', [
+            'event' => $event,
+    ]);
+    }
+
 }
