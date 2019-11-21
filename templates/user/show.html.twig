@@ -50,7 +50,8 @@
             </tr>
             <tr>
                 <th>Avatar</th>
-                <td>{{ user.avatar }}</td>
+                {#<td>{{ user.avatar }}</td>#}
+                <td><img src="{{ asset('img/avatars' ~ user.avatar) }}" alt=""/></td>
             </tr>
         </tbody>
     </table>

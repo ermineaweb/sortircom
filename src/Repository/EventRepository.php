@@ -27,7 +27,7 @@ class EventRepository extends ServiceEntityRepository
     //  * @return Event[] Returns an array of Event objects
     //  */
 // PAR DEFAUT LA SCHOOL EST LA SCHOOL DE USER CONNECTE
-    public function findByFilters($search = null, $start = null, $end = null, $school = null, $page = 1) : Paginator
+    public function findByFilters($search = null, $start = null, $end = null, $school = null, $page = 1, $pastevents = null) : Paginator
     {
         $queryBuilder = $this->createQueryBuilder('event');
         //$queryBuilder->addSelect('s');
@@ -46,6 +46,9 @@ class EventRepository extends ServiceEntityRepository
                 $queryBuilder->andWhere('event.start BETWEEN :start AND :end');
                 $queryBuilder->setParameter('start', \DateTime::createFromFormat('Y-m-d', $start));
                 $queryBuilder->setParameter('end', \DateTime::createFromFormat('Y-m-d', $end));
+            }
+            if ($pastevents !=null) {
+                //$queryBuilder->andWhere('')
             }
         $queryBuilder->setFirstResult(($page-1)*EventRepository::PAGINATION);
             $queryBuilder->setMaxResults(EventRepository::PAGINATION);
