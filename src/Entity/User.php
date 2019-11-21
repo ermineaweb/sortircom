@@ -60,12 +60,12 @@ class User implements UserInterface
 	/**
 	 * @ORM\Column(type="boolean")
 	 */
-	private $admin;
+	private $admin = false;
 	
 	/**
 	 * @ORM\Column(type="boolean")
 	 */
-	private $active;
+	private $active = true;
 	
 	/**
 	 * @ORM\Column(type="string", length=255, nullable=true)
@@ -91,6 +91,14 @@ class User implements UserInterface
 	{
 		$this->events = new ArrayCollection();
 		$this->eventsCreated = new ArrayCollection();
+		
+		/*
+		 * lors de la création de l'user,
+		 * s'il est admin on vient ajouter ce role
+		 */
+		if ($this->admin === true) {
+			$this->roles[] = 'ROLE_ADMIN';
+		}
 	}
 	
 	public function getId(): ?int
@@ -222,14 +230,6 @@ class User implements UserInterface
 	public function setAdmin(bool $admin): self
 	{
 		$this->admin = $admin;
-		
-		/*
-		 * lors de la création de l'user,
-		 * s'il est admin on vient ajouter ce role
-		 */
-		if ($admin === true) {
-			$this->roles[] = 'ROLE_ADMIN';
-		}
 		
 		return $this;
 	}

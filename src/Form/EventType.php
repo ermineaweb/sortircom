@@ -43,7 +43,8 @@ class EventType extends AbstractType
                     'label' => 'Lieu :'
             ])
             ->add('cancel', null, [
-                    'label' => 'Motif de l\'annulation :'
+                    'label' => 'Motif de l\'annulation :',
+				'required' => false,
             ]);
     }
 

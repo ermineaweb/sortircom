@@ -31,6 +31,12 @@
                 <label for="end">Et : </label>
             <input type="date" name="end" id="end"/>
             </div>
+            <div>
+                <input type="checkbox" name="creator"/>Sorties dont je suis l'organisateur/trice<br>
+                <input type="checkbox" name="registered"/>Sorties auquelles je suis inscrit/e<br>
+                <input type="checkbox" name="notregistered"/>Sorties auquelles je ne suis pasinscrit/e<br>
+                <input type="checkbox" name="pastevents"/>Sorties passées<br>
+            </div>
             <button class="btn btn-info" type="submit" name="Rechercher"> Rechercher</button>
         </form>
     </div>
@@ -55,7 +61,7 @@
                 <td>{{ event.name }}</td>
                 <td>{{ event.start ? event.start|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ event.limitdate ? event.limitdate|date('Y-m-d') : '' }}</td>
-                <td>{{ event.maxsize }}</td>
+                <td>{{ event.actualsize }} / {{ event.maxsize }}</td>
                 <td>Etat</td>
                 <td>Inscrit</td>
                 <td>{{ event.creator }}</td>

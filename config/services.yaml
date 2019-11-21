@@ -23,8 +23,11 @@ services:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
 
-    Inscription:
-        class: App\Services\Inscription
+    App\Services\Inscription:
+
+    App\Services\FileUpLoader:
+        arguments:
+            $targetDirectory: '%kernel.project_dir%/public/assets/img/avatar'
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

@@ -43,6 +43,7 @@ class EventController extends AbstractController
         $value = $request->request->get('search');
         $start = $request->request->get('start');
         $end = $request->request->get('end');
+        $pastevents = $request->request->get('pastevents');
         // TODO : Lorsqu'un user affiche la page la 1re fois, la school par défaut est la sienne
         /*if ($request->isMethod('get')) {
             $user = $this->getUser();
@@ -54,7 +55,7 @@ class EventController extends AbstractController
         }*/
         // TODO : filtrer par school
         $school = $request->request->get('school');
-        $paginator = $eventRepository->findByFilters($value, $start, $end, $school, $page);
+        $paginator = $eventRepository->findByFilters($value, $start, $end, $school, $page, $pastevents);
         dump($school);
         return $this->render('event/manage.html.twig', [
             'paginator' => $paginator,

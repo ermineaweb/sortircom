@@ -11,40 +11,41 @@ use Symfony\Component\Validator\Constraints\File;
 
 class UserType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-        $builder
-            ->add('username')
-            ->add('password')
-            ->add('lastname')
-            ->add('firstname')
-            ->add('phone')
-            ->add('email')
-            ->add('school')
-            ->add('avatar', FileType::class, [
-                'label' => 'Télécharger une image',
-                'mapped' => false,
-                'required' => false,
-                'constraints' => [
-                    new File([
-                        'maxSize' => '1024k',
-                        'mimeTypes' => [
-                            'application/png',
-                            'application/jpg',
-                        ],
-						'mimeTypesMessage' => 'Les avatars peuvent être uniquement des fichiers JPG ou PNG',
-                    ])
-                ]
-            ])
-        ;
-    }
-
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults([
-            'data_class' => User::class,
-        ]);
-    }
-
-
+	public function buildForm(FormBuilderInterface $builder, array $options)
+	{
+		$builder
+			->add('username')
+			->add('password')
+			->add('lastname')
+			->add('firstname')
+			->add('phone')
+			->add('email')
+			->add('school')
+			->add('avatar', FileType::class, [
+				'label' => 'Brochure (PDF file)',
+				'mapped' => false,
+				'required' => false,
+				// unmapped fields can't define their validation using annotations
+				// in the associated entity, so you can use the PHP constraint classes
+				'constraints' => [
+					new File([
+						'maxSize' => '1024k',
+						'mimeTypes' => [
+							'image/jpg',
+							'image/png',
+						],
+						'mimeTypesMessage' => 'JPG ou PNG uniquement',
+					])
+				],
+			]);
+	}
+	
+	public function configureOptions(OptionsResolver $resolver)
+	{
+		$resolver->setDefaults([
+			'data_class' => User::class,
+		]);
+	}
+	
+	
 }

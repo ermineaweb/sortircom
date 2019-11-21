@@ -81,7 +81,6 @@ class Event
     private $place;
 
     /**
-     * @Assert\NotBlank(message="Vous devez renseigner un motif d'annulation de la sortie")
      * @ORM\Column(type="text", nullable=true)
      */
     private $cancel;
