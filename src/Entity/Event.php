@@ -71,6 +71,11 @@ class Event
      */
     private $place;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $cancel;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
@@ -223,6 +228,18 @@ class Event
     public function setPlace(?Place $place): self
     {
         $this->place = $place;
+
+        return $this;
+    }
+
+    public function getCancel(): ?string
+    {
+        return $this->cancel;
+    }
+
+    public function setCancel(?string $cancel): self
+    {
+        $this->cancel = $cancel;
 
         return $this;
     }
