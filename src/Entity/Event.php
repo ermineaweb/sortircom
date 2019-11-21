@@ -61,8 +61,7 @@ class Event
     private $creator;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Status", inversedBy="events")
-     * @ORM\JoinColumn(nullable=false)
+	 * @ORM\Column(type="integer", nullable=false)
      */
     private $status;
 
@@ -208,12 +207,12 @@ class Event
         return $this;
     }
 
-    public function getStatus(): ?Status
+    public function getStatus(): ?int
     {
         return $this->status;
     }
 
-    public function setStatus(?Status $status): self
+    public function setStatus(?int $status): self
     {
         $this->status = $status;
 
