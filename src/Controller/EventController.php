@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Event;
-use App\Entity\StatusEnum;
 use App\Form\EventType;
 use App\Repository\CityRepository;
 use App\Repository\EventRepository;
@@ -14,7 +13,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @Route("/sortie", name="event_")
@@ -134,13 +132,11 @@ class EventController extends AbstractController
 	 */
 	public function inscription(Event $event, EntityManagerInterface $userManager, Inscription $inscription): Response
 	{
-		$inscription->setUser($this->getUser());
-		$inscription->setEvent($event);
 		
-		if (!$inscription->eventOpen()) {
+		if (!$inscription->eventOpen($event)) {
 			// si l'évènement n'est pas ouvert
 			$this->addFlash("danger", "L'évènement n'est pas ouvert, votre inscription est refusée");
-		} elseif (!$inscription->limitDate()) {
+		} elseif (!$inscription->limitDate($event)) {
 			// si la date d'inscription est dépassée
 			$this->addFlash("danger", "La date limite d'inscription est dépassée, votre inscription est refusée");
 		} else {
