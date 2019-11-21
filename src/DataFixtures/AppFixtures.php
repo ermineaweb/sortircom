@@ -6,10 +6,8 @@ use App\Entity\City;
 use App\Entity\Event;
 use App\Entity\Place;
 use App\Entity\School;
-use App\Entity\Status;
 use App\Entity\StatusEnum;
 use App\Entity\User;
-use Cassandra\Date;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -74,25 +72,7 @@ class AppFixtures extends Fixture
 		$place4->setLatitude($faker->latitude);
 		$manager->persist($place4);
 		
-		// Statuses
-		$status1 = new Status();
-		$status1->setName(StatusEnum::CREE);
-		$manager->persist($status1);
-		$status2 = new Status();
-		$status2->setName(StatusEnum::OUVERTE);
-		$manager->persist($status2);
-		$status3 = new Status();
-		$status3->setName(StatusEnum::CLOTURE);
-		$manager->persist($status3);
-		$status4 = new Status();
-		$status4->setName(StatusEnum::EN_COURS);
-		$manager->persist($status4);
-		$status5 = new Status();
-		$status5->setName(StatusEnum::PASSEE);
-		$manager->persist($status5);
-		$status6 = new Status();
-		$status6->setName(StatusEnum::ANNULEE);
-		$manager->persist($status6);
+
 		
 		// Schools
 		$eniquimper = new School();
@@ -209,7 +189,7 @@ class AppFixtures extends Fixture
 		$sortie1->setLimitdate($faker->dateTime);
 		$sortie1->setCreator($etudiant1);
 		$sortie1->setPlace($place1);
-		$sortie1->setStatus($status1);
+		$sortie1->setStatus(StatusEnum::OUVERTE);
 		$manager->persist($sortie1);
 		
 		$sortie2 = new Event();
@@ -221,7 +201,7 @@ class AppFixtures extends Fixture
 		$sortie2->setLimitdate($faker->dateTime);
 		$sortie2->setCreator($etudiant2);
 		$sortie2->setPlace($place1);
-		$sortie2->setStatus($status1);
+		$sortie2->setStatus(StatusEnum::CREE);
 		$manager->persist($sortie2);
 		
 		$sortie3 = new Event();
@@ -233,7 +213,7 @@ class AppFixtures extends Fixture
 		$sortie3->setLimitdate($faker->dateTime);
 		$sortie3->setCreator($etudiant1);
 		$sortie3->setPlace($place2);
-		$sortie3->setStatus($status2);
+		$sortie3->setStatus(StatusEnum::OUVERTE);
 		$manager->persist($sortie3);
 		
 		$manager->flush();
