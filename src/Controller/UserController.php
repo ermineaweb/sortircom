@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * @Route("/user")
@@ -88,24 +89,28 @@ class UserController extends AbstractController
     /**
      * @Route("/{id}/edit", name="user_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, User $user, FileUpLoader $fileUpLoader): Response
+    public function edit(Request $request,
+                         User $user,
+                         FileUpLoader $fileUpLoader,
+                         UserPasswordEncoderInterface $passwordEncoder): Response
     {
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
-        var_dump($request->request->All());
+
         if ($form->isSubmitted() && $form->isValid()) {
-
-            $file = $user->getAvatar();
-            dump($file);
-            if ($file) {
-                $filename = $fileUpLoader->upload($file);
-
-                $user->setAvatar($filename);
+            $password = $request->getPassword();
+            $avatarFile = $form['avatar']->getData();
+            if ($avatarFile) {
+                $avatarFileName = $fileUpLoader->upload($avatarFile);
+                dump($avatarFileName);
+                $user->setAvatar($avatarFileName);
+            }
+            if ($password) {
+                $user->setPassword($this->$passwordEncoder->encodePassword($user, $password));
+                dump($password);
             }
 
             $this->entityManager->flush();
-
-            return $this->redirectToRoute('user_index');
         }
 
         return $this->render('user/edit.html.twig', [
