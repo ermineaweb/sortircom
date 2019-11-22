@@ -31,7 +31,7 @@
             <td>{{ user.email }}</td>
             <td>{{ user.admin ? 'Yes' : 'No' }}</td>
             <td>{{ user.active ? 'Yes' : 'No' }}</td>
-            <td>{{ user.avatar }}</td>
+            <td><img src="{{ asset('assets/img/avatar/') }}{{ user.avatar }}" alt="" style="width: 50px;"></td>
             <td>
                 <a href="{{ path('user_show', {'id': user.id}) }}">Voir</a>
                 <a href="{{ path('user_edit', {'id': user.id}) }}">Modifier</a>
