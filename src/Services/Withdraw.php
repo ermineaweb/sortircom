@@ -7,7 +7,6 @@ use App\Entity\StatusEnum;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Security\Core\Security;
-
 /*
  * Se désinscrire
  * Contraintes :
