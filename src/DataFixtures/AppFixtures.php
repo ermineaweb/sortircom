@@ -239,6 +239,18 @@ class AppFixtures extends Fixture
         $sortie->setPlace($place2);
         $sortie->setStatus(StatusEnum::OUVERTE);
         $manager->persist($sortie);
+
+        $sortie = new Event();
+        $sortie->setName("sortie cloturee avec inscrit");
+        $sortie->setDescription("Nous irons visiter la Flore");
+        $sortie->setMaxsize(5);
+        $sortie->setStart(new \DateTime("2019-12-14T15:30:01.012345Z"));
+        $sortie->setEnd(new \DateTime("2019-12-14T18:03:01.012345Z"));
+        $sortie->setLimitdate(new \DateTime("2019-11-18T15:03:01.012345Z"));
+        $sortie->setCreator($etudiant4);
+        $sortie->setPlace($place2);
+        $sortie->setStatus(StatusEnum::CLOTURE);
+        $manager->persist($sortie);
 		
 		$sortie1 = new Event();
 		$sortie1->setName("sortie cloturée");
@@ -323,17 +335,17 @@ class AppFixtures extends Fixture
 		$sortie5->setPlace($place2);
 		$sortie5->setStatus(StatusEnum::CREE);
 		$manager->persist($sortie5);
-		
-		$manager->flush();
-		
+
+        $manager->flush();
+
 		/*
 	A EXECUTER LORSQUE CE FICHIER CHANGE
-	
+
 php bin/console d:d:d --force
 php bin/console d:d:c
 php bin/console d:m:m
 php bin/console d:f:l
-		
+
 		 */
 	}
 }

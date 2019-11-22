@@ -86,11 +86,11 @@ class EventController extends AbstractController
             //L'utilisateur connecté qui crée l'event devient le creator
             $event->setCreator($this->getUser());
             // status par défaut au moment de la création
-			$event->setStatus(StatusEnum::CREE);
-			
+            $event->setStatus(StatusEnum::CREE);
+
             $this->entityManager->persist($event);
             $this->entityManager->flush();
-			
+
             $this->addFlash(Alert::SUCCESS, Messages::NEW_EVENT_SUCCESS);
             return $this->redirectToRoute('event_index');
         }
@@ -132,7 +132,7 @@ class EventController extends AbstractController
             && ($event->getStatus() == StatusEnum::CREE || $event->getStatus() == StatusEnum::OUVERTE)) {
 
             $this->addFlash(Alert::SUCCESS, 'Modification de la sortie ' . $event->getName() . ' effectuée');
-			
+
             $this->entityManager->flush();
             return $this->redirectToRoute('event_index');
         }
@@ -185,7 +185,7 @@ class EventController extends AbstractController
 
             $event->setStatus(StatusEnum::ANNULEE);
             $this->entityManager->flush();
-            $this->addFlash('success','Le statut de votre sortie est maintenant : annulée');
+            $this->addFlash('success', 'Le statut de votre sortie est maintenant : annulée');
         }
 
         return $this->render('event/show.html.twig', [
@@ -211,9 +211,10 @@ class EventController extends AbstractController
 
     /**
      * Un utilisateur se désinscrit d'une sortie où il s'est inscrit
-     * @Route("/sedésinscrire/{id}", name="withdraw", methods={"GET"})
+     * @Route("/desinscrire/{id}", name="withdraw", methods={"GET"})
      */
-    public function withdraw(Event $event, Withdraw $withdraw): Response {
+    public function withdraw(Event $event, Withdraw $withdraw): Response
+    {
         $withdraw->setEvent($event);
         $withdraw->setUser($this->getUser());
         $withdraw->leave();
@@ -235,7 +236,7 @@ class EventController extends AbstractController
      */
     public function publish(Event $event): Response
     {
-        if($this->getUser() == $event->getCreator()
+        if ($this->getUser() == $event->getCreator()
             && $event->getStart() > new \DateTime()
             && $event->getStatus() == StatusEnum::CREE) {
 
