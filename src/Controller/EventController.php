@@ -178,6 +178,7 @@ class EventController extends AbstractController
             && $event->getStatus() == StatusEnum::OUVERTE) {
 
             $event->setStatus(StatusEnum::ANNULEE);
+            $this->entityManager->flush();
         }
 
         return $this->render('event/show.html.twig', [
@@ -207,7 +208,7 @@ class EventController extends AbstractController
      * - si l'utilisateur est bien le créateur
      * - si la date de début de la sortie est supérieure à la date actuelle
      * - si le statut de la sortie est : crée
-     * (Une annonce n'est publiée ne peut plus être supprimée mais doit être annulée)
+     * (Une annonce publiée ne peut plus être supprimée mais doit être annulée)
      * @Route("/publish/{id}", name="publish", methods={"GET"})
      */
     public function publish(Event $event): Response
@@ -217,6 +218,8 @@ class EventController extends AbstractController
             && $event->getStatus() == StatusEnum::CREE) {
 
             $event->setStatus(StatusEnum::OUVERTE);
+            $this->entityManager->flush();
+            $this->addFlash('success', 'Le statut de votre sortie est maintenant : ouverte');
         }
 
         return $this->render('event/show.html.twig', [
