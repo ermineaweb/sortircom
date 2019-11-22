@@ -15,16 +15,14 @@ class EventType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', TextType::class, [
-                'label' => 'Nom de la sortie : '
+            ->add('name', null, [
+                'label' => 'Nom de la sortie : ',
+                'attr' => [
+                    'placeholder' => 'Baptème de plongée aux Glénan'
+                ],
             ])
             ->add('start',null, [
                     'label' => 'Date et heure début de la sortie :',
-                    //'widget' => 'single_text',
-                    //'format' => 'yyyy-MM-dd  HH:mm',
-                    //'attr' => [
-                     //   'type' => 'dateTime-local'
-                   // ]
                 ])
             ->add('end', DateTimeType::class, [
                     'label' => 'Date et heure fin de la sortie :'
@@ -37,10 +35,13 @@ class EventType extends AbstractType
                     'label' => 'Nombre de places :'
             ])
             ->add('description', null, [
-                    'label' => 'Description et infos :'
+                    'label' => 'Description et infos :',
+                    'attr' => [
+                        'placeholder' => 'Départ du bateau à 09h00'
+                    ],
             ])
             ->add('place', null, [
-                    'label' => 'Lieu :'
+                    'label' => 'Lieu : ',
             ])
             ->add('cancel', null, [
                     'label' => 'Motif de l\'annulation :',

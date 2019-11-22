@@ -63,6 +63,12 @@ class EventController extends AbstractController
     }
 
     /**
+     * Cette route permet de créer une sortie :
+     * - si la date de début de la sortie est supérieure à la date actuelle
+     * - si le nombre maximum de participants est supérieur à 0
+     * Alors :
+     * - l'utilisateur en cours devient le créateur de l'annonce
+     * - le statut de la sortie devient cree
      * @Route("/creer", name="new", methods={"GET","POST"})
      */
     public function new(Request $request, CityRepository $cityRepository): Response
@@ -71,9 +77,13 @@ class EventController extends AbstractController
         $form = $this->createForm(EventType::class, $event);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()
+            && $event->getStart() > new \DateTime()
+            && $event->getMaxsize() > 0) {
             //L'utilisateur connecté qui crée l'event devient le creator
             $event->setCreator($this->getUser());
+            //le statut de la sortie devient cree
+            $event->setStatus(StatusEnum::CREE);
 
             $this->entityManager->persist($event);
             $this->entityManager->flush();
@@ -89,6 +99,7 @@ class EventController extends AbstractController
     }
 
     /**
+     * Cette page permet d'affcher les détails d'une sortie en particulier :
      * @Route("/show/{id}", name="show", methods={"GET"})
      */
     public function show(Event $event): Response
@@ -99,6 +110,11 @@ class EventController extends AbstractController
     }
 
     /**
+     * Cette route permet de modifier une sortie :
+     * (Un message apparait pour confirmer la modification)
+     * - si l'utilisateur est bien le créateur
+     * - si la date de début de la sortie est supérieure à la date actuelle
+     * - si le statut de la sortie est : crée ou ouverte(publiée)
      * @Route("/{id}/edit", name="edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Event $event, CityRepository $cityRepository): Response
@@ -106,7 +122,11 @@ class EventController extends AbstractController
         $form = $this->createForm(EventType::class, $event);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()
+            && $this->getUser() == $event->getCreator()
+            && $event->getStart() > new \DateTime()
+            && ($event->getStatus() == StatusEnum::CREE || $event->getStatus() == StatusEnum::OUVERTE)) {
+
             $this->addFlash('success', 'Modification de la sortie ' . $event->getName() . ' effectuée');
             $this->entityManager->flush();
             return $this->redirectToRoute('event_index');
@@ -120,6 +140,11 @@ class EventController extends AbstractController
     }
 
     /**
+     * Cette route permet de supprimer une sortie :
+     * (Une sortie publiée ne peut plus être supprimée mais doit être anullée)
+     * - si l'utilisateur est bien le créateur
+     * - si la date de début de la sortie est supérieure à la date actuelle
+     * - si le statut de la sortie est : crée
      * @Route("/{id}", name="delete", methods={"DELETE"})
      */
     public function delete(Request $request, Event $event): Response
@@ -127,8 +152,7 @@ class EventController extends AbstractController
         if ($this->isCsrfTokenValid('delete' . $event->getId(), $request->request->get('_token'))
             && $this->getUser() == $event->getCreator()
             && $event->getStart() > new \DateTime()
-            && ($event->getStatus() == StatusEnum::CREE))
-        {
+            && ($event->getStatus() == StatusEnum::CREE)) {
 
             $this->entityManager->remove($event);
             $this->entityManager->flush();
@@ -138,6 +162,12 @@ class EventController extends AbstractController
     }
 
     /**
+     * Cette route permet d'annuler une sortie :
+     * (Une sortie non publiée ne peut pas être annulée mais doit être supprimée)
+     * - si l'utilisateur est bien le créateur
+     * - si la date de début de la sortie est supérieure à la date actuelle
+     * - si le champ "Motif de l'annulation :" du formulaire est renseigné
+     * - si le statut de la sortie est : ouverte
      * @Route("/cancel/{id}", name="cancel", methods={"GET"})
      */
     public function cancel(Event $event): Response
@@ -145,8 +175,8 @@ class EventController extends AbstractController
         if ($this->getUser() == $event->getCreator()
             && $event->getStart() > new \DateTime()
             && $event->getCancel() != null
-        && $event->getStatus() == StatusEnum::OUVERTE)
-        {
+            && $event->getStatus() == StatusEnum::OUVERTE) {
+
             $event->setStatus(StatusEnum::ANNULEE);
         }
 
@@ -172,11 +202,22 @@ class EventController extends AbstractController
     }
 
     /**
+     * Cette route permet de publier une annonce :
+     * (Une annonce est publiée après avoir été crée et non supprimée)
+     * - si l'utilisateur est bien le créateur
+     * - si la date de début de la sortie est supérieure à la date actuelle
+     * - si le statut de la sortie est : crée
+     * (Une annonce n'est publiée ne peut plus être supprimée mais doit être annulée)
      * @Route("/publish/{id}", name="publish", methods={"GET"})
      */
     public function publish(Event $event): Response
     {
-        $event->setStatus(StatusEnum::OUVERTE);
+        if($this->getUser() == $event->getCreator()
+            && $event->getStart() > new \DateTime()
+            && $event->getStatus() == StatusEnum::CREE) {
+
+            $event->setStatus(StatusEnum::OUVERTE);
+        }
 
         return $this->render('event/show.html.twig', [
             'event' => $event,
