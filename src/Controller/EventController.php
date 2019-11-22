@@ -218,9 +218,7 @@ class EventController extends AbstractController
         $withdraw->setEvent($event);
         $withdraw->setUser($this->getUser());
         $withdraw->leave();
-        $statut = $event->getStatus();
-        dump($statut);
-
+        $this->addFlash(Alert::SUCCESS, 'Vous avez bien été désinscrit de la sortie ' . $event->getName());
         return $this->render('event/show.html.twig', compact('event'));
 
     }
