@@ -16,6 +16,7 @@ use Symfony\Component\Security\Core\Security;
  * - la date d'inscription doit être inférieure à la date limite d'inscription
  * - il doit rester des places libres dans l'event
  */
+
 class Inscription
 {
 	private $event;
@@ -32,9 +33,9 @@ class Inscription
 	
 	public function register()
 	{
-		if ($this->alreadyRegistered()) {
+		if ($this->isAlreadyRegistered()) {
 			$this->flashBag->add("danger", "Vous êtes déjà inscrit à cet évènement");
-		} elseif (!$this->eventOpen()) {
+		} elseif (!$this->isEventOpen()) {
 			// si l'évènement n'est pas ouvert
 			$this->flashBag->add("danger", "L'évènement n'est pas ouvert, votre inscription est refusée");
 		} elseif ($this->limitDate()) {
@@ -62,7 +63,7 @@ class Inscription
 	/*
 	 * Vérifie que l'event est bien en status ouvert
 	 */
-	private function eventOpen(): bool
+	private function isEventOpen(): bool
 	{
 		return $this->event->getStatus() == StatusEnum::OUVERTE;
 	}
@@ -70,13 +71,14 @@ class Inscription
 	/*
 	 * Vérifie que l'user n'est pas déjà inscrit
 	 */
-	private function alreadyRegistered(): bool
+	private function isAlreadyRegistered(): bool
 	{
 		// on cherche si l'utilisateur est présent dans les inscriptions de la sortie
 		return $this->event->getUsers()->contains($this->user);
 	}
 	
-	private function isFull() : bool {
+	private function isFull(): bool
+	{
 		return false;
 	}
 	

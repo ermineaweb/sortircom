@@ -91,14 +91,6 @@ class User implements UserInterface
 	{
 		$this->events = new ArrayCollection();
 		$this->eventsCreated = new ArrayCollection();
-		
-		/*
-		 * lors de la création de l'user,
-		 * s'il est admin on vient ajouter ce role
-		 */
-		if ($this->admin === true) {
-			$this->roles[] = 'ROLE_ADMIN';
-		}
 	}
 	
 	public function getId(): ?int
@@ -131,6 +123,12 @@ class User implements UserInterface
 		$roles = $this->roles;
 		// guarantee every user at least has ROLE_USER
 		$roles[] = 'ROLE_USER';
+		/*
+		 * s'il est admin on vient ajouter ce role
+		 */
+		if ($this->admin === true) {
+			$this->roles[] = 'ROLE_ADMIN';
+		}
 		
 		return array_unique($roles);
 	}

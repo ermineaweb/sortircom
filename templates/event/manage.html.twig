@@ -6,44 +6,43 @@
 
 {% block body %}
     {% block main %}
-    <h2>Filtrer les sorties</h2>
-    <div>
-        <form action="" method="post">
-            <label for="school"> Sélectionner un site :</label>
-            <select name="school" id="school">
-                {% for school in schools %}
-                    {% set selected = '' %}
-                    {% if (app.user) and (app.user.school.id == school.id) %}
-                        {% set selected = 'selected' %}
+        <h2>Filtrer les sorties</h2>
+        <div>
+            <form action="" method="post">
+                <label for="school"> Sélectionner un site :</label>
+                <select name="school" id="school">
+                    {% for school in schools %}
+                        {% set selected = '' %}
+                        {% if (app.user) and (app.user.school.id == school.id) %}
+                            {% set selected = 'selected' %}
+                        {% endif %}
+                        <option value="school.name" {{ selected }}>{{ school.name }}</option>
+                    {% endfor %}
+                </select>
 
-                    {% endif %}
-                 <option value="school.name" {{ selected }}>{{ school.name }}</option>
-                {% endfor %}
-            </select>
-
-            <div>
-            <label for="search"> Le nom de la sortie contient :</label>
-            <input type="text" name="search" id="search">
-            </div>
-            <div>
-                <label for="start">Entre : </label>
-            <input type="date" name="start" id="start"/>
-                <label for="end">Et : </label>
-            <input type="date" name="end" id="end"/>
-            </div>
-            <div>
-                <input type="checkbox" name="creator"/> Sorties dont je suis l'organisateur/trice<br>
-                <input type="checkbox" name="registered"/> Sorties auquelles je suis inscrit/e<br>
-                <input type="checkbox" name="notregistered"/> Sorties auquelles je ne suis pas inscrit/e<br>
-                <input type="checkbox" name="pastevents"/> Sorties passées<br>
-            </div>
-            <button class="btn btn-info" type="submit" name="Rechercher"> Rechercher</button>
-        </form>
-    </div>
+                <div>
+                    <label for="search"> Le nom de la sortie contient :</label>
+                    <input type="text" name="search" id="search">
+                </div>
+                <div>
+                    <label for="start">Entre : </label>
+                    <input type="date" name="start" id="start"/>
+                    <label for="end">Et : </label>
+                    <input type="date" name="end" id="end"/>
+                </div>
+                <div>
+                    <input type="checkbox" name="creator"/> Sorties dont je suis l'organisateur/trice<br>
+                    <input type="checkbox" name="registered"/> Sorties auquelles je suis inscrit/e<br>
+                    <input type="checkbox" name="notregistered"/> Sorties auquelles je ne suis pas inscrit/e<br>
+                    <input type="checkbox" name="pastevents"/> Sorties passées<br>
+                </div>
+                <button class="btn btn-info" type="submit" name="Rechercher"> Rechercher</button>
+            </form>
+        </div>
 
 
-    <table class="table">
-        <thead>
+        <table class="table">
+            <thead>
             <tr>
                 <th>Nom de la sortie</th>
                 <th>Date de la sortie</th>
@@ -53,48 +52,48 @@
                 <th>Organisateur</th>
                 <th>Actions</th>
             </tr>
-        </thead>
-        <tbody>
-        {% for event in paginator %}
-            <tr>
-                <td>{{ event.name }}</td>
-                <td>{{ event.start ? event.start|date('d/m/Y à H:i') : '' }}</td>
-                <td>{{ event.limitdate ? event.limitdate|date('d/m/Y') : '' }}</td>
-                <td>{{ event.actualsize }} / {{ event.maxsize }}</td>
-                <td>{{ event.status }}</td>
-                <td>{{ event.creator }}</td>
+            </thead>
+            <tbody>
+            {% for event in paginator %}
+                <tr>
+                    <td>{{ event.name }}</td>
+                    <td>{{ event.start ? event.start|date('d/m/Y à H:i') : '' }}</td>
+                    <td>{{ event.limitdate ? event.limitdate|date('d/m/Y') : '' }}</td>
+                    <td>{{ event.actualsize }} / {{ event.maxsize }}</td>
+                    <td>{{ event.status }}</td>
+                    <td>{{ event.creator }}</td>
 
-                <td>
-                    <a href="{{ path('event_show', {'id': event.id}) }}">Afficher</a>
-                    <a href="{{ path('event_edit', {'id': event.id}) }}">Modifier</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="8">Aucune sortie ne correspond à vos critères.</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+                    <td>
+                        <a href="{{ path('event_show', {'id': event.id}) }}">Afficher</a>
+                        <a href="{{ path('event_edit', {'id': event.id}) }}">Modifier</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="8">Aucune sortie ne correspond à vos critères.</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
 
-{% endblock %}
-{% if paginator|length>0 %}
-    <div class="center">
-        <nav aria-label="paginator">
-            <ul class="pagination pagination-lg">
-                {% set nbPages = ((paginator|length)/constant('App\\Repository\\EventRepository::PAGINATION')) |round(0, 'ceil') %}
-                {% for i in 1..nbPages %}
-                    <li class="page-item {% if (page == i) %}disabled{% endif %}">
-                        <a
-                            class="page-link"
-                            href="{{ path('event_index', {'page' : i}) }}">
-                            {{ i }}
-                        </a>
-                    </li>
-                {% endfor %}
-            </ul>
-        </nav>
-    </div>
+    {% endblock %}
+    {% if paginator|length>0 %}
+        <div class="center">
+            <nav aria-label="paginator">
+                <ul class="pagination pagination-lg">
+                    {% set nbPages = ((paginator|length)/constant('App\\Repository\\EventRepository::PAGINATION')) |round(0, 'ceil') %}
+                    {% for i in 1..nbPages %}
+                        <li class="page-item {% if (page == i) %}disabled{% endif %}">
+                            <a
+                                    class="page-link"
+                                    href="{{ path('event_index', {'page' : i}) }}">
+                                {{ i }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </nav>
+        </div>
     {% endif %}
 
 
