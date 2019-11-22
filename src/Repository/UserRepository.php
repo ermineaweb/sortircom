@@ -18,22 +18,13 @@ class UserRepository extends ServiceEntityRepository
         parent::__construct($registry, User::class);
     }
 	
-    /**
-     * Loads the user for the given username.
-     *
-     * This method must return null if the user is not found.
-     *
-     * @param string $username The username
-     *
-     * @return UserInterface|null
-     */
+    // on retourne l'user grâce au mail OU au username
     public function loadUserByUsername($username)
     {
         try {
             return $this->createQueryBuilder('u')
-                ->where('u.username = :username OR u.email= :email')
+                ->where('u.username = :username OR u.email= :username')
                 ->setParameter('username', $username)
-                ->setParameter('email', $username)
                 ->getQuery()
                 ->getOneOrNullResult();
         } catch (NonUniqueResultException $e) {

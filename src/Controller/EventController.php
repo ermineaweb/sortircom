@@ -9,6 +9,8 @@ use App\Repository\CityRepository;
 use App\Repository\EventRepository;
 use App\Repository\SchoolRepository;
 use App\Services\Inscription;
+use App\Technical\Alert;
+use App\Technical\Messages;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -76,10 +78,13 @@ class EventController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             //L'utilisateur connecté qui crée l'event devient le creator
             $event->setCreator($this->getUser());
-
+            // status par défaut au moment de la création
+			$event->setStatus(StatusEnum::CREE);
+			
             $this->entityManager->persist($event);
             $this->entityManager->flush();
-
+			
+            $this->addFlash(Alert::SUCCESS, Messages::NEW_EVENT_SUCCESS);
             return $this->redirectToRoute('event_index');
         }
 
@@ -109,7 +114,7 @@ class EventController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->addFlash('success', 'Modification de la sortie ' . $event->getName() . ' effectuée');
+            $this->addFlash(Alert::SUCCESS, 'Modification de la sortie ' . $event->getName() . ' effectuée');
             $this->entityManager->flush();
             return $this->redirectToRoute('event_index');
         }

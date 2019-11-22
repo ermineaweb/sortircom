@@ -47,10 +47,9 @@
             <tr>
                 <th>Nom de la sortie</th>
                 <th>Date de la sortie</th>
-                <th>Clôture</th>
+                <th>Limite d'inscription</th>
                 <th>Inscrits/places</th>
                 <th>Etat</th>
-                <th>Inscrit</th>
                 <th>Organisateur</th>
                 <th>Actions</th>
             </tr>
@@ -59,11 +58,10 @@
         {% for event in paginator %}
             <tr>
                 <td>{{ event.name }}</td>
-                <td>{{ event.start ? event.start|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ event.limitdate ? event.limitdate|date('Y-m-d') : '' }}</td>
+                <td>{{ event.start ? event.start|date('d/m/Y à H:i') : '' }}</td>
+                <td>{{ event.limitdate ? event.limitdate|date('d/m/Y') : '' }}</td>
                 <td>{{ event.actualsize }} / {{ event.maxsize }}</td>
-                <td>Etat</td>
-                <td>Inscrit</td>
+                <td>{{ event.status }}</td>
                 <td>{{ event.creator }}</td>
                 <td>
                     <a href="{{ path('event_show', {'id': event.id}) }}">Afficher</a>
