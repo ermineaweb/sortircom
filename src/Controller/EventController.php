@@ -10,6 +10,7 @@ use App\Repository\CityRepository;
 use App\Repository\EventRepository;
 use App\Repository\SchoolRepository;
 use App\Services\Inscription;
+use App\Services\Withdraw;
 use App\Technical\Alert;
 use App\Technical\Messages;
 use Doctrine\ORM\EntityManagerInterface;
@@ -86,11 +87,11 @@ class EventController extends AbstractController
             //L'utilisateur connecté qui crée l'event devient le creator
             $event->setCreator($this->getUser());
             // status par défaut au moment de la création
-			$event->setStatus(StatusEnum::CREE);
-			
+            $event->setStatus(StatusEnum::CREE);
+
             $this->entityManager->persist($event);
             $this->entityManager->flush();
-			
+
             $this->addFlash(Alert::SUCCESS, Messages::NEW_EVENT_SUCCESS);
             return $this->redirectToRoute('event_index');
         }
@@ -186,7 +187,7 @@ class EventController extends AbstractController
             && $event->getStatus() == StatusEnum::OUVERTE) {
 
             if (empty($event->getCancel())) {
-                $this->addFlash(Alert::WARNING, 'Vous devez indiquer un motif d\'annulation de la sortie' );
+                $this->addFlash(Alert::WARNING, 'Vous devez indiquer un motif d\'annulation de la sortie');
 
             } else {
                 $event->setStatus(StatusEnum::ANNULEE);
@@ -220,8 +221,22 @@ class EventController extends AbstractController
     }
 
     /**
+     * Un utilisateur se désinscrit d'une sortie où il s'est inscrit
+     * @Route("/desinscrire/{id}", name="withdraw", methods={"GET"})
+     */
+    public function withdraw(Event $event, Withdraw $withdraw): Response
+    {
+        $withdraw->setEvent($event);
+        $withdraw->setUser($this->getUser());
+        $withdraw->leave();
+        $this->addFlash(Alert::SUCCESS, 'Vous avez bien été désinscrit de la sortie ' . $event->getName());
+        return $this->render('event/show.html.twig', compact('event'));
+
+    }
+
+    /**
      * Cette route permet de publier une annonce :
-     * (Une annonce est publiée après avoir été crée et non supprimée)
+     * (Une annonce est publiée après avoir été créée et non supprimée)
      * - si l'utilisateur est bien le créateur
      * - si la date de début de la sortie est supérieure à la date actuelle
      * - si le statut de la sortie est : crée
@@ -230,7 +245,7 @@ class EventController extends AbstractController
      */
     public function publish(Event $event): Response
     {
-        if($this->getUser() == $event->getCreator()
+        if ($this->getUser() == $event->getCreator()
             && $event->getStart() > new \DateTime()
             && $event->getStatus() == StatusEnum::CREE) {
 
