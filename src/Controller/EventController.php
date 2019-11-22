@@ -172,13 +172,15 @@ class EventController extends AbstractController
      */
     public function cancel(Event $event): Response
     {
+        $cancel = $event->getCancel();
         if ($this->getUser() == $event->getCreator()
             && $event->getStart() > new \DateTime()
-            && $event->getCancel() != null
+            && empty($cancel)
             && $event->getStatus() == StatusEnum::OUVERTE) {
 
             $event->setStatus(StatusEnum::ANNULEE);
             $this->entityManager->flush();
+            $this->addFlash('success','Le statut de votre sortie est maintenant : annulée');
         }
 
         return $this->render('event/show.html.twig', [
