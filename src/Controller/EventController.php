@@ -10,6 +10,8 @@ use App\Repository\EventRepository;
 use App\Repository\SchoolRepository;
 use App\Services\Inscription;
 use App\Services\Withdraw;
+use App\Technical\Alert;
+use App\Technical\Messages;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -83,12 +85,13 @@ class EventController extends AbstractController
             && $event->getMaxsize() > 0) {
             //L'utilisateur connecté qui crée l'event devient le creator
             $event->setCreator($this->getUser());
-            //le statut de la sortie devient cree
-            $event->setStatus(StatusEnum::CREE);
-
+            // status par défaut au moment de la création
+			$event->setStatus(StatusEnum::CREE);
+			
             $this->entityManager->persist($event);
             $this->entityManager->flush();
-
+			
+            $this->addFlash(Alert::SUCCESS, Messages::NEW_EVENT_SUCCESS);
             return $this->redirectToRoute('event_index');
         }
 
@@ -128,7 +131,8 @@ class EventController extends AbstractController
             && $event->getStart() > new \DateTime()
             && ($event->getStatus() == StatusEnum::CREE || $event->getStatus() == StatusEnum::OUVERTE)) {
 
-            $this->addFlash('success', 'Modification de la sortie ' . $event->getName() . ' effectuée');
+            $this->addFlash(Alert::SUCCESS, 'Modification de la sortie ' . $event->getName() . ' effectuée');
+			
             $this->entityManager->flush();
             return $this->redirectToRoute('event_index');
         }
@@ -173,12 +177,15 @@ class EventController extends AbstractController
      */
     public function cancel(Event $event): Response
     {
+        $cancel = $event->getCancel();
         if ($this->getUser() == $event->getCreator()
             && $event->getStart() > new \DateTime()
-            && $event->getCancel() != null
+            && empty($cancel)
             && $event->getStatus() == StatusEnum::OUVERTE) {
 
             $event->setStatus(StatusEnum::ANNULEE);
+            $this->entityManager->flush();
+            $this->addFlash('success','Le statut de votre sortie est maintenant : annulée');
         }
 
         return $this->render('event/show.html.twig', [
@@ -223,7 +230,7 @@ class EventController extends AbstractController
      * - si l'utilisateur est bien le créateur
      * - si la date de début de la sortie est supérieure à la date actuelle
      * - si le statut de la sortie est : crée
-     * (Une annonce n'est publiée ne peut plus être supprimée mais doit être annulée)
+     * (Une annonce publiée ne peut plus être supprimée mais doit être annulée)
      * @Route("/publish/{id}", name="publish", methods={"GET"})
      */
     public function publish(Event $event): Response
@@ -233,6 +240,8 @@ class EventController extends AbstractController
             && $event->getStatus() == StatusEnum::CREE) {
 
             $event->setStatus(StatusEnum::OUVERTE);
+            $this->entityManager->flush();
+            $this->addFlash(Alert::SUCCESS, Messages::PUBLISH_EVENT_SUCCESS);
         }
 
         return $this->render('event/show.html.twig', [

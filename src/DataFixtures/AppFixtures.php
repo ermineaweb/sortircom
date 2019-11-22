@@ -311,29 +311,29 @@ class AppFixtures extends Fixture
 		$sortie5->setPlace($place2);
 		$sortie5->setStatus(StatusEnum::OUVERTE);
 		$manager->persist($sortie5);
-
-        $sortie5 = new Event();
-        $sortie5->setName("sortie test cancel");
-        $sortie5->setDescription("Essai cancel");
-        $sortie5->setMaxsize(2);
-        $sortie5->setStart($faker->dateTime);
-        $sortie5->setEnd($faker->dateTime);
-        $sortie5->setLimitdate($faker->dateTime);
-        $sortie5->setCreator($user);
-        $sortie5->setPlace($place2);
-        $sortie5->setStatus(StatusEnum::CREE);
-        $manager->persist($sortie5);
+		
+		$sortie5 = new Event();
+		$sortie5->setName("sortie test cancel");
+		$sortie5->setDescription("Essai cancel");
+		$sortie5->setMaxsize(2);
+		$sortie5->setStart($faker->dateTime);
+		$sortie5->setEnd($faker->dateTime);
+		$sortie5->setLimitdate($faker->dateTime);
+		$sortie5->setCreator($user);
+		$sortie5->setPlace($place2);
+		$sortie5->setStatus(StatusEnum::CREE);
+		$manager->persist($sortie5);
 		
 		$manager->flush();
-
+		
 		/*
+	A EXECUTER LORSQUE CE FICHIER CHANGE
+	
 php bin/console d:d:d --force
 php bin/console d:d:c
 php bin/console d:m:m
 php bin/console d:f:l
-
-
-
+		
 		 */
 	}
 }
