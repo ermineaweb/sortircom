@@ -49,6 +49,7 @@
     {% if app.user %}
         <a href="{{ path('event_inscription', {id : event.id }) }}">S'inscrire à la sortie</a>
     {% endif %}
+    <a href="{{ path('event_withdraw', {id : event.id}) }}">Se désinscrire de la sortie</a>
 
     <a href="{{ path('event_index') }}">Revenir à la liste des sorties</a>
     <a href="{{ path('event_edit', {'id': event.id}) }}">edit</a>

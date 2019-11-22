@@ -9,6 +9,7 @@ use App\Repository\CityRepository;
 use App\Repository\EventRepository;
 use App\Repository\SchoolRepository;
 use App\Services\Inscription;
+use App\Services\Withdraw;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -202,8 +203,23 @@ class EventController extends AbstractController
     }
 
     /**
+     * Un utilisateur se désinscrit d'une sortie où il s'est inscrit
+     * @Route("/sedésinscrire/{id}", name="withdraw", methods={"GET"})
+     */
+    public function withdraw(Event $event, Withdraw $withdraw): Response {
+        $withdraw->setEvent($event);
+        $withdraw->setUser($this->getUser());
+        $withdraw->leave();
+        $statut = $event->getStatus();
+        dump($statut);
+
+        return $this->render('event/show.html.twig', compact('event'));
+
+    }
+
+    /**
      * Cette route permet de publier une annonce :
-     * (Une annonce est publiée après avoir été crée et non supprimée)
+     * (Une annonce est publiée après avoir été créée et non supprimée)
      * - si l'utilisateur est bien le créateur
      * - si la date de début de la sortie est supérieure à la date actuelle
      * - si le statut de la sortie est : crée
