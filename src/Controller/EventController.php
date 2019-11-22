@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Event;
 use App\Entity\StatusEnum;
+use App\Form\EventCancelType;
 use App\Form\EventType;
 use App\Repository\CityRepository;
 use App\Repository\EventRepository;
@@ -131,9 +132,9 @@ class EventController extends AbstractController
             && $event->getStart() > new \DateTime()
             && ($event->getStatus() == StatusEnum::CREE || $event->getStatus() == StatusEnum::OUVERTE)) {
 
+            $this->entityManager->flush();
             $this->addFlash(Alert::SUCCESS, 'Modification de la sortie ' . $event->getName() . ' effectuée');
 
-            $this->entityManager->flush();
             return $this->redirectToRoute('event_index');
         }
 
@@ -173,23 +174,33 @@ class EventController extends AbstractController
      * - si la date de début de la sortie est supérieure à la date actuelle
      * - si le champ "Motif de l'annulation :" du formulaire est renseigné
      * - si le statut de la sortie est : ouverte
-     * @Route("/cancel/{id}", name="cancel", methods={"GET"})
+     * @Route("/cancel/{id}", name="cancel",methods={"GET","POST"})
      */
-    public function cancel(Event $event): Response
+    public function cancel(Event $event, Request $request): Response
     {
-        $cancel = $event->getCancel();
-        if ($this->getUser() == $event->getCreator()
+        $form = $this->createForm(EventCancelType::class, $event);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()
+            && $this->getUser() == $event->getCreator()
             && $event->getStart() > new \DateTime()
-            && empty($cancel)
             && $event->getStatus() == StatusEnum::OUVERTE) {
 
-            $event->setStatus(StatusEnum::ANNULEE);
-            $this->entityManager->flush();
-            $this->addFlash('success', 'Le statut de votre sortie est maintenant : annulée');
+            if (empty($event->getCancel())) {
+                $this->addFlash(Alert::WARNING, 'Vous devez indiquer un motif d\'annulation de la sortie');
+
+            } else {
+                $event->setStatus(StatusEnum::ANNULEE);
+                $this->addFlash(Alert::SUCCESS, "L'annulation de la sortie est effectuée");
+
+                $this->entityManager->flush();
+                return $this->redirectToRoute('event_index');
+            }
         }
 
-        return $this->render('event/show.html.twig', [
+        return $this->render('event/cancel.html.twig', [
             'event' => $event,
+            'form' => $form->createView(),
         ]);
     }
 
