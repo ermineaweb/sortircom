@@ -59,12 +59,14 @@
         {% for event in paginator %}
             <tr>
                 <td>{{ event.name }}</td>
-                <td>{{ event.start ? event.start|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ event.limitdate ? event.limitdate|date('Y-m-d') : '' }}</td>
+                <td>{{ event.start ? event.start|date('d-m-Y H:i:s') : '' }}</td>
+                <td>{{ event.limitdate ? event.limitdate|date('d-m-Y') : '' }}</td>
                 <td>{{ event.actualsize }} / {{ event.maxsize }}</td>
                 <td>Etat</td>
                 <td>Inscrit</td>
-                <td>{{ event.creator }}</td>
+                <td>
+                    <a href="{{ path('user_show', {'id': event.creator.id}) }}">{{ event.creator }}</a>
+                </td>
                 <td>
                     <a href="{{ path('event_show', {'id': event.id}) }}">Afficher</a>
                     <a href="{{ path('event_edit', {'id': event.id}) }}">Modifier</a>
