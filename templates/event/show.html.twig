@@ -35,7 +35,7 @@
             <td>
                 <ul>
                     {% for user in event.users %}
-                        <li>{{ user.username }}</li>
+                        <li><a href="{{ path('user_show', {'id': user.id}) }}">{{ user.username }}</a></li>
                     {% else %}
                         <li>Aucun participant pour le moment :(</li>
                     {% endfor %}
