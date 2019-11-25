@@ -8,6 +8,7 @@ use App\Form\EventCancelType;
 use App\Form\EventType;
 use App\Repository\CityRepository;
 use App\Repository\EventRepository;
+use App\Repository\PlaceRepository;
 use App\Repository\SchoolRepository;
 use App\Services\Inscription;
 use App\Services\Withdraw;
@@ -75,7 +76,7 @@ class EventController extends AbstractController
      * - le statut de la sortie devient cree
      * @Route("/creer", name="new", methods={"GET","POST"})
      */
-    public function new(Request $request, CityRepository $cityRepository): Response
+    public function new(Request $request, CityRepository $cityRepository, PlaceRepository $placeRepository): Response
     {
         $event = new Event();
         $form = $this->createForm(EventType::class, $event);
@@ -100,6 +101,7 @@ class EventController extends AbstractController
             'event' => $event,
             'form' => $form->createView(),
             'cities' => $cityRepository->findAll(),
+            'places' => $placeRepository->findAll(),
         ]);
     }
 
