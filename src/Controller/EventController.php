@@ -133,7 +133,7 @@ class EventController extends AbstractController
             && ($event->getStatus() == StatusEnum::CREE || $event->getStatus() == StatusEnum::OUVERTE)) {
 
             $this->entityManager->flush();
-            $this->addFlash(Alert::SUCCESS, 'Modification de la sortie ' . $event->getName() . ' effectuée');
+            $this->addFlash(Alert::SUCCESS, Messages::EDIT_EVENT_SUCCESS_1 . $event->getName() . Messages::EDIT_EVENT_SUCCESS_2);
 
             return $this->redirectToRoute('event_index');
         }
@@ -187,11 +187,11 @@ class EventController extends AbstractController
             && $event->getStatus() == StatusEnum::OUVERTE) {
 
             if (empty($event->getCancel())) {
-                $this->addFlash(Alert::WARNING, 'Vous devez indiquer un motif d\'annulation de la sortie');
+                $this->addFlash(Alert::WARNING, Messages::CANCEL_EVENT_WARNING);
 
             } else {
                 $event->setStatus(StatusEnum::ANNULEE);
-                $this->addFlash(Alert::SUCCESS, "L'annulation de la sortie est effectuée");
+                $this->addFlash(Alert::SUCCESS, Messages::CANCEL_EVENT_SUCCESS);
 
                 $this->entityManager->flush();
                 return $this->redirectToRoute('event_index');
