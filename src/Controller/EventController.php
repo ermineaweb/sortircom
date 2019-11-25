@@ -26,7 +26,6 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class EventController extends AbstractController
 {
-
     private $entityManager;
     private $eventRepository;
 
@@ -50,11 +49,16 @@ class EventController extends AbstractController
         $end = $request->request->get('end');
         $pastevents = $request->request->get('pastevents');
         $eventscreated = $request->request->get('eventscreated');
+        dump($eventscreated);
         $registered = $request->request->get('registered');
+        dump($registered);
         $notregistered = $request->request->get('notregistered');
+        dump($notregistered);
         $user = $this->getUser();
+        dump($user);
         $userId = $user->getId();
-
+        dump($userId);
+        // Sorties dont l'école du creator = l'école du user
         // TODO : Lorsqu'un user affiche la page la 1re fois, la school par défaut est la sienne
         if ($request->isMethod('get')) {
             $school = $user->getSchool();

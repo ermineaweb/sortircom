@@ -3,9 +3,18 @@ $(document).ready(function () {
 
     $("#idcity").change(function () {
         $.getJSON(url, function (result) {
-            $.each(result, function (i, field) {
-                $("#maclasse").append(field + " ");
+            // parcours du résultat json
+            $.each(result, function (key, value) {
+                // on parcours chaque place
+                $.each(value, function (key, place) {
+                    let idcity = $("#idcity").children("option:selected").val();
+                    if (idcity == 1) {
+                        console.log(key + " " + place);
+                        console.log(place.address);
+                    }
+                })
             });
         });
     });
+
 });

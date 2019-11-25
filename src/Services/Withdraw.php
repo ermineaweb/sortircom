@@ -4,6 +4,8 @@
 namespace App\Services;
 
 use App\Entity\StatusEnum;
+use App\Technical\Alert;
+use App\Technical\Messages;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Security\Core\Security;
@@ -15,7 +17,6 @@ use Symfony\Component\Security\Core\Security;
  * - Vérifie que le statut de la sortie n'est pas "annulée", "passée" ou "en cours"
  * Libère une place
  */
-
 
 class Withdraw
 {
@@ -33,14 +34,14 @@ class Withdraw
 	
 	public function leave()
 	{
-		if ($this->isNotRegistered()) {
-			$this->flashBag->add("danger", "Vous n'êtes pas inscrit à cet évènement");
+		if (!$this->isNotRegistered()) {
+			$this->flashBag->add(Alert::DANGER, Messages::ERROR_EVENT_NOT_REGISTERED);
 		} elseif ($this->isEventCanceled()) {
-			$this->flashBag->add("danger", "Vous ne pouvez pas vous désinscrire à un évènement annulé");
+			$this->flashBag->add(Alert::DANGER, Messages::ERROR_EVENT_CANCELED);
 		} elseif ($this->isEventFinished()) {
-			$this->flashBag->add("danger", "Vous ne pouvez pas vous désinscrire à un évènement terminé");
+			$this->flashBag->add(Alert::DANGER, Messages::ERROR_EVENT_FINISHED);
 		} elseif ($this->isEventInProgress()) {
-			$this->flashBag->add("danger", "Vous ne pouvez pas vous désinscrire à un évènement en cours");
+			$this->flashBag->add(Alert::DANGER, Messages::ERROR_EVENT_IN_PROGRESS);
 		} else {
 			$this->event->removeUser($this->user);
 			$this->userManager->persist($this->user);
@@ -51,9 +52,9 @@ class Withdraw
 	/*
 	 * Vérifie si l'utilisateur connecté est bien inscrit à la sortie consultée
 	 */
-	private function isNotRegistered(): bool
+	private function isRegistered(): bool
 	{
-		return !$this->event->getUsers()->contains($this->user);
+		return $this->event->getUsers()->contains($this->user);
 	}
 	
 	/*
