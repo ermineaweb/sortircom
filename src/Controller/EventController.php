@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+
 /**
  * @Route("/sortie", name="event_")
  */
@@ -47,18 +48,24 @@ class EventController extends AbstractController
         $start = $request->request->get('start');
         $end = $request->request->get('end');
         $pastevents = $request->request->get('pastevents');
-        // TODO : Lorsqu'un user affiche la page la 1re fois, la school par défaut est la sienne
-        /*if ($request->isMethod('get')) {
-            $user = $this->getUser();
-            dump($user);
-           $school = $user->getSchool;
+        $eventscreated = $request->request->get('eventscreated');
+        $registered = $request->request->get('registered');
+        $notregistered = $request->request->get('notregistered');
+        $user = $this->getUser();
+        $userId = $user->getId();
 
-        } else {
-            $school = $request->request->get('school');
-        }*/
+        // TODO : Lorsqu'un user affiche la page la 1re fois, la school par défaut est la sienne
+        if ($request->isMethod('get')) {
+            $school = $user->getSchool();
+
+                    } else {
+                        $school = $request->request->get('school');
+                    }
+        dump($school);
+
         // TODO : filtrer par school
-        $school = $request->request->get('school');
-        $paginator = $eventRepository->findByFilters($value, $start, $end, $school, $page, $pastevents);
+
+        $paginator = $eventRepository->findByFilters($value, $start, $end, $school, $page, $pastevents, $eventscreated, $registered, $notregistered, $user, $userId);
         return $this->render('event/manage.html.twig', [
             'paginator' => $paginator,
             'schools' => $schoolRepository->findAll(),
