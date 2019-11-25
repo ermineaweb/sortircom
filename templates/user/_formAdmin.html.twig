@@ -1,0 +1,17 @@
+{{ form_start(form) }}
+
+    {{ form_label(form.username) }}
+    {{ form_widget(form.username) }}
+    {{ form_help(form.username) }}
+
+    {{ form_label(form.email) }}
+    {{ form_widget(form.email) }}
+    {{ form_help(form.email) }}
+
+    {{ form_label(form.school) }}
+    {{ form_widget(form.school) }}
+    {{ form_help(form.school) }}
+
+
+<button class="button">{{ button_label|default('Enregistrer') }}</button>
+{{ form_end(form) }}

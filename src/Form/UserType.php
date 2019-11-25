@@ -16,17 +16,47 @@ class UserType extends AbstractType
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
 		$builder
-			->add('username')
+			->add('username', null,[
+                'label' => 'Pseudo : ',
+                'attr' => [
+                    'placeholder' => 'login'
+                ],
+            ])
 			->add('password', RepeatedType::class, array(
                 'type' => PasswordType::class,
                 'first_options' => array('label'=> 'Mot de passe : '),
                 'second_options' => array('label'=>'Confirmer le mot de passe : '),
             ))
-			->add('lastname')
-			->add('firstname')
-			->add('phone')
-			->add('email')
-			->add('school')
+			->add('lastname', null,[
+                'label' => 'Nom : ',
+                'attr' => [
+                    'placeholder' => 'Legall'
+                ],
+            ])
+			->add('firstname', null,[
+                'label' => 'Prénom : ',
+                'attr' => [
+                    'placeholder' => 'Erwann'
+                ],
+            ])
+			->add('phone', null,[
+                'label' => 'Numéro de téléphone : ',
+                'attr' => [
+                    'placeholder' => '06-XX-XX-XX-XX'
+                ],
+            ])
+			->add('email', null,[
+                'label' => 'Adresse mail : ',
+                'attr' => [
+                    'placeholder' => 'erwann.legall@eni.bzh'
+                ],
+            ])
+			->add('school', null,[
+                'label' => 'Ecole : ',
+                'attr' => [
+                    'placeholder' => 'ENI Quimper'
+                ],
+            ])
 			->add('avatar', FileType::class, [
 				'label' => 'Brochure (PDF file)',
 				'mapped' => false,
