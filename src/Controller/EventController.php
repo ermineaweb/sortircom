@@ -26,7 +26,6 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class EventController extends AbstractController
 {
-
     private $entityManager;
     private $eventRepository;
 

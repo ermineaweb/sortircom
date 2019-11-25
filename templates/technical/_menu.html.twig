@@ -32,7 +32,10 @@
             </li>
             {% if app.user %}
                 Bienvenue {{ app.user.username }}
+            {% if app.user.admin %}vous etes admin{% else %} vous etes pas admin{% endif %}
             {% endif %}
+
+            {% if app.user and "ROLE_ADMIN" in app.user.roles %}ADMIN{% else %} NON ADMIN {% endif %}
         </ul>
     </div>
 </nav>

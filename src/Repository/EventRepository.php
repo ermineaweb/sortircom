@@ -36,8 +36,8 @@ class EventRepository extends ServiceEntityRepository
                                   $eventscreated = null,
                                   $registered = null,
                                   $notregistered = null,
-                                  $user,
-                                  $userId) : Paginator
+                                  $user = null,
+                                  $userId = null) : Paginator
     {
         $queryBuilder = $this->createQueryBuilder('event');
         $queryBuilder->addSelect('user');
