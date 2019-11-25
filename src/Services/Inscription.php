@@ -5,6 +5,8 @@ namespace App\Services;
 use App\Entity\Event;
 use App\Entity\StatusEnum;
 use App\Entity\User;
+use App\Technical\Alert;
+use App\Technical\Messages;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Security\Core\Security;
@@ -34,16 +36,16 @@ class Inscription
 	public function register()
 	{
 		if ($this->isAlreadyRegistered()) {
-			$this->flashBag->add("danger", "Vous êtes déjà inscrit à cet évènement");
+			$this->flashBag->add(Alert::DANGER, Messages::ERROR_ALREADY_REGISTERED);
 		} elseif (!$this->isEventOpen()) {
 			// si l'évènement n'est pas ouvert
-			$this->flashBag->add("danger", "L'évènement n'est pas ouvert, votre inscription est refusée");
+			$this->flashBag->add(Alert::DANGER, Messages::ERROR_EVENT_NO_OPENED);
 		} elseif ($this->limitDate()) {
 			// si la date d'inscription est dépassée
-			$this->flashBag->add("danger", "La date limite d'inscription est dépassée, votre inscription est refusée");
+			$this->flashBag->add(Alert::DANGER, Messages::ERROR_LIMIT_DATE);
 		} elseif ($this->isFull()) {
 			// l'event est complet pour le moment
-			$this->flashBag->add("danger", "Il n'y a plus de place pour le moment, un désistement peut avoir lieu, sait on jamais...");
+			$this->flashBag->add(Alert::DANGER, Messages::ERROR_IS_FULL);
 		} else {
 			// si tout est ok, on enregistre l'inscription
 			$this->event->addUser($this->user);
