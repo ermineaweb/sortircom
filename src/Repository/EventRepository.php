@@ -42,6 +42,7 @@ class EventRepository extends ServiceEntityRepository
         $queryBuilder = $this->createQueryBuilder('event');
         $queryBuilder->addSelect('user');
         $queryBuilder->leftJoin('event.users', 'user');
+        //$queryBuilder->addSelect('sch');
         /*$queryBuilder->addSelect('sch');
         $queryBuilder->innerJoin('event.creator', 'creator');
         $queryBuilder->innerJoin('creator.school', 'sch');*/
@@ -63,6 +64,15 @@ class EventRepository extends ServiceEntityRepository
             if ($pastevents !=null) {
                 $queryBuilder->andWhere("DATE_DIFF(CURRENT_DATE(), event.start) <= 31");
             }
+            /*if ($pastevents !=null || $registered !=null || $notregistered != null) {
+                $queryBuilder->andWhere('event.creator =:user');
+                $queryBuilder->setParameter('user', $user);
+                //$queryBuilder->andWhere('cat.enabled = :enabled');
+                //$queryBuilder->setParameter('enabled', true);
+                /*$queryBuilder->orWhere('user.id =:userId');
+                $queryBuilder->setParameter('userId', $userId);
+                $queryBuilder->orWhere($queryBuilder->expr()->isNull('user.id'));
+            }*/
             if ($eventscreated !=null) {
                 $queryBuilder->andWhere('event.creator =:user');
                 $queryBuilder->setParameter('user', $user);
