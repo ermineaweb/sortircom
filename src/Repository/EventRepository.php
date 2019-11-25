@@ -38,6 +38,7 @@ class EventRepository extends ServiceEntityRepository
             $queryBuilder->andWhere('sch.name =:school');
             $queryBuilder->setParameter('school', $school);
         }*/
+        $queryBuilder->andWhere("DATE_DIFF(CURRENT_DATE(), event.end) <= 31");
             if ($search !=null) {
                 $queryBuilder->andWhere('event.name like :val');
                 $queryBuilder->setParameter('val', '%'.$search.'%');
