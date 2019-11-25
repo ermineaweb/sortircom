@@ -177,31 +177,31 @@ class AppFixtures extends Fixture
 		$user->setSchool($eniquimper);
 		$manager->persist($user);
 
-        $user = new User();
-        $user->setUsername("victor");
-        $user->setLastname("Victor");
-        $user->setFirstname("Fabian");
-        $user->setEmail("victor@mail.com");
-        $user->setPassword($this->encoder->encodePassword($user, "123"));
-        $user->setPhone($faker->phoneNumber);
-        $user->setAvatar("avatar.jpg");
-        $user->setAdmin(false);
-        $user->setActive(true);
-        $user->setSchool($eninantes);
-        $manager->persist($user);
+        $userVic = new User();
+        $userVic->setUsername("victor");
+        $userVic->setLastname("Victor");
+        $userVic->setFirstname("Fabian");
+        $userVic->setEmail("victor@mail.com");
+        $userVic->setPassword($this->encoder->encodePassword($userVic, "123"));
+        $userVic->setPhone($faker->phoneNumber);
+        $userVic->setAvatar("avatar.jpg");
+        $userVic->setAdmin(false);
+        $userVic->setActive(true);
+        $userVic->setSchool($eninantes);
+        $manager->persist($userVic);
 
-        $user = new User();
-        $user->setUsername("baptiste");
-        $user->setLastname("Baptiste");
-        $user->setFirstname("Durand");
-        $user->setEmail("baptiste@mail.com");
-        $user->setPassword($this->encoder->encodePassword($user, "123"));
-        $user->setPhone($faker->phoneNumber);
-        $user->setAvatar("avatar.jpg");
-        $user->setAdmin(false);
-        $user->setActive(true);
-        $user->setSchool($eninantes);
-        $manager->persist($user);
+        $userBapt = new User();
+        $userBapt->setUsername("baptiste");
+        $userBapt->setLastname("Baptiste");
+        $userBapt->setFirstname("Durand");
+        $userBapt->setEmail("baptiste@mail.com");
+        $userBapt->setPassword($this->encoder->encodePassword($user, "123"));
+        $userBapt->setPhone($faker->phoneNumber);
+        $userBapt->setAvatar("avatar.jpg");
+        $userBapt->setAdmin(false);
+        $userBapt->setActive(true);
+        $userBapt->setSchool($eninantes);
+        $manager->persist($userBapt);
 		
 		// Events
 		$sortieValide = new Event();
@@ -235,7 +235,7 @@ class AppFixtures extends Fixture
         $sortie->setStart(new \DateTime("2019-12-14T15:30:01.012345Z"));
         $sortie->setEnd(new \DateTime("2019-12-14T18:03:01.012345Z"));
         $sortie->setLimitdate(new \DateTime("2019-11-30T15:03:01.012345Z"));
-        $sortie->setCreator($etudiant2);
+        $sortie->setCreator($userVic);
         $sortie->setPlace($place2);
         $sortie->setStatus(StatusEnum::OUVERTE);
         $manager->persist($sortie);
@@ -247,7 +247,7 @@ class AppFixtures extends Fixture
         $sortie->setStart(new \DateTime("2019-12-14T15:30:01.012345Z"));
         $sortie->setEnd(new \DateTime("2019-12-14T18:03:01.012345Z"));
         $sortie->setLimitdate(new \DateTime("2019-11-18T15:03:01.012345Z"));
-        $sortie->setCreator($etudiant4);
+        $sortie->setCreator($userVic);
         $sortie->setPlace($place2);
         $sortie->setStatus(StatusEnum::CLOTURE);
         $manager->persist($sortie);

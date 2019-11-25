@@ -14,6 +14,8 @@ abstract class Messages
 	public const NEW_EVENT_SUCCESS = "Votre sortie a bien été enregistrée, vous pouvez la modifier ou la publier";
 	public const NEW_EVENT_ERROR = "Votre sortie n'a pas pu être ajoutée";
 	public const PUBLISH_EVENT_SUCCESS = "Le statut de votre sortie est maintenant : ouverte";
+	public const CREATE_USER_ADMIN = "L'utilisateur/trice a bien été crée/e";
+	public const EDIT_USER_SUCCESS = "Votre profil a bien été mis à jour";
 	
 	/**
 	 * SECURITY MESSAGES

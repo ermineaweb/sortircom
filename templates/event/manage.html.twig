@@ -31,7 +31,7 @@
                     <input type="date" name="end" id="end"/>
                 </div>
                 <div>
-                    <input type="checkbox" name="creator"/> Sorties dont je suis l'organisateur/trice<br>
+                    <input type="checkbox" name="eventscreated"/> Sorties dont je suis l'organisateur/trice<br>
                     <input type="checkbox" name="registered"/> Sorties auquelles je suis inscrit/e<br>
                     <input type="checkbox" name="notregistered"/> Sorties auquelles je ne suis pas inscrit/e<br>
                     <input type="checkbox" name="pastevents"/> Sorties passées<br>
@@ -61,8 +61,8 @@
                     <td>{{ event.limitdate ? event.limitdate|date('d/m/Y') : '' }}</td>
                     <td>{{ event.actualsize }} / {{ event.maxsize }}</td>
                     <td>{{ event.status }}</td>
-                    <td>{{ event.creator }}</td>
-
+                    <td>
+                        <a href="{{ path('user_show', {'id': event.creator.id}) }}">{{ event.creator }}</a>
                     <td>
                         <a href="{{ path('event_show', {'id': event.id}) }}">Afficher</a>
                         <a href="{{ path('event_edit', {'id': event.id}) }}">Modifier</a>
