@@ -3,9 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\UserAdminType;
 use App\Form\UserType;
 use App\Repository\UserRepository;
 use App\Services\FileUpLoader;
+use App\Technical\Alert;
+use App\Technical\Messages;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -38,13 +41,15 @@ class UserController extends AbstractController
     /**
      * @Route("/new", name="user_new", methods={"GET","POST"})
      */
-    public function new(Request $request, FileUpLoader $fileUpLoader): Response
+    public function new(Request $request, FileUpLoader $fileUpLoader, UserPasswordEncoderInterface $encoder): Response
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $password = $encoder->encodePassword($user, $user->getPassword());
+            $user->setPassword($password);
 
             $avatarFile = $form['avatar']->getData();
             if ($avatarFile) {
@@ -64,6 +69,34 @@ class UserController extends AbstractController
             'form' => $form->createView(),
         ]);
 
+    }
+
+    /**
+     * A VERIFIER : Encodage
+     * Cette route permet à l'administrateur de créer un nouvel utilisateur :
+     * @Route("/newuser", name="user_newuser", methods={"GET","POST"} )
+     */
+    public function newuser(Request $request, UserPasswordEncoderInterface $encoder) :Response
+    {
+        $user = new User();
+        $form = $this->createForm(UserAdminType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $password = $encoder->encodePassword($user, '123');
+            $user->setPassword($password);
+
+            $this->entityManager->persist($user);
+            $this->entityManager->flush();
+
+            $this->addFlash(Alert::SUCCESS,Messages::CREATE_USER_ADMIN);
+            return $this->redirectToRoute('user_new');
+        }
+
+        return $this->render('user/newuser.html.twig', [
+            'user' => $user,
+            'form' => $form->createView(),
+        ]);
     }
 
     /**
@@ -92,25 +125,23 @@ class UserController extends AbstractController
     public function edit(Request $request,
                          User $user,
                          FileUpLoader $fileUpLoader,
-                         UserPasswordEncoderInterface $passwordEncoder): Response
+                         UserPasswordEncoderInterface $encoder): Response
     {
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $password = $request->getPassword();
+            $password = $encoder->encodePassword($user, $user->getPassword());
+            $user->setPassword($password);
             $avatarFile = $form['avatar']->getData();
             if ($avatarFile) {
                 $avatarFileName = $fileUpLoader->upload($avatarFile);
                 dump($avatarFileName);
                 $user->setAvatar($avatarFileName);
             }
-            if ($password) {
-                $user->setPassword($this->$passwordEncoder->encodePassword($user, $password));
-                dump($password);
-            }
 
             $this->entityManager->flush();
+            $this->addFlash(Alert::SUCCESS,Messages::EDIT_USER_SUCCESS);
         }
 
         return $this->render('user/edit.html.twig', [
