@@ -28,6 +28,7 @@ class UserRepository extends ServiceEntityRepository
                 ->getQuery()
                 ->getOneOrNullResult();
         } catch (NonUniqueResultException $e) {
+        
         }
     }
 

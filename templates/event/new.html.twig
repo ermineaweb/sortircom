@@ -5,17 +5,6 @@
 {% block h1 %}Créer une sortie{% endblock %}
 
 {% block body %}
-    <form action="">
-        <div>
-            <label for="idcity"> Ville :</label>
-            <select name="city" class="form-control" id="idcity">
-                {% for city in cities %}
-                    <option value="{{ city.id }}">{{ city.name }}</option>
-                {% endfor %}
-            </select>
-        </div>
-    </form>
-
     <div>
         {{ form_start(form) }}
 
@@ -70,13 +59,27 @@
         {{ form_widget(form.description) }}
         {{ form_help(form.description) }}
 
+        <div>
+            <label for="idcity"> Ville</label>
+            <select name="city" class="form-control" id="idcity">
+                {% for city in cities %}
+                    <option value="{{ city.id }}">{{ city.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div id="maclasse"></div>
+
         {{ form_label(form.place) }}
         {{ form_widget(form.place) }}
         {{ form_help(form.place) }}
 
         <button class="btn btn-info">{{ button_label|default('Enregistrer') }}</button>
-        <button class="btn btn-info" type="reset" name="Annuler">Annuler</button>
+        <a href="{{ path('event_index') }}" class="btn btn-danger">Annuler et revenir à l'accueil</a>
         {{ form_end(form) }}
     </div>
-    {#<a href="{{ path('event_index') }}">back to list</a>#}
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('assets/js/places.js') }}"></script>
 {% endblock %}
