@@ -64,12 +64,11 @@ class EventRepository extends ServiceEntityRepository
             if ($pastevents !=null) {
                 $queryBuilder->andWhere("DATE_DIFF(CURRENT_DATE(), event.start) <= 31");
             }
-            /*if ($pastevents !=null || $registered !=null || $notregistered != null) {
+
+            /*if ($eventscreated !=null || $registered !=null || $notregistered != null) {
                 $queryBuilder->andWhere('event.creator =:user');
                 $queryBuilder->setParameter('user', $user);
-                //$queryBuilder->andWhere('cat.enabled = :enabled');
-                //$queryBuilder->setParameter('enabled', true);
-                /*$queryBuilder->orWhere('user.id =:userId');
+                $queryBuilder->orWhere('user.id =:userId');
                 $queryBuilder->setParameter('userId', $userId);
                 $queryBuilder->orWhere($queryBuilder->expr()->isNull('user.id'));
             }*/
