@@ -24,7 +24,7 @@ security:
             logout:
                 path: app_logout
                 # where to redirect after logout
-                # target: app_any_route
+                target: index_logout
 
             # permet a l'utilisateur de choisir que l'on se souvienne de lui
             remember_me:

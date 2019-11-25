@@ -6,6 +6,7 @@ use App\Entity\Event;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\Tools\Pagination\Paginator;
+use function Doctrine\ORM\QueryBuilder;
 
 /**
  * @method Event|null find($id, $lockMode = null, $lockVersion = null)
@@ -15,7 +16,6 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
  */
 class EventRepository extends ServiceEntityRepository
 {
-
     const PAGINATION = 10;
     public function __construct(ManagerRegistry $registry)
     {
@@ -27,14 +27,26 @@ class EventRepository extends ServiceEntityRepository
     //  * @return Event[] Returns an array of Event objects
     //  */
 // PAR DEFAUT LA SCHOOL EST LA SCHOOL DE USER CONNECTE
-    public function findByFilters($search = null, $start = null, $end = null, $school = null, $page = 1, $pastevents = null) : Paginator
+    public function findByFilters($search = null,
+                                  $start = null,
+                                  $end = null,
+                                  $school = null,
+                                  $page = 1,
+                                  $pastevents = null,
+                                  $eventscreated = null,
+                                  $registered = null,
+                                  $notregistered = null,
+                                  $user,
+                                  $userId) : Paginator
     {
         $queryBuilder = $this->createQueryBuilder('event');
-        //$queryBuilder->addSelect('s');
-        /*$queryBuilder->innerJoin('event.creator', 'creator');
-        $queryBuilder->innerJoin('creator.school', 'sch');
+        $queryBuilder->addSelect('user');
+        $queryBuilder->leftJoin('event.users', 'user');
+        /*$queryBuilder->addSelect('sch');
+        $queryBuilder->innerJoin('event.creator', 'creator');
+        $queryBuilder->innerJoin('creator.school', 'sch');*/
         $queryBuilder->orderBy('event.start', 'ASC');
-        if ($school !=null){
+        /*if ($school !=null){
             $queryBuilder->andWhere('sch.name =:school');
             $queryBuilder->setParameter('school', $school);
         }*/
@@ -50,6 +62,17 @@ class EventRepository extends ServiceEntityRepository
             }
             if ($pastevents !=null) {
                 $queryBuilder->andWhere("DATE_DIFF(CURRENT_DATE(), event.start) <= 31");
+            }
+            if ($eventscreated !=null) {
+                $queryBuilder->andWhere('event.creator =:user');
+                $queryBuilder->setParameter('user', $user);
+            }
+            if ($registered !=null) {
+                $queryBuilder->andWhere('user.id =:userId');
+                $queryBuilder->setParameter('userId', $userId);
+            }
+            if ($notregistered !=null) {
+                $queryBuilder->andWhere($queryBuilder->expr()->isNull('user.id'));
             }
         $queryBuilder->setFirstResult(($page-1)*EventRepository::PAGINATION);
             $queryBuilder->setMaxResults(EventRepository::PAGINATION);

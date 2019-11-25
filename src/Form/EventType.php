@@ -15,32 +15,32 @@ class EventType extends AbstractType
     {
         $builder
             ->add('name', null, [
-                'label' => 'Nom de la sortie : ',
+                'label' => 'Nom de la sortie',
                 'attr' => [
-                    'placeholder' => 'Baptème de plongée aux Glénan'
+                    'placeholder' => 'Nom de votre sortie...'
                 ],
             ])
             ->add('start',null, [
-                    'label' => 'Date et heure début de la sortie :',
+                    'label' => 'Date et heure du début de la sortie',
                 ])
             ->add('end', DateTimeType::class, [
-                    'label' => 'Date et heure fin de la sortie :'
+                    'label' => 'Date et heure de la fin de la sortie'
             ])
             ->add('limitdate', DateType::class, [
                     'label' => 'Date limite d\'inscription :',
                     'widget' => 'single_text'
             ])
             ->add('maxsize', null, [
-                    'label' => 'Nombre de places :'
+                    'label' => 'Nombre de places'
             ])
             ->add('description', null, [
-                    'label' => 'Description et infos :',
+                    'label' => 'Description et infos',
                     'attr' => [
-                        'placeholder' => 'Départ du bateau à 09h00'
+                        'placeholder' => 'Description de votre sortie...'
                     ],
             ])
             ->add('place', null, [
-                    'label' => 'Lieu : ',
+                    'label' => 'Lieu',
             ])
           ;
     }
