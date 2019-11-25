@@ -1,6 +1,9 @@
 # Symfony project
 
 
+Documentation pour le projet.
+
+
 [GitLab](https://gitlab.com/ermineaweb/sortircom/pipelines)
 
 
@@ -143,7 +146,16 @@ Ressources
 ```
 composer require api
 ```
-#### 3. 
+#### 3. Add annotation to your entity
+```php
+use ApiPlatform\Core\Annotation\ApiResource;
+
+/**
+ * @ApiResource
+ * @ORM\Entity
+ */
+ class MyEntity { ... }
+ ```
 
 ## API-Platform-Admin
 [Top](#Index)
