@@ -125,7 +125,8 @@ class UserController extends AbstractController
     public function edit(Request $request,
                          User $user,
                          FileUpLoader $fileUpLoader,
-                         UserPasswordEncoderInterface $encoder): Response
+                         UserPasswordEncoderInterface $encoder,
+                         EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
@@ -139,8 +140,9 @@ class UserController extends AbstractController
                 $user->setAvatar($avatarFileName);
             }
 
-            $this->entityManager->flush();
+            $entityManager->flush();
             $this->addFlash(Alert::SUCCESS,Messages::USER_SUCCESS_EDIT);
+            return $this->redirectToRoute('user_show', ['id' => $user->getId()]);
         }
 
         return $this->render('user/edit.html.twig', [
