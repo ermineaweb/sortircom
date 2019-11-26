@@ -65,7 +65,15 @@
                         <a href="{{ path('user_show', {'id': event.creator.id}) }}">{{ event.creator }}</a>
                     <td>
                         <a href="{{ path('event_show', {'id': event.id}) }}">Afficher</a>
+                        {% if app.user == event.creator and event.getStatus == 0 %}
                         <a href="{{ path('event_edit', {'id': event.id}) }}">Modifier</a>
+                        <a href="{{ path('event_publish', {'id': event.id}) }}">Publier</a>
+                        <a href="{{ path('event_delete', {'id': event.id}) }}">Supprimer</a>
+                        {% endif %}
+                        {% if app.user == event.creator and event.getStatus == 1 %}
+                        <a href="{{ path('event_cancel', {'id': event.id}) }}">Annuler</a>
+                        {% endif %}
+
                     </td>
                 </tr>
             {% else %}
