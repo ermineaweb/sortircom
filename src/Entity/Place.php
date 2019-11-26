@@ -165,6 +165,7 @@ class Place implements \JsonSerializable
 	public function jsonSerialize()
 	{
 		return [
+			"id" => $this->id,
 			"name" => $this->name,
 			"address" => $this->address,
 			"latitude" => $this->latitude,

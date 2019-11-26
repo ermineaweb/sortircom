@@ -29,23 +29,36 @@ abstract class Messages
 	 */
 	public const INSCRIPTION_ERROR_ALREADY_REGISTRED = "Vous êtes déjà inscrit à cet évènement";
 	public const INSCRIPTION_ERROR_NO_OPEN = "L'évènement n'est pas ouvert, votre inscription est refusée";
-	public const ERROR_EVENT_LIMIT_DATE = "La date limite d'inscription est dépassée, votre inscription est refusée";
-	public const ERROR_EVENT_IS_FULL = "Il n'y a plus de place pour le moment, un désistement peut avoir lieu, sait on jamais...";
+	public const INSCRIPTION_ERROR_EVENT_LIMIT_DATE = "La date limite d'inscription est dépassée, votre inscription est refusée";
+	public const INSCRIPTION_ERROR_EVENT_IS_FULL = "Il n'y a plus de place pour le moment, un désistement peut avoir lieu, sait on jamais...";
 	
 	/*
 	 * DESINSCRIPTION
 	 */
-	public const ERROR_EVENT_NOT_REGISTERED = "Vous n'êtes pas inscrit à cet évènement";
-	public const ERROR_EVENT_CANCELED = "Vous ne pouvez pas vous désinscrire d'un évènement annulé";
-	public const ERROR_EVENT_FINISHED = "Vous ne pouvez pas vous désinscrire d'un évènement terminé";
-	public const ERROR_EVENT_IN_PROGRESS = "Vous ne pouvez pas vous désinscrire d'un évènement en cours";
-	public const SUCCESS_UNSUBSCRIBE = "Vous avez bien été désinscrit de la sortie ";
+	public const DESINSCRIPTION_ERROR_EVENT_NOT_REGISTERED = "Vous n'êtes pas inscrit à cet évènement";
+	public const DESINSCRIPTION_ERROR_EVENT_CANCELED = "Vous ne pouvez pas vous désinscrire d'un évènement annulé";
+	public const DESINSCRIPTION_ERROR_EVENT_FINISHED = "Vous ne pouvez pas vous désinscrire d'un évènement terminé";
+	public const DESINSCRIPTION_ERROR_EVENT_IN_PROGRESS = "Vous ne pouvez pas vous désinscrire d'un évènement en cours";
+	public const DESINSCRIPTION_SUCCESS_UNSUBSCRIBE = "Vous avez bien été désinscrit de la sortie ";
 
 	/*
 	 * SECURITY
 	 */
-	public const SECURITY = "Vous êtes à présent connecté, bienvenue";
-	public const LOGIN_ERROR = "Identifiants incorrects";
-	public const LOGOUT_SUCCESS = "Vous êtes à présent déconnecté";
-	
+	public const SECURITY_SUCESS_LOGIN = "Vous êtes à présent connecté, bienvenue";
+	public const SECURITY_ERROR_ERROR = "Identifiants incorrects";
+	public const SECURITY_SUCCESS_LOGOUT = "Vous êtes à présent déconnecté";
+
+	/*
+	 * CITY
+	 */
+	public const CITY_SUCESS_NEW = "La ville a bien été ajoutée";
+    public const CITY_SUCESS_EDIT = "La ville a bien été modifiée";
+    public const CITY_SUCESS_DELETE = "La ville a bien été supprimée";
+
+    /*
+     * PLACES
+     */
+    public const PLACES_SUCESS_NEW = "La ville a bien été ajoutée";
+    public const PLACES_SUCESS_EDIT = "La ville a bien été modifiée";
+    public const PLACES_SUCESS_DELETE = "La ville a bien été supprimée";
 }

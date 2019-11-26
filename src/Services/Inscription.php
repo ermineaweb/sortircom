@@ -42,10 +42,10 @@ class Inscription
 			$this->flashBag->add(Alert::DANGER, Messages::INSCRIPTION_ERROR_NO_OPEN);
 		} elseif ($this->limitDate()) {
 			// si la date d'inscription est dépassée
-			$this->flashBag->add(Alert::DANGER, Messages::ERROR_LIMIT_DATE);
+			$this->flashBag->add(Alert::DANGER, Messages::INSCRIPTION_ERROR_EVENT_LIMIT_DATE);
 		} elseif ($this->isFull()) {
 			// l'event est complet pour le moment
-			$this->flashBag->add(Alert::DANGER, Messages::ERROR_IS_FULL);
+			$this->flashBag->add(Alert::DANGER, Messages::INSCRIPTION_ERROR_EVENT_IS_FULL);
 		} else {
 			// si tout est ok, on enregistre l'inscription
 			$this->event->addUser($this->user);

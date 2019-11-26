@@ -6,6 +6,7 @@ use App\Entity\City;
 use App\Form\CityType;
 use App\Repository\CityRepository;
 use App\Technical\Alert;
+use App\Technical\Messages;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -65,7 +66,7 @@ class CityController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($city);
             $entityManager->flush();
-            $this->addFlash(Alert::SUCCESS, "La ville a bien été ajoutée");
+            $this->addFlash(Alert::SUCCESS, Messages::CITY_SUCESS_NEW);
             return $this->redirectToRoute('city_index');
         }
 
@@ -96,7 +97,7 @@ class CityController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
-            $this->addFlash('success', "La ville a bien été modifiée.");
+            $this->addFlash('success', Messages::CITY_SUCESS_EDIT);
 
             return $this->redirectToRoute('city_show', ['id' => $city->getId()]);
         }
@@ -115,6 +116,7 @@ class CityController extends AbstractController
         if ($this->isCsrfTokenValid('delete' . $city->getId(), $request->request->get('_token'))) {
             $entityManager->remove($city);
             $entityManager->flush();
+            $this->addFlash('success', Messages::CITY_SUCESS_DELETE);
         }
 
         return $this->redirectToRoute('city_index');

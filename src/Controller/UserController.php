@@ -89,7 +89,7 @@ class UserController extends AbstractController
             $this->entityManager->persist($user);
             $this->entityManager->flush();
 
-            $this->addFlash(Alert::SUCCESS,Messages::CREATE_USER_ADMIN);
+            $this->addFlash(Alert::SUCCESS,Messages::USER_SUCCESS_NEW);
             return $this->redirectToRoute('user_new');
         }
 
