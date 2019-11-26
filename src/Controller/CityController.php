@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\City;
 use App\Form\CityType;
 use App\Repository\CityRepository;
+use App\Technical\Alert;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -64,7 +65,7 @@ class CityController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($city);
             $entityManager->flush();
-            $this->addFlash('success', "La ville a bien été ajoutée");
+            $this->addFlash(Alert::SUCCESS, "La ville a bien été ajoutée");
             return $this->redirectToRoute('city_index');
         }
 

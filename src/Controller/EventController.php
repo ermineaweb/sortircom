@@ -104,7 +104,7 @@ class EventController extends AbstractController
             $this->entityManager->persist($event);
             $this->entityManager->flush();
 
-            $this->addFlash(Alert::SUCCESS, Messages::NEW_EVENT_SUCCESS);
+            $this->addFlash(Alert::SUCCESS, Messages::EVENT_SUCCESS_NEW);
             return $this->redirectToRoute('event_index');
         }
 

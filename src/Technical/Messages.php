@@ -27,8 +27,8 @@ abstract class Messages
 	/*
 	 * INSCRIPTION
 	 */
-	public const ERROR_USER_ALREADY_REGISTERED = "Vous êtes déjà inscrit à cet évènement";
-	public const ERROR_EVENT_NO_OPEN = "L'évènement n'est pas ouvert, votre inscription est refusée";
+	public const INSCRIPTION_ERROR_ALREADY_REGISTRED = "Vous êtes déjà inscrit à cet évènement";
+	public const INSCRIPTION_ERROR_NO_OPEN = "L'évènement n'est pas ouvert, votre inscription est refusée";
 	public const ERROR_EVENT_LIMIT_DATE = "La date limite d'inscription est dépassée, votre inscription est refusée";
 	public const ERROR_EVENT_IS_FULL = "Il n'y a plus de place pour le moment, un désistement peut avoir lieu, sait on jamais...";
 	
@@ -44,7 +44,7 @@ abstract class Messages
 	/*
 	 * SECURITY
 	 */
-	public const LOGIN_SUCCESS = "Vous êtes à présent connecté, bienvenue";
+	public const SECURITY = "Vous êtes à présent connecté, bienvenue";
 	public const LOGIN_ERROR = "Identifiants incorrects";
 	public const LOGOUT_SUCCESS = "Vous êtes à présent déconnecté";
 	

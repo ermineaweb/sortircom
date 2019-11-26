@@ -136,12 +136,11 @@ class UserController extends AbstractController
             $avatarFile = $form['avatar']->getData();
             if ($avatarFile) {
                 $avatarFileName = $fileUpLoader->upload($avatarFile);
-                dump($avatarFileName);
                 $user->setAvatar($avatarFileName);
             }
 
             $this->entityManager->flush();
-            $this->addFlash(Alert::SUCCESS,Messages::EDIT_USER_SUCCESS);
+            $this->addFlash(Alert::SUCCESS,Messages::USER_SUCCESS_EDIT);
         }
 
         return $this->render('user/edit.html.twig', [

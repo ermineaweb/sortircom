@@ -36,10 +36,10 @@ class Inscription
 	public function register()
 	{
 		if ($this->isAlreadyRegistered()) {
-			$this->flashBag->add(Alert::DANGER, Messages::ERROR_ALREADY_REGISTERED);
+			$this->flashBag->add(Alert::DANGER, Messages::INSCRIPTION_ERROR_ALREADY_REGISTRED);
 		} elseif (!$this->isEventOpen()) {
 			// si l'évènement n'est pas ouvert
-			$this->flashBag->add(Alert::DANGER, Messages::ERROR_EVENT_NO_OPENED);
+			$this->flashBag->add(Alert::DANGER, Messages::INSCRIPTION_ERROR_NO_OPEN);
 		} elseif ($this->limitDate()) {
 			// si la date d'inscription est dépassée
 			$this->flashBag->add(Alert::DANGER, Messages::ERROR_LIMIT_DATE);
