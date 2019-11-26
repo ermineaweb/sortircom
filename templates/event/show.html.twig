@@ -42,6 +42,12 @@
                 </ul>
             </td>
         </tr>
+        {% if event.status == 5 %}
+        <tr>
+            <th>Motif d'annulation</th>
+            <td>{{ event.cancel }}</td>
+        </tr>
+        {% endif %}
         </tbody>
     </table>
 
