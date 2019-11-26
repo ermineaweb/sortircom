@@ -13,8 +13,7 @@ $(document).ready(() => {
         places = result;
     });
 
-    $("#city").onload(() => {
-        alert("it woek");
+    $("#city").on('change', () => {
         // on met a jour le champ select places
         let newOptions = places.filter(p => p.city == $("#city").val());
         let $el = $("#event_place");
