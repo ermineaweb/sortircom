@@ -9,6 +9,8 @@
         <label for="search">Rechercher :</label>
         <input type="text" name="search" id="search" class="form-control">
         <hr>
+        {% if app.user.admin %}
+
         {{ form_start(form) }}
         {{ form_label(form.name) }}
         {{ form_widget(form.name) }}
@@ -18,6 +20,8 @@
         {{ form_help(form.zipcode) }}
         <button class="button btn btn-info">{{ button_label|default('Enregistrer') }}</button>
         {{ form_end(form) }}
+
+        {% endif %}
     </div>
 
     <div>
@@ -26,7 +30,11 @@
             <tr>
                 <th>Nom</th>
                 <th>Code postal</th>
+
+                {% if app.user.admin %}
                 <th>Actions</th>
+                {% endif %}
+
             </tr>
             </thead>
             <tbody id="table">
@@ -34,10 +42,12 @@
                 <tr>
                     <td>{{ city.name }}</td>
                     <td>{{ city.zipcode }}</td>
+                    {% if app.user.admin %}
                     <td>
                         <a href="{{ path('city_edit', {'id': city.id}) }}">Modifier</a>
                         {% include 'city/_delete_form.html.twig' %}
                     </td>
+                    {% endif %}
                 </tr>
             {% else %}
                 <tr>

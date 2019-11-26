@@ -13,7 +13,9 @@
                 <th>City</th>
                 <th>Longitude</th>
                 <th>Latitude</th>
+                {% if app.user.admin %}
                 <th>actions</th>
+                {% endif %}
             </tr>
         </thead>
         <tbody>
@@ -24,10 +26,12 @@
                 <td>{{ place.city.name }}</td>
                 <td>{{ place.longitude }}</td>
                 <td>{{ place.latitude }}</td>
+                {% if app.user.admin %}
                 <td>
                     <a href="{{ path('place_show', {'id': place.id}) }}">show</a>
                     <a href="{{ path('place_edit', {'id': place.id}) }}">edit</a>
                 </td>
+                {% endif %}
             </tr>
         {% else %}
             <tr>
@@ -36,6 +40,7 @@
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('place_new') }}">Create new</a>
+    {%  if app.user.admin %}
+    <a href="{{ path('place_new') }}">Enregistrer</a>
+    {% endif %}
 {% endblock %}

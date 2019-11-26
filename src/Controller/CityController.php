@@ -74,6 +74,7 @@ class CityController extends AbstractController
             'city' => $city,
             'form' => $form->createView(),
             'cities' => $cities,
+            'request' => $request,
         ]);
     }
 
