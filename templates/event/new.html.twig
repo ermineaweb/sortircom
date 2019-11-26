@@ -60,19 +60,21 @@
         {{ form_help(form.description) }}
 
         <div>
-            <label for="idcity"> Ville</label>
-            <select name="city" class="form-control" id="idcity">
+            <label for="city"> Ville</label>
+            <select name="city" class="form-control" id="city">
                 {% for city in cities %}
                     <option value="{{ city.id }}">{{ city.name }}</option>
                 {% endfor %}
             </select>
         </div>
 
-        <div id="maclasse"></div>
-
         {{ form_label(form.place) }}
         {{ form_widget(form.place) }}
         {{ form_help(form.place) }}
+
+        <div id="address"></div>
+        <div id="latitude"></div>
+        <div id="longitude"></div>
 
         <button class="btn btn-info">{{ button_label|default('Enregistrer') }}</button>
         <a href="{{ path('event_index') }}" class="btn btn-danger">Annuler et revenir à l'accueil</a>

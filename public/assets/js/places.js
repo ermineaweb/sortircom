@@ -1,20 +1,24 @@
-$(document).ready(function () {
-    const url = "http://localhost/sortircom/sortircom/public/index.php/api/places";
+$(document).ready(() => {
+    // si on veut modifier les places récupérées, on changera la requête qui est exécutée dans le controlle sur cette adresse :
+    const url = "http://localhost/sortircom/sortircom/public/index.php/place/api";
 
-    $("#idcity").change(function () {
-        $.getJSON(url, function (result) {
-            // parcours du résultat json
-            $.each(result, function (key, value) {
-                // on parcours chaque place
-                $.each(value, function (key, place) {
-                    let idcity = $("#idcity").children("option:selected").val();
-                    if (idcity == 1) {
-                        console.log(key + " " + place);
-                        console.log(place.address);
-                    }
-                })
-            });
-        });
+    // on récupère une seule fois la liste des places en JSON, au chargement de la page
+    let places = "";
+    $.getJSON(url, (result) => {
+        places = result;
+    });
+
+    // à chaque changement de la ville, on met a jour le champ select place
+    $("#city").change(() => {
+        // parcours du résultat json
+        console.log(places.filter(p => p.city == $("#city").val()));
+        // on met a jour le champ select places
+        // TODO
+    });
+
+    // à chaque changement de place, on met à jour les coordonnées de la place (address, latitude, longitude)
+    $("#event_place").change(() => {
+        console.log("hibhb" + $("#event_place").val());
     });
 
 });
