@@ -10,6 +10,7 @@ use App\Repository\CityRepository;
 use App\Repository\EventRepository;
 use App\Repository\PlaceRepository;
 use App\Repository\SchoolRepository;
+use App\Services\EventCreation;
 use App\Services\Inscription;
 use App\Services\Withdraw;
 use App\Technical\Alert;
@@ -77,38 +78,34 @@ class EventController extends AbstractController
 			'page' => $page
 		]);
 	}
-	
-	/**
-	 * Cette route permet de créer une sortie :
-	 * - si la date de début de la sortie est supérieure à la date actuelle
-	 * - si le nombre maximum de participants est supérieur à 0
-	 * Alors :
-	 * - l'utilisateur en cours devient le créateur de l'annonce
-	 * - le statut de la sortie devient créee
-	 * @Route("/creer", name="new", methods={"GET","POST"})
-	 */
-	public function new(Request $request, CityRepository $cityRepository, PlaceRepository $placeRepository): Response
+
+    /**
+     * Cette route permet de créer une sortie :
+     * - si la date de début de la sortie est supérieure à la date actuelle
+     * - si le nombre maximum de participants est supérieur à 0
+     * Alors :
+     * - l'utilisateur en cours devient le créateur de l'annonce
+     * - le statut de la sortie devient créee
+     * @Route("/creer", name="new", methods={"GET","POST"})
+     * @param Request $request
+     * @param CityRepository $cityRepository
+     * @param PlaceRepository $placeRepository
+     * @param EventCreation $eventCreation
+     * @return Response
+     */
+	public function new(Request $request, CityRepository $cityRepository, PlaceRepository $placeRepository, EventCreation $eventCreation): Response
 	{
 		$event = new Event();
 		$form = $this->createForm(EventType::class, $event);
 		$form->handleRequest($request);
 		
 		if ($form->isSubmitted() && $form->isValid()) {
-			
-			if ($event->getStart() <= new \DateTime()) {
-				$this->addFlash(Alert::DANGER, Messages::EVENT_ERROR_NEW_DATE);
-			} elseif ($event->getMaxsize() < 0) {
-				$this->addFlash(Alert::DANGER, Messages::EVENT_ERROR_MAXSIZE);
-			} else {
-				//L'utilisateur connecté qui crée l'event devient le creator
-				$event->setCreator($this->getUser());
-				// status par défaut au moment de la création
-				$event->setStatus(StatusEnum::CREE);
-				
-				$this->entityManager->persist($event);
-				$this->entityManager->flush();
-				$this->addFlash(Alert::SUCCESS, Messages::EVENT_SUCCESS_NEW);
-			}
+
+            $eventCreation->setEvent($event);
+            $eventCreation->setUser($this->getUser());
+            $eventCreation->creation();
+
+
 				return $this->redirectToRoute('event_new');
 		}
 		
