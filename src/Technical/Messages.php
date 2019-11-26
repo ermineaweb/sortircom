@@ -17,6 +17,8 @@ abstract class Messages
 	public const EVENT_SUCCESS_CANCEL = "L'annulation de la sortie est effectuée";
 	public const EVENT_ERROR_CANCEL = "Vous devez indiquer un motif d'annulation de la sortie";
 	public const EVENT_ERROR_NEW = "Votre sortie n'a pas pu être ajoutée";
+	public const EVENT_ERROR_NEW_DATE = "La date de la sortie doit être supérieure à la date du jour";
+	public const EVENT_ERROR_MAXSIZE = "Le nombre de participants doit être supérieur à 0";
 	
 	/*
 	 * USER
@@ -32,6 +34,8 @@ abstract class Messages
 	public const INSCRIPTION_ERROR_NO_OPEN = "L'évènement n'est pas ouvert, votre inscription est refusée";
 	public const INSCRIPTION_ERROR_EVENT_LIMIT_DATE = "La date limite d'inscription est dépassée, votre inscription est refusée";
 	public const INSCRIPTION_ERROR_EVENT_IS_FULL = "Il n'y a plus de place pour le moment, un désistement peut avoir lieu, sait on jamais...";
+	public const INSCRIPTION_ERROR_CREATOR = "Vous ne pouvez pas vous inscrire à votre propre évènement";
+	public const INSCRIPTION_SUCCESS_SUBSCRIBE = "Vous êtes à présent inscrit à cette sortie";
 	
 	/*
 	 * DESINSCRIPTION
@@ -40,7 +44,7 @@ abstract class Messages
 	public const DESINSCRIPTION_ERROR_EVENT_CANCELED = "Vous ne pouvez pas vous désinscrire d'un évènement annulé";
 	public const DESINSCRIPTION_ERROR_EVENT_FINISHED = "Vous ne pouvez pas vous désinscrire d'un évènement terminé";
 	public const DESINSCRIPTION_ERROR_EVENT_IN_PROGRESS = "Vous ne pouvez pas vous désinscrire d'un évènement en cours";
-	public const DESINSCRIPTION_SUCCESS_UNSUBSCRIBE = "Vous avez bien été désinscrit de la sortie ";
+	public const DESINSCRIPTION_SUCCESS_UNSUBSCRIBE = "Votre désinscription a bien été prise en comtpe";
 
 	/*
 	 * SECURITY

@@ -88,6 +88,8 @@ class Event
     {
         $this->users = new ArrayCollection();
         $this->start = new \DateTime();
+        $this->end = new \DateTime();
+        $this->limitdate = new \DateTime();
     }
 
     /*
