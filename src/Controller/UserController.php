@@ -60,7 +60,7 @@ class UserController extends AbstractController
 
             $this->entityManager->persist($user);
             $this->entityManager->flush();
-
+            $this->addFlash(Alert::SUCCESS,Messages::USER_SUCCESS_NEW);
             return $this->redirectToRoute('user_new');
         }
 
@@ -157,6 +157,7 @@ class UserController extends AbstractController
         if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
             $this->entityManager->remove($user);
             $this->entityManager->flush();
+            $this->addFlash(Alert::SUCCESS,Messages::USER_SUCESS_DELETE);
         }
 
         return $this->redirectToRoute('user_index');

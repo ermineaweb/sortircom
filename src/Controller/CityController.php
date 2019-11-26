@@ -97,7 +97,7 @@ class CityController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
-            $this->addFlash('success', Messages::CITY_SUCESS_EDIT);
+            $this->addFlash(Alert::SUCCESS, Messages::CITY_SUCESS_EDIT);
 
             return $this->redirectToRoute('city_show', ['id' => $city->getId()]);
         }
@@ -116,7 +116,7 @@ class CityController extends AbstractController
         if ($this->isCsrfTokenValid('delete' . $city->getId(), $request->request->get('_token'))) {
             $entityManager->remove($city);
             $entityManager->flush();
-            $this->addFlash('success', Messages::CITY_SUCESS_DELETE);
+            $this->addFlash(Alert::SUCCESS, Messages::CITY_SUCESS_DELETE);
         }
 
         return $this->redirectToRoute('city_index');
