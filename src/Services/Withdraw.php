@@ -34,7 +34,7 @@ class Withdraw
 	
 	public function leave()
 	{
-		if (!$this->isNotRegistered()) {
+		if (!$this->isRegistered()) {
 			$this->flashBag->add(Alert::DANGER, Messages::DESINSCRIPTION_ERROR_EVENT_NOT_REGISTERED );
 		} elseif ($this->isEventCanceled()) {
 			$this->flashBag->add(Alert::DANGER, Messages::DESINSCRIPTION_ERROR_EVENT_CANCELED);
@@ -46,6 +46,7 @@ class Withdraw
 			$this->event->removeUser($this->user);
 			$this->userManager->persist($this->user);
 			$this->userManager->flush();
+			$this->flashBag->add(Alert::SUCCESS, Messages::DESINSCRIPTION_SUCCESS_UNSUBSCRIBE);
 		}
 	}
 	
