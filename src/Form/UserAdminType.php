@@ -16,21 +16,21 @@ class UserAdminType extends AbstractType
     {
         $builder
             ->add('username', null,[
-                'label' => 'Pseudo : ',
+                'label' => 'Pseudo',
                 'attr' => [
                     'placeholder' => 'login'
                 ],
             ])
             ->add('email', null,[
-                'label' => 'Adresse mail : ',
+                'label' => 'Adresse mail',
                 'attr' => [
-                    'placeholder' => 'erwann.legall@eni.bzh'
+                    'placeholder' => 'votreadresse@mail.com'
                 ],
             ])
             ->add('school', null,[
-                'label' => 'Ecole : ',
+                'label' => 'Ecole',
                 'attr' => [
-                    'placeholder' => 'ENI Quimper'
+                    'placeholder' => 'Nom de l\'école...'
                 ],
             ])
         ;
