@@ -23,6 +23,7 @@ abstract class Messages
 	 */
 	public const USER_SUCCESS_NEW = "L'utilisateur a bien été créé";
 	public const USER_SUCCESS_EDIT = "Votre profil a bien été mis à jour";
+	public const USER_SUCESS_DELETE= "L'utilisateur a bien été supprimé";
 	
 	/*
 	 * INSCRIPTION
@@ -56,9 +57,9 @@ abstract class Messages
     public const CITY_SUCESS_DELETE = "La ville a bien été supprimée";
 
     /*
-     * PLACES
+     * PLACE
      */
-    public const PLACES_SUCESS_NEW = "La ville a bien été ajoutée";
-    public const PLACES_SUCESS_EDIT = "La ville a bien été modifiée";
-    public const PLACES_SUCESS_DELETE = "La ville a bien été supprimée";
+    public const PLACE_SUCESS_NEW = "Le lieu a bien été ajouté";
+    public const PLACE_SUCESS_EDIT = "Le lieu a bien été modifié";
+    public const PLACE_SUCESS_DELETE = "Le lieu a bien été supprimé";
 }

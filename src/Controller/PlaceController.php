@@ -5,6 +5,9 @@ namespace App\Controller;
 use App\Entity\Place;
 use App\Form\PlaceType;
 use App\Repository\PlaceRepository;
+use App\Technical\Alert;
+use App\Technical\Messages;
+use http\Message;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -46,7 +49,7 @@ class PlaceController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($place);
             $entityManager->flush();
-
+            $this->addFlash(Alert::SUCCESS, Messages::PLACE_SUCESS_NEW);
             return $this->redirectToRoute('place_index');
         }
 
@@ -76,6 +79,7 @@ class PlaceController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
+            $this->addFlash(Alert::SUCCESS, Messages::PLACE_SUCESS_EDIT);
 
             return $this->redirectToRoute('place_index');
         }
@@ -95,6 +99,7 @@ class PlaceController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($place);
             $entityManager->flush();
+            $this->addFlash(Alert::SUCCESS, Messages::PLACE_SUCESS_DELETE);
         }
 
         return $this->redirectToRoute('place_index');
