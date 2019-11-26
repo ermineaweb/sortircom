@@ -24,6 +24,14 @@ class PlaceController extends AbstractController
             'places' => $placeRepository->findAll(),
         ]);
     }
+    
+    /**
+     * @Route("/api", name="api_place_index", methods={"GET"})
+     */
+    public function indexApi(PlaceRepository $placeRepository): Response
+    {
+        return $this->json($placeRepository->findAll());
+    }
 
     /**
      * @Route("/new", name="place_new", methods={"GET","POST"})
