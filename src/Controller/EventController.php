@@ -146,7 +146,7 @@ class EventController extends AbstractController
             && ($event->getStatus() == StatusEnum::CREE || $event->getStatus() == StatusEnum::OUVERTE)) {
 
             $this->entityManager->flush();
-            $this->addFlash(Alert::SUCCESS, Messages::EDIT_EVENT_SUCCESS_1 . $event->getName() . Messages::EDIT_EVENT_SUCCESS_2);
+            $this->addFlash(Alert::SUCCESS, Messages::EVENT_SUCCESS_EDIT);
 
             return $this->redirectToRoute('event_index');
         }
@@ -200,11 +200,11 @@ class EventController extends AbstractController
             && $event->getStatus() == StatusEnum::OUVERTE) {
 
             if (empty($event->getCancel())) {
-                $this->addFlash(Alert::WARNING, Messages::CANCEL_EVENT_WARNING);
+                $this->addFlash(Alert::WARNING, Messages::EVENT_ERROR_CANCEL);
 
             } else {
                 $event->setStatus(StatusEnum::ANNULEE);
-                $this->addFlash(Alert::SUCCESS, Messages::CANCEL_EVENT_SUCCESS);
+                $this->addFlash(Alert::SUCCESS, Messages::EVENT_SUCCESS_CANCEL);
 
                 $this->entityManager->flush();
                 return $this->redirectToRoute('event_index');
@@ -242,9 +242,8 @@ class EventController extends AbstractController
         $withdraw->setEvent($event);
         $withdraw->setUser($this->getUser());
         $withdraw->leave();
-        $this->addFlash(Alert::SUCCESS, Messages::UNSUBSCRIBE_EVENT_SUCCESS . $event->getName());
+        $this->addFlash(Alert::SUCCESS, Messages::DESINSCRIPTION_SUCCESS_UNSUBSCRIBE . $event->getName());
         return $this->render('event/show.html.twig', compact('event'));
-
     }
 
     /**
@@ -264,7 +263,7 @@ class EventController extends AbstractController
 
             $event->setStatus(StatusEnum::OUVERTE);
             $this->entityManager->flush();
-            $this->addFlash(Alert::SUCCESS, Messages::PUBLISH_EVENT_SUCCESS);
+            $this->addFlash(Alert::SUCCESS, Messages::EVENT_SUCCESS_PUBLISH);
         }
 
         return $this->render('event/show.html.twig', [

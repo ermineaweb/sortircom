@@ -35,13 +35,13 @@ class Withdraw
 	public function leave()
 	{
 		if (!$this->isNotRegistered()) {
-			$this->flashBag->add(Alert::DANGER, Messages::ERROR_EVENT_NOT_REGISTERED);
+			$this->flashBag->add(Alert::DANGER, Messages::DESINSCRIPTION_ERROR_EVENT_NOT_REGISTERED );
 		} elseif ($this->isEventCanceled()) {
-			$this->flashBag->add(Alert::DANGER, Messages::ERROR_EVENT_CANCELED);
+			$this->flashBag->add(Alert::DANGER, Messages::DESINSCRIPTION_ERROR_EVENT_CANCELED);
 		} elseif ($this->isEventFinished()) {
-			$this->flashBag->add(Alert::DANGER, Messages::ERROR_EVENT_FINISHED);
+			$this->flashBag->add(Alert::DANGER, Messages::DESINSCRIPTION_ERROR_EVENT_FINISHED );
 		} elseif ($this->isEventInProgress()) {
-			$this->flashBag->add(Alert::DANGER, Messages::ERROR_EVENT_IN_PROGRESS);
+			$this->flashBag->add(Alert::DANGER, Messages::DESINSCRIPTION_ERROR_EVENT_IN_PROGRESS);
 		} else {
 			$this->event->removeUser($this->user);
 			$this->userManager->persist($this->user);

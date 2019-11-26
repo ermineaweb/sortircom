@@ -26,7 +26,7 @@ class MainController extends AbstractController
 	 */
 	public function logout()
 	{
-		$this->addFlash(Alert::INFO, Messages::LOGOUT_SUCCESS);
+		$this->addFlash(Alert::INFO, Messages::SECURITY_SUCCESS_LOGOUT);
 		return $this->redirectToRoute('event_index');
 	}
 	

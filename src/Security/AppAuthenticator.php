@@ -75,7 +75,7 @@ class AppAuthenticator extends AbstractFormLoginAuthenticator
         if (!$user) {
             // fail authentication with a custom error
             //throw new CustomUserMessageAuthenticationException('Vos identifiants sont invalides');
-			$this->flashBag->add(Alert::DANGER, Messages::LOGIN_ERROR);
+			$this->flashBag->add(Alert::DANGER, Messages::SECURITY_ERROR_ERROR);
         }
 
         return $user;
@@ -92,7 +92,7 @@ class AppAuthenticator extends AbstractFormLoginAuthenticator
             return new RedirectResponse($targetPath);
         }
 		
-        $this->flashBag->add(Alert::SUCCESS, Messages::LOGIN_SUCCESS);
+        $this->flashBag->add(Alert::SUCCESS, Messages::SECURITY_SUCESS_LOGIN);
         return new RedirectResponse($this->urlGenerator->generate('home'));
     }
 
