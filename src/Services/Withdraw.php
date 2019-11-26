@@ -35,7 +35,7 @@ class Withdraw
 	public function leave()
 	{
 		if (!$this->isRegistered()) {
-			$this->flashBag->add(Alert::DANGER, Messages::DESINSCRIPTION_ERROR_EVENT_NOT_REGISTERED );
+			$this->flashBag->add(Alert::DANGER, Messages::DESINSCRIPTION_ERROR_EVENT_NOT_REGISTERED);
 		} elseif ($this->isEventCanceled()) {
 			$this->flashBag->add(Alert::DANGER, Messages::DESINSCRIPTION_ERROR_EVENT_CANCELED);
 		} elseif ($this->isEventFinished()) {
