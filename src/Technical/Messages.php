@@ -44,7 +44,7 @@ abstract class Messages
 	public const DESINSCRIPTION_ERROR_EVENT_CANCELED = "Vous ne pouvez pas vous désinscrire d'un évènement annulé";
 	public const DESINSCRIPTION_ERROR_EVENT_FINISHED = "Vous ne pouvez pas vous désinscrire d'un évènement terminé";
 	public const DESINSCRIPTION_ERROR_EVENT_IN_PROGRESS = "Vous ne pouvez pas vous désinscrire d'un évènement en cours";
-	public const DESINSCRIPTION_SUCCESS_UNSUBSCRIBE = "Votre inscription a bien été prise en comtpe";
+	public const DESINSCRIPTION_SUCCESS_UNSUBSCRIBE = "Votre désinscription a bien été prise en comtpe";
 
 	/*
 	 * SECURITY
