@@ -45,33 +45,42 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         # Route /ville
-         # - { path: '^/ville/{id}', roles: ROLE_USER, methods: GET }
-         # - { path: '^/ville/{id}', roles: ROLE_ADMIN, methods: DELETE }
-         # - { path: '^/ville/{id}/modifier', roles: ROLE_ADMIN }
-         # - { path: '^/ville/', roles: ROLE_USER, methods: GET }
-         # - { path: '^/ville/', roles: ROLE_ADMIN, methods: POST}
+        # Seul l'administrateur à accès à l'écran de CRUD des villes
+#        - { path: '^/ville/{id}', roles: ROLE_USER, methods: GET }
+#        - { path: '^/ville/{id}', roles: ROLE_ADMIN, methods: DELETE }
+#        - { path: '^/ville/{id}/modifier', roles: ROLE_ADMIN }
+#        - { path: '^/ville/', roles: ROLE_USER, methods: GET }
+#        - { path: '^/ville/', roles: ROLE_ADMIN, methods: POST}
 
         # Route /place
-         # - { path: '^/place/{id}', roles: ROLE_ADMIN, methods: DELETE }
-         # - { path: '^place/{id}/edit', roles: ROLE_ADMIN }
-         # - { path: '^/place/{id}', roles: ROLE_USER, methods: GET}
-         # - { path: '^/place/new', roles: ROLE_USER }
-         # - { path: '^/place/api', roles: ROLE_USER}
-         # - { path: '^/place/', roles: ROLE_USER }
+        # Seul l'administrateur à accès à l'écran de CRUD des lieux
+#        - { path: '^/place/{id}', roles: ROLE_ADMIN, methods: DELETE }
+#        - { path: '^place/{id}/edit', roles: ROLE_ADMIN }
+#        - { path: '^/place/{id}', roles: ROLE_USER, methods: GET}
+#        - { path: '^/place/new', roles: ROLE_USER }
+#        - { path: '^/place/api', roles: ROLE_USER}
+#        - { path: '^/place/', roles: ROLE_USER }
 
-         # Route /school
-         # - { path: '^/school/{id}', roles: ROLE_ADMIN, methods: DELETE }
-         # - { path: '^/school/{id}/edit', roles: ROLE_ADMIN }
-         # - { path: '^/school/{id}', roles: ROLE_USER, methods: GET }
-         # - { path: '^/school/', roles: ROLE_ADMIN, methods: POST }
-         # - { path: '^/school/', roles: ROLE_USER, methods: GET }
+        # Route /school
+        # Seul l'administrateur à accès à l'écran de CRUD des écoles
+#        - { path: '^/school/{id}', roles: ROLE_ADMIN, methods: DELETE }
+#        - { path: '^/school/{id}/edit', roles: ROLE_ADMIN }
+#        - { path: '^/school/{id}', roles: ROLE_USER, methods: GET }
+#        - { path: '^/school/', roles: ROLE_ADMIN, methods: POST }
+#        - { path: '^/school/', roles: ROLE_USER, methods: GET }
 
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+        # Route /sortie
+        # Les utilisateurs ont accès à l'écran de CRUD des sorties
+#        - { path: '^/sortie/{page}', roles: ROLE_ADMIN, methods: POST }
+#        - { path: '^/sortie/{page}', roles: ROLE_USER, methods: GET }
+#        - { path: '^/sortie/creer', roles: ROLE_USER }
+#        - { path: '^/sortie/show/{id}', roles: ROLE_USER }
+#        - { path: '^/sortie/{id}/edit', roles: ROLE_USER }
+#        - { path: '^/sortie/{id}', roles: ROLE_USER }
+#        - { path: '^/sortie/cancel/{id}', roles: ROLE_USER }
+#        - { path: '^/sortie/inscription/{id}', roles: ROLE_USER }
+#        - { path: '^/sortie/desinscrire/{id}', roles: ROLE_USER }
+#        - { path: '^/sortie/publish/{id}', roles: ROLE_USER }
 
-        # TODO Mathieu : proposition de path (à activer si OK)
-        # Seul l'administrateur à acces à l'écran d'edition et de CRUD des écoles
-        # - { path: ^/school, roles: ROLE_USER }
-        # - { path: ^/school/{id}/, roles: ROLE_ADMIN }
+        # Modèle
         # - { path: '^/admin', roles: ROLE_USER_METHOD, methods: [POST, PUT] }
-        # - { path: ^/school, roles: ROLE_ADMIN }

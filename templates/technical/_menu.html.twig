@@ -1,41 +1,48 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">Navbar</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+<nav class="mb-1 navbar navbar-expand-lg default-color {% if app.user.admin %}bg-danger{% endif %}">
+    <a class="navbar-brand" href="{{ path('home') }}">
+        <img src="{{ asset('assets/img/logo_ENI2.png') }}" alt="" style="width: 120px;">
+    </a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-333"
+            aria-controls="navbarSupportedContent-333" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent-333">
+
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="{{ path('home') }}">
-                    <i class="fa fa-home"></i>
-                </a>
+                <a class="nav-link" href="{{ path('home') }}"><i class="fa fa-home"></i>Accueil</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ path('user_index') }}">Users</a>
+                <a class="nav-link" href="{{ path('event_new') }}"><i class="fa fa-add"></i>Créer une sortie</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ path('city_index') }}">Cities</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ path('place_index') }}">Places</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ path('school_index') }}">Schools</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ path('app_login') }}">Login</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ path('app_logout') }}">Logout</a>
-            </li>
-            {% if app.user %}
-                Bienvenue {{ app.user.username }}
-            {% if app.user.admin %}vous etes admin{% else %} vous etes pas admin{% endif %}
-            {% endif %}
-
-            {% if app.user and "ROLE_ADMIN" in app.user.roles %}ADMIN{% else %} NON ADMIN {% endif %}
         </ul>
+
+        {% if app.user %}
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="{{ path('home') }}">Heureux de vous revoir, {{ app.user.username }}</a>
+            </li>
+        </ul>
+        {% endif %}
+
+        <ul class="navbar-nav ml-auto nav-flex-icons">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-333" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-user"></i>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right dropdown-default"
+                     aria-labelledby="navbarDropdownMenuLink-333">
+                    <a class="dropdown-item" href="{{ path('app_login') }}"><i class="fa fa-sign-in-alt"></i> Se
+                        connecter</a>
+                    <a class="dropdown-item" href="admin@eni-party.com"><i class="fa fa-envelope"></i> Contacter un
+                        admin</a>
+                </div>
+            </li>
+        </ul>
+
     </div>
 </nav>
+<!--/.Navbar -->

@@ -9,28 +9,12 @@
     <table class="table">
         <tbody>
             <tr>
-                <th>Id</th>
-                <td>{{ user.id }}</td>
-            </tr>
-            <tr>
-                <th>Nom d'utilisateur</th>
-                <td>{{ user.username }}</td>
-            </tr>
-            <tr>
-                <th>Rôle</th>
-                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
-            </tr>
-            <tr>
-                <th>Mot de passe</th>
-                <td>{{ user.password }}</td>
-            </tr>
-            <tr>
-                <th>Nom de famille</th>
-                <td>{{ user.lastname }}</td>
-            </tr>
-            <tr>
                 <th>Prénom</th>
                 <td>{{ user.firstname }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ user.lastname }}</td>
             </tr>
             <tr>
                 <th>Téléphone</th>
@@ -41,12 +25,8 @@
                 <td>{{ user.email }}</td>
             </tr>
             <tr>
-                <th>Administrateur</th>
-                <td>{{ user.admin ? 'Yes' : 'No' }}</td>
-            </tr>
-            <tr>
-                <th>Active</th>
-                <td>{{ user.active ? 'Yes' : 'No' }}</td>
+                <th>Ecole de rattachement</th>
+                <td>{{ user.school }}</td>
             </tr>
             <tr>
                 <th>Avatar</th>
