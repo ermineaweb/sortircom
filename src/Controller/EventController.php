@@ -84,7 +84,7 @@ class EventController extends AbstractController
      * - si le nombre maximum de participants est supérieur à 0
      * Alors :
      * - l'utilisateur en cours devient le créateur de l'annonce
-     * - le statut de la sortie devient cree
+     * - le statut de la sortie devient créee
      * @Route("/creer", name="new", methods={"GET","POST"})
      */
     public function new(Request $request, CityRepository $cityRepository, PlaceRepository $placeRepository): Response

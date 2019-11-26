@@ -44,7 +44,13 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        - { path: ^/school, roles: ROLE_ADMIN }
+        # Route /ville
+        # - { path: '^/ville/{id}', roles: ROLE_USER, methods: GET }
+        # - { path: '^/ville/{id}', roles: ROLE_ADMIN, methods: DELETE }
+        # - { path: '^/ville/{id}/modifier', roles: ROLE_ADMIN }
+        # - { path: '^/ville/', roles: ROLE_USER, methods: GET }
+        # - { path: '^/ville/', roles: ROLE_ADMIN, methods: POST}
+
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
 
@@ -52,3 +58,5 @@ security:
         # Seul l'administrateur à acces à l'écran d'edition et de CRUD des écoles
         # - { path: ^/school, roles: ROLE_USER }
         # - { path: ^/school/{id}/, roles: ROLE_ADMIN }
+        # - { path: '^/admin', roles: ROLE_USER_METHOD, methods: [POST, PUT] }
+        # - { path: ^/school, roles: ROLE_ADMIN }
