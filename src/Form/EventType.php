@@ -27,7 +27,7 @@ class EventType extends AbstractType
                     'label' => 'Date et heure de la fin de la sortie'
             ])
             ->add('limitdate', DateType::class, [
-                    'label' => 'Date limite d\'inscription :',
+                    'label' => 'Date limite d\'inscription',
                     'widget' => 'single_text'
             ])
             ->add('maxsize', null, [

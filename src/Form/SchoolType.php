@@ -15,7 +15,7 @@ class SchoolType extends AbstractType
             ->add('name', null, [
                 'help'=>"Nom de l'école à ajouter",
                 'attr' => [
-                    'placeholder'=>"Ajouter une nouvelle école ENI",
+                    'placeholder'=>"Ajouter une nouvelle école ENI...",
                 ],
             ])
         ;
