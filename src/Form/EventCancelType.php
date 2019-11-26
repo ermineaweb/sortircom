@@ -13,7 +13,7 @@ class EventCancelType extends AbstractType
     {
         $builder
             ->add('cancel', null, [
-                'label' => 'Motif de l\'annulation :',
+                'label' => 'Motif de l\'annulation',
             ])
         ;
     }
