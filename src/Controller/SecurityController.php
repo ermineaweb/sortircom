@@ -40,6 +40,13 @@ class SecurityController extends AbstractController
      * @Route("/motdepasse", name="password")
      */
     public function password() {
-        return $this->render('security/password.html.twig');
+        return $this->render('security/passwordforgotten.html.twig');
+    }
+
+    /**
+     * @Route("/nouveaumotdepasse", name="newpassword")
+     */
+    public function newpassword() {
+        return $this->render('security/newpassword.html.twig');
     }
 }

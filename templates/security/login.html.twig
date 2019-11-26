@@ -27,8 +27,10 @@
                 <label>
                     <input type="checkbox" name="_remember_me">Se souvenir de moi</label>
             </div>
-
             <button class="btn btn-lg btn-primary" type="submit">Connexion</button>
+            <div>
+                <a href="{{ path('password') }}">Mot de passe oublié</a>
+            </div>
         {% endif %}
     </form>
 {% endblock %}
