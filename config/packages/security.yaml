@@ -45,26 +45,26 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         # Route /ville
-         - { path: '^/ville/{id}', roles: ROLE_USER, methods: GET }
-         - { path: '^/ville/{id}', roles: ROLE_ADMIN, methods: DELETE }
-         - { path: '^/ville/{id}/modifier', roles: ROLE_ADMIN }
-         - { path: '^/ville/', roles: ROLE_USER, methods: GET }
-         - { path: '^/ville/', roles: ROLE_ADMIN, methods: POST}
+         # - { path: '^/ville/{id}', roles: ROLE_USER, methods: GET }
+         # - { path: '^/ville/{id}', roles: ROLE_ADMIN, methods: DELETE }
+         # - { path: '^/ville/{id}/modifier', roles: ROLE_ADMIN }
+         # - { path: '^/ville/', roles: ROLE_USER, methods: GET }
+         # - { path: '^/ville/', roles: ROLE_ADMIN, methods: POST}
 
         # Route /place
-         - { path: '^/place/{id}', roles: ROLE_ADMIN, methods: DELETE }
-         - { path: '^place/{id}/edit', roles: ROLE_ADMIN }
-         - { path: '^/place/{id}', roles: ROLE_USER, methods: GET}
-         - { path: '^/place/new', roles: ROLE_USER }
-         - { path: '^/place/api', roles: ROLE_USER}
-         - { path: '^/place/', roles: ROLE_USER }
+         # - { path: '^/place/{id}', roles: ROLE_ADMIN, methods: DELETE }
+         # - { path: '^place/{id}/edit', roles: ROLE_ADMIN }
+         # - { path: '^/place/{id}', roles: ROLE_USER, methods: GET}
+         # - { path: '^/place/new', roles: ROLE_USER }
+         # - { path: '^/place/api', roles: ROLE_USER}
+         # - { path: '^/place/', roles: ROLE_USER }
 
          # Route /school
-         - { path: '^/school/{id}', roles: ROLE_ADMIN, methods: DELETE }
-         - { path: '^/school/{id}/edit', roles: ROLE_ADMIN }
-         - { path: '^/school/{id}', roles: ROLE_USER, methods: GET }
-         - { path: '^/school/', roles: ROLE_ADMIN, methods: POST }
-         - { path: '^/school/', roles: ROLE_USER, methods: GET }
+         # - { path: '^/school/{id}', roles: ROLE_ADMIN, methods: DELETE }
+         # - { path: '^/school/{id}/edit', roles: ROLE_ADMIN }
+         # - { path: '^/school/{id}', roles: ROLE_USER, methods: GET }
+         # - { path: '^/school/', roles: ROLE_ADMIN, methods: POST }
+         # - { path: '^/school/', roles: ROLE_USER, methods: GET }
 
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
