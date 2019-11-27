@@ -13,6 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * @Route("/school")
@@ -27,6 +28,7 @@ class SchoolController extends AbstractController
     }
 
     /**
+     * @IsGranted("ROLE_ADMIN")
      * Cette route permet d'afficher la liste des écoles existantes
      * et propose d'en ajouter une
      * @Route("/", name="school_index", methods={"GET","POST"})
@@ -62,6 +64,7 @@ class SchoolController extends AbstractController
     }
 
     /**
+     * @IsGranted("ROLE_ADMIN")
      * @Route("/edit/{id}", name="school_edit", methods={"GET","POST"}, requirements={"id":"\d+"})
      */
     public function edit(Request $request, School $school): Response
@@ -82,6 +85,7 @@ class SchoolController extends AbstractController
     }
 
     /**
+     * @IsGranted("ROLE_ADMIN")
      * @Route("/{id}", name="school_delete", methods={"DELETE"}, requirements={"id":"\d+"})
      */
     public function delete(Request $request, School $school): Response
