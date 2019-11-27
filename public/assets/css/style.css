@@ -10,27 +10,40 @@ body {
     font-weight: bold;
 }
 
+a {
+    color: #54002f;
+}
+
+a:hover {
+    color: #ab006d;
+}
+
+.icone-actions {
+    font-size: 2em;
+}
+
 .container {
     color: black;
-    background: rgba(255,240,255,70%);
+    background: rgba(255, 240, 255, 70%);
 }
 
 .jumbotron {
-    background: rgba(255,180,200,60%);
+    background: rgba(255, 180, 200, 75%);
+}
+
+nav {
+    background: rgba(255, 230, 255, 70%);
 }
 
 h1 {
-    color: #54002f;
+    font-weight: bold;
+    color: #f8fdff;
 }
 
 .nav-link {
     color: #54002f;
     font-size: 1.6em;
     font-weight: bold;
-}
-
-a.nav-link {
-    color: #54002f;
 }
 
 .btn {
