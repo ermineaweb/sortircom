@@ -9,39 +9,39 @@
 
     <table class="table">
         <thead>
-            <tr>
-                <th>Pseudo</th>
-                <th>Nom prénom</th>
-                <th>Rôle</th>
-                <th>Téléphone</th>
-                <th>Email</th>
-                <th>Administrateur</th>
-                <th>Active</th>
-                <th>Avatar</th>
-                <th>Actions</th>
-            </tr>
+        <tr>
+            <th>Pseudo</th>
+            <th>Nom prénom</th>
+            <th>Rôle</th>
+            <th>Téléphone</th>
+            <th>Email</th>
+            <th>Administrateur</th>
+            <th>Active</th>
+            <th>Avatar</th>
+            <th>Actions</th>
+        </tr>
         </thead>
         <tbody>
-    {% for user in users %}
-        <tr>
-            <td>{{ user.username }}</td>
-            <td>{{ user.lastname }} {{ user.firstname }}</td>
-            <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
-            <td>{{ user.phone }}</td>
-            <td>{{ user.email }}</td>
-            <td>{{ user.admin ? 'Yes' : 'No' }}</td>
-            <td>{{ user.active ? 'Yes' : 'No' }}</td>
-            <td><img src="{{ asset('assets/img/avatar/') }}{{ user.avatar }}" alt="" style="width: 50px;"></td>
-            <td>
-                <a href="{{ path('user_show', {'id': user.id}) }}">Voir</a>
-                <a href="{{ path('user_edit', {'id': user.id}) }}">Modifier</a>
-            </td>
-        </tr>
-    {% else %}
-        <tr>
-            <td colspan="12">Aucun utilisateur enregistré</td>
-        </tr>
-    {% endfor %}
+        {% for user in users %}
+            <tr>
+                <td>{{ user.username }}</td>
+                <td>{{ user.lastname }} {{ user.firstname }}</td>
+                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+                <td>{{ user.phone }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.admin ? 'Yes' : 'No' }}</td>
+                <td>{{ user.active ? 'Yes' : 'No' }}</td>
+                <td><img src="{{ asset('assets/img/avatar/') }}{{ user.avatar }}" alt="" style="width: 50px;"></td>
+                <td>
+                    <a href="{{ path('user_show', {'id': user.id}) }}">Voir</a>
+                    <a href="{{ path('user_edit', {'id': user.id}) }}">Modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="12">Aucun utilisateur enregistré</td>
+            </tr>
+        {% endfor %}
         </tbody>
     </table>
 
