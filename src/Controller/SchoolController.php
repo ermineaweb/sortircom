@@ -5,7 +5,10 @@ namespace App\Controller;
 use App\Entity\School;
 use App\Form\SchoolType;
 use App\Repository\SchoolRepository;
+use App\Technical\Alert;
+use App\Technical\Messages;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -34,11 +37,19 @@ class SchoolController extends AbstractController
         $form = $this->createForm(SchoolType::class, $school);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid() && $this->getUser()->getRoles === 'ROLE_ADMIN') {
             $this->entityManager->persist($school);
             $this->entityManager->flush();
 
             return $this->redirectToRoute('school_index');
+        } else if($form->isSubmitted() && $form->isValid() && $this->getUser()->getRoles !== 'ROLE_ADMIN'){
+            $this->addFlash(Alert::WARNING, Messages::ADMIN_WARNING);
+
+            return $this->render('school/manage.html.twig', [
+                'school' => $school,
+                'form' => $form->createView(),
+                'schools' => $schoolRepository->findAll(),
+            ]);
         }
 
         return $this->render('school/manage.html.twig', [

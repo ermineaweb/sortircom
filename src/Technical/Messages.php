@@ -66,4 +66,9 @@ abstract class Messages
     public const PLACE_SUCESS_NEW = "Le lieu a bien été ajouté";
     public const PLACE_SUCESS_EDIT = "Le lieu a bien été modifié";
     public const PLACE_SUCESS_DELETE = "Le lieu a bien été supprimé";
+
+    /*
+     * ADMIN
+     */
+    public const ADMIN_WARNING = "Vous ne disposez pas des droits nécessaires";
 }
