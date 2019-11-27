@@ -8,13 +8,12 @@
 </head>
 <body>
 
-<div class="jumbotron">
 {% include 'technical/_menu.html.twig' %}
-    <h1 class="text-center">{% block h1 %}{% endblock %}</h1>
-</div>
+
+<h1 class="text-center">{% block h1 %}{% endblock %}</h1>
 
 <div class="container">
-{% include 'technical/_flash.html.twig' %}
+    {% include 'technical/_flash.html.twig' %}
     {% block body %}{% endblock %}
 </div>
 
