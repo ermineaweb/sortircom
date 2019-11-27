@@ -28,17 +28,19 @@ class EventCreation
 
     public function __construct(FlashBagInterface $flashBag, EntityManagerInterface $eventManager, Security $security)
     {
-      $this->flashBag = $flashBag;
-      $this->eventManager = $eventManager;
-      $this->user = $security->getUser();
+        $this->flashBag = $flashBag;
+        $this->eventManager = $eventManager;
+        $this->user = $security->getUser();
     }
 
     public function creation()
     {
-        if ($this->isBeginningOk ()) {
+        if ($this->isBeginningOk()) {
             $this->flashBag->add(Alert::DANGER, Messages::EVENT_ERROR_NEW_DATE);
         } elseif ($this->isMaxsize()) {
             $this->flashBag->add(Alert::DANGER, Messages::EVENT_ERROR_MAXSIZE);
+        } elseif (!$this->isLimitDateValid()) {
+            $this->flashBag->add(Alert::DANGER, Messages::EVENT_ERROR_LIMITDATE);
         } else {
             //Si tout est bon
             //L'utilisateur connecté qui crée l'event devient le creator
@@ -55,18 +57,23 @@ class EventCreation
     /*
     * Vérifie que la date du début est supérieur à la date du jour
     */
-   private function isBeginningOk(): bool
-   {
-       return $this->event->getStart() <= new \DateTime();
-   }
+    private function isBeginningOk(): bool
+    {
+        return $this->event->getStart() <= new \DateTime();
+    }
+
+    private function isLimitDateValid(): bool
+    {
+        return $this->event->getStart() > $this->event->getLimitdate();
+    }
 
     /*
      * Vérifie que le nombre de places de la sortie est supérieur à 0.
      */
-   private function isMaxsize(): bool
-   {
-       return $this->event->getMaxsize() < 0;
-   }
+    private function isMaxsize(): bool
+    {
+        return $this->event->getMaxsize() < 0;
+    }
 
     public function getEvent(): ?Event
     {
