@@ -22,6 +22,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 
+
 /**
  * @Route("/sortie", name="event_")
  */
@@ -123,7 +124,7 @@ class EventController extends AbstractController
 	
 	/**
 	 * Cette page permet d'affcher les détails d'une sortie en particulier :
-	 * @Route("/show/{id}", name="show", methods={"GET"})
+	 * @Route("/show/{id}", name="show", methods={"GET"}, requirements={"id":"\d+"})
 	 */
 	public function show(Event $event): Response
 	{
@@ -138,7 +139,7 @@ class EventController extends AbstractController
 	 * - si l'utilisateur est bien le créateur
 	 * - si la date de début de la sortie est supérieure à la date actuelle
 	 * - si le statut de la sortie est : crée ou ouverte(publiée)
-	 * @Route("/{id}/edit", name="edit", methods={"GET","POST"})
+	 * @Route("/{id}/edit", name="edit", methods={"GET","POST"}, requirements={"id":"\d+"})
 	 */
 	public function edit(Request $request, Event $event, CityRepository $cityRepository): Response
 	{
@@ -169,7 +170,7 @@ class EventController extends AbstractController
 	 * - si l'utilisateur est bien le créateur
 	 * - si la date de début de la sortie est supérieure à la date actuelle
 	 * - si le statut de la sortie est : crée
-	 * @Route("/{id}", name="delete", methods={"DELETE"})
+	 * @Route("/{id}", name="delete", methods={"DELETE"}, requirements={"id":"\d+"})
 	 */
 	public function delete(Request $request, Event $event): Response
 	{
@@ -192,7 +193,7 @@ class EventController extends AbstractController
 	 * - si la date de début de la sortie est supérieure à la date actuelle
 	 * - si le champ "Motif de l'annulation :" du formulaire est renseigné
 	 * - si le statut de la sortie est : ouverte
-	 * @Route("/cancel/{id}", name="cancel",methods={"GET","POST"})
+	 * @Route("/cancel/{id}", name="cancel",methods={"GET","POST"}, requirements={"id":"\d+"})
 	 */
 	public function cancel(Event $event, Request $request): Response
 	{
@@ -225,7 +226,7 @@ class EventController extends AbstractController
 	/**
 	 * Inscription d'un utilisateur à une sortie
 	 *
-	 * @Route("/inscription/{id}", name="inscription", methods={"GET"})
+	 * @Route("/inscription/{id}", name="inscription", methods={"GET"}, requirements={"id":"\d+"})
 	 */
 	public function register(Event $event, Inscription $inscription): Response
 	{
@@ -240,7 +241,7 @@ class EventController extends AbstractController
 	
 	/**
 	 * Un utilisateur se désinscrit d'une sortie où il s'est inscrit
-	 * @Route("/desinscrire/{id}", name="withdraw", methods={"GET"})
+	 * @Route("/desinscrire/{id}", name="withdraw", methods={"GET"}, requirements={"id":"\d+"})
 	 */
 	public function withdraw(Event $event, Withdraw $withdraw): Response
 	{
@@ -258,7 +259,7 @@ class EventController extends AbstractController
 	 * - si la date de début de la sortie est supérieure à la date actuelle
 	 * - si le statut de la sortie est : crée
 	 * (Une annonce publiée ne peut plus être supprimée mais doit être annulée)
-	 * @Route("/publish/{id}", name="publish", methods={"GET"})
+	 * @Route("/publish/{id}", name="publish", methods={"GET"}, requirements={"id":"\d+"})
 	 */
 	public function publish(Event $event): Response
 	{
