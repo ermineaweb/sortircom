@@ -71,33 +71,7 @@ class UserController extends AbstractController
 
     }
 
-    /**
-     * A VERIFIER : Encodage
-     * Cette route permet à l'administrateur de créer un nouvel utilisateur :
-     * @Route("/newuser", name="user_newuser", methods={"GET","POST"} )
-     */
-    public function newuser(Request $request, UserPasswordEncoderInterface $encoder) :Response
-    {
-        $user = new User();
-        $form = $this->createForm(UserAdminType::class, $user);
-        $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $password = $encoder->encodePassword($user, '123');
-            $user->setPassword($password);
-
-            $this->entityManager->persist($user);
-            $this->entityManager->flush();
-
-            $this->addFlash(Alert::SUCCESS,Messages::USER_SUCCESS_NEW);
-            return $this->redirectToRoute('user_new');
-        }
-
-        return $this->render('user/newuser.html.twig', [
-            'user' => $user,
-            'form' => $form->createView(),
-        ]);
-    }
 
     /**
      * @return string
