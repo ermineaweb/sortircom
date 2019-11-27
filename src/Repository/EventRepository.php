@@ -46,7 +46,8 @@ class EventRepository extends ServiceEntityRepository
         /*$queryBuilder->addSelect('sch');
         $queryBuilder->innerJoin('event.creator', 'creator');
         $queryBuilder->innerJoin('creator.school', 'sch');*/
-        $queryBuilder->orderBy('event.start', 'ASC');
+       $queryBuilder->orderBy('event.start', 'ASC');
+       $queryBuilder->orderBy('event.status', 'ASC');
         /*if ($school !=null){
             $queryBuilder->andWhere('sch.name =:school');
             $queryBuilder->setParameter('school', $school);

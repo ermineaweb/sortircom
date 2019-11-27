@@ -133,14 +133,14 @@ class AppNewFixtures extends Fixture
             'Atelier d\'art plastique',
             'Atelier cuisine',
             'Atelier d\'écriture',
-            'Festival de BD'
+            'Festival de BD',
         ];
         // Création de 50 events passées
         $randomEnd = random_int(1,3);
         $randomLimitdate = random_int(2,10);
         for ($count = 0; $count < 50; $count++) {
             $sortiePassee = new Event();
-            $sortiePassee->setName(shuffle($events));
+            $sortiePassee->setName($events[random_int(0, count($events))]);
             $sortiePassee->setDescription($sortiePassee->getName());
             $sortiePassee->setMaxsize(random_int(5, 20));
             $sortiePassee->setStart($faker->dateTimeThisMonth());
