@@ -2,14 +2,11 @@
 
 {% block title %}Edit User{% endblock %}
 
-{% block h1 %}{{ user.username }}{% endblock %}
+{% block h1 %}Modification du profil utilisateur {{ user.username }}{% endblock %}
 
 {% block body %}
-    <h1>Modification du profil utilisateur</h1>
-
     {{ include('user/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('user_index') }}">Retour à la liste</a>
+    <a class="btn btn-info" href="{{ path('user_index') }}">Retour à la liste</a>
 
-    {{ include('user/_delete_form.html.twig') }}
 {% endblock %}

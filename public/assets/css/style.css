@@ -55,6 +55,7 @@ h2 {
     background: #1b1e21;
     border: none;
     border-radius: 18px;
+    margin: 10px;
 }
 
 .btn:hover {

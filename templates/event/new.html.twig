@@ -81,8 +81,8 @@
             <p id="longitude"></p>
         </div>
 
-        <button class="btn btn-info">{{ button_label|default('Enregistrer') }}</button>
-        <a href="{{ path('event_index') }}" class="btn btn-danger">Annuler et revenir à l'accueil</a>
+        <button class="btn btn-info">{{ button_label|default('Enregistrer la sortie') }}</button>
+        <a class="btn btn-info" href="{{ path('event_index') }}" class="btn btn-danger">Annuler et revenir à l'accueil</a>
         {{ form_end(form) }}
     </div>
 {% endblock %}
