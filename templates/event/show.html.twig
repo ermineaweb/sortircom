@@ -33,11 +33,11 @@
                 Participants
             </th>
             <td>
-                <ul>
+                <ul class="list-group">
                     {% for user in event.users %}
-                        <li><a href="{{ path('user_show', {'id': user.id}) }}">{{ user.username }}</a></li>
+                        <li class="list-group-item"><a href="{{ path('user_show', {'id': user.id}) }}">{{ user.username }}</a></li>
                     {% else %}
-                        <li>Aucun participant pour le moment :(</li>
+                        <li class="list-group-item">Aucun participant pour le moment :-(</li>
                     {% endfor %}
                 </ul>
             </td>

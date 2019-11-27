@@ -26,4 +26,28 @@ abstract class StatusEnum
 		
 		return $tabStatus($nb);
 	}
+	
+	// retourne tous les status sous forme de tableaux, pour concertir un numéro de status en
+	// chaine de caractère dans les twig
+	public static function getAllStatuses() : array {
+		return [
+			0 => "Créé",
+			1 => "Ouverte",
+			2 => "Clôturé",
+			3 => "En cours",
+			4 => "Passée",
+			5 => "Annulée",
+		];
+	}
+	
+	public static function getStatusStyles() : array {
+		return [
+			0 => "info",
+			1 => "primary",
+			2 => "danger",
+			3 => "primary",
+			4 => "danger",
+			5 => "danger",
+		];
+	}
 }
