@@ -136,21 +136,44 @@ class AppNewFixtures extends Fixture
             'Festival de BD'
         ];
         // Création de 50 events passées
-        $random = random_int(1,3);
+        $randomEnd = random_int(1,3);
+        $randomLimitdate = random_int(2,10);
         for ($count = 0; $count < 50; $count++) {
             $sortiePassee = new Event();
             $sortiePassee->setName(shuffle($events));
             $sortiePassee->setDescription($sortiePassee->getName());
             $sortiePassee->setMaxsize(random_int(5, 20));
             $sortiePassee->setStart($faker->dateTimeThisMonth());
-            $sortiePassee->setEnd(dateTimeInInterval($sortiePassee->getStart(), $interval = '+ '. '$random'. 'days'));
-            $sortiePassee->setLimitdate(dateTimeInInterval($sortiePassee->getStart(), $interval = '- '. '$random'. 'days'));
+            $sortiePassee->setEnd($faker->dateTimeInInterval($sortiePassee->getStart(), '+ '. $randomEnd. ' days'));
+            $sortiePassee->setLimitdate($faker->dateTimeInInterval($sortiePassee->getStart(), '- '. $randomLimitdate. ' days'));
             $sortiePassee->setCreator($this->getReference('user_' . rand(0, 19)));
             $sortiePassee->setPlace($this->getReference('place_' . rand(0, 39)));
             $sortiePassee->setStatus(StatusEnum::PASSEE);
             $manager->persist($sortiePassee);
         }
 
+        // Création de 50 events ouverts
+        $randomEnd = random_int(1,3);
+        $randomLimitdate = random_int(2,10);
+        for ($count = 0; $count < 50; $count++) {
+            $sortiePassee = new Event();
+            $sortiePassee->setName(shuffle($events));
+            $sortiePassee->setDescription($sortiePassee->getName());
+            $sortiePassee->setMaxsize(random_int(2, 20));
+            $sortiePassee->setStart($faker->dateTimeInInterval($startDate = new \DateTime('+ '. $randomEnd. ' days')));
+            $sortiePassee->setEnd($faker->dateTimeInInterval($sortiePassee->getStart(), $interval = '+ '. $randomEnd. ' days'));
+
+
+            $sortiePassee->setLimitdate($faker->dateTimeInInterval($sortiePassee->getStart(), $interval = '- '. $randomLimitdate. ' days'));
+
+
+
+            $sortiePassee->setCreator($this->getReference('user_' . rand(0, 19)));
+            $sortiePassee->setPlace($this->getReference('place_' . rand(0, 39)));
+            $sortiePassee->setStatus(StatusEnum::OUVERTE);
+            $manager->persist($sortiePassee);
+
+        }
 
 
         $manager->flush();
