@@ -21,7 +21,9 @@
 
         {% if app.user %}
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active nav-link">Vous êtes connectés en tant que : {{ app.user.username }}</li>
+                <li class="nav-item active nav-link">Vous êtes connectés en tant que :
+                    <a href="{{ path('user_show', {id : app.user.id }) }}">{{ app.user.username }}</a>
+                </li>
             </ul>
         {% endif %}
 
@@ -34,16 +36,17 @@
                 <div class="dropdown-menu dropdown-menu-right dropdown-default"
                      aria-labelledby="navbarDropdownMenuLink-333">
                     {% if app.user %}
-                        <a class="dropdown-item" href="{{ path('user_edit', {id: app.user.id }) }}"><i class="fa fa-sign-in-alt"></i>
+                        <a class="dropdown-item" href="{{ path('user_edit', {id: app.user.id }) }}"><i
+                                    class="fa fa-sign-in-alt"></i>
                             Gérer mon profil
                         </a>
-                    <a class="dropdown-item" href="{{ path('app_logout') }}"><i class="fa fa-sign-in-alt"></i>
-                        Se déconnecter
-                    </a>
+                        <a class="dropdown-item" href="{{ path('app_logout') }}"><i class="fa fa-sign-in-alt"></i>
+                            Se déconnecter
+                        </a>
                     {% else %}
-                    <a class="dropdown-item" href="{{ path('app_login') }}"><i class="fa fa-sign-in-alt"></i>
-                        Se connecter
-                    </a>
+                        <a class="dropdown-item" href="{{ path('app_login') }}"><i class="fa fa-sign-in-alt"></i>
+                            Se connecter
+                        </a>
                     {% endif %}
                     <a class="dropdown-item" href="mailto:admin@eni-party.com"><i class="fa fa-envelope"></i>
                         Contacter un admin

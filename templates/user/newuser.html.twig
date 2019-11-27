@@ -1,13 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New UserAdmin{% endblock %}
+{% block title %}Nouvel utilisateur{% endblock %}
 
 {% block h1 %}Ajouter un nouvel utilisateur {% endblock %}
 
 {% block body %}
     {{ include('user/_formAdmin.html.twig') }}
 
-    <a href="{{ path('user_index') }}">Retour à la liste</a>
+    <a class="btn btn-info" href="{{ path('user_index') }}">Retour à la liste</a>
 {% endblock %}
 
 

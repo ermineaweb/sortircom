@@ -57,6 +57,7 @@ class UserType extends AbstractType
                     'placeholder' => 'ENI Quimper'
                 ],
             ])
+			/*
 			->add('avatar', FileType::class, [
 				'label' => 'Brochure (PDF file)',
 				'mapped' => false,
@@ -73,7 +74,9 @@ class UserType extends AbstractType
 						'mimeTypesMessage' => 'JPG ou PNG uniquement',
 					])
 				],
-			]);
+			])
+			*/
+		;
 	}
 	
 	public function configureOptions(OptionsResolver $resolver)

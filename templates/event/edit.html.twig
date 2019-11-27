@@ -6,17 +6,6 @@
 
 {% block body %}
 
-    <form action="" method="get">
-        <div>
-            <label for="idcity"> Ville :</label>
-            <select name="city" class="form-control" id="idcity">
-                {% for city in cities %}
-                    <option value="{{ city.id }}">{{ city.name }}</option>
-                {% endfor %}
-            </select>
-        </div>
-    </form>
-
     {{ form_start(form) }}
 
     {{ form_label(form.name) }}
@@ -69,6 +58,17 @@
     {{ form_label(form.description) }}
     {{ form_widget(form.description) }}
     {{ form_help(form.description) }}
+
+    <form action="" method="get">
+        <div>
+            <label for="city"> Ville</label>
+            <select name="city" class="form-control" id="city">
+                {% for city in cities %}
+                    <option value="{{ city.id }}">{{ city.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </form>
 
     {{ form_label(form.place) }}
     {{ form_widget(form.place) }}
