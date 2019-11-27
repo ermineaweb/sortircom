@@ -41,12 +41,12 @@
         </div>
 
 
-        <table class="table">
+        <table class="table text-center">
             <thead>
             <tr>
                 <th>Nom de la sortie</th>
                 <th>Date de la sortie</th>
-                <th>Limite d'inscription</th>
+                <th>Temps restant pour s'inscrire</th>
                 <th>Inscrits/places</th>
                 <th>Etat</th>
                 <th>Organisateur</th>
@@ -58,22 +58,39 @@
                 <tr>
                     <td>{{ event.name }}</td>
                     <td>{{ event.start ? event.start|date('d/m/Y à H:i') : '' }}</td>
-                    <td>{{ event.limitdate ? event.limitdate|date('d/m/Y') : '' }}</td>
+                    <td>
+                        <h4>
+                            <span class="badge badge-{{ event.timeremaining['style'] }}">{{ event.timeremaining['time'] }}</span>
+                        </h4>
+                    </td>
                     <td>{{ event.actualsize }} / {{ event.maxsize }}</td>
-                    <td>{{ event.status }}</td>
                     <td>
-                        <a href="{{ path('user_show', {'id': event.creator.id}) }}">{{ event.creator }}</a>
+                        <h4>
+                            <span class="badge badge-{{ statusstyles[event.status] }}">{{ statusenum[event.status] }}</span>
+                        </h4>
+                    </td>
+                    <td><a href="{{ path('user_show', {'id': event.creator.id}) }}">{{ event.creator }}</a></td>
                     <td>
-                        <a href="{{ path('event_show', {'id': event.id}) }}">Afficher</a>
-                        {% if app.user == event.creator and event.getStatus == 0 %}
-                        <a href="{{ path('event_edit', {'id': event.id}) }}">Modifier</a>
-                        <a href="{{ path('event_publish', {'id': event.id}) }}">Publier</a>
-                        <a href="{{ path('event_delete', {'id': event.id}) }}">Supprimer</a>
-                        {% endif %}
-                        {% if app.user == event.creator and event.getStatus == 1 %}
-                        <a href="{{ path('event_cancel', {'id': event.id}) }}">Annuler</a>
-                        {% endif %}
+                        <!-- Afficher -->
+                        <a href="{{ path('event_show', {'id': event.id}) }}"><i
+                                    class="icone-actions fa fa-search-plus"></i></a>
+                        {% if app.user == event.creator and event.status == 0 %}
+                            <!-- Modifier -->
+                            <a href="{{ path('event_edit', {'id': event.id}) }}"><i
+                                        class="icone-actions fa fa-pencil-alt"></i></a>
+                            <!-- Publier -->
+                            <a href="{{ path('event_publish', {'id': event.id}) }}"><i
+                                        class="icone-actions fa fa-check-circle"></i></a>
+                            <!-- Supprimer -->
+                            <a href="{{ path('event_delete', {'id': event.id}) }}"><i
+                                        class="icone-actions fa fa-trash-alt"></i></a>
 
+                        {% endif %}
+                        {% if app.user == event.creator and event.status == 1 %}
+                            <!-- Annuler -->
+                            <a href="{{ path('event_cancel', {'id': event.id}) }}"><i
+                                        class="icone-actions fa fa-window-close"></i></a>
+                        {% endif %}
                     </td>
                 </tr>
             {% else %}

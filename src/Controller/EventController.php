@@ -75,7 +75,9 @@ class EventController extends AbstractController
 		return $this->render('event/manage.html.twig', [
 			'paginator' => $paginator,
 			'schools' => $schoolRepository->findAll(),
-			'page' => $page
+			'page' => $page,
+			'statusenum' => StatusEnum::getAllStatuses(),
+			'statusstyles' => StatusEnum::getStatusStyles(),
 		]);
 	}
 
