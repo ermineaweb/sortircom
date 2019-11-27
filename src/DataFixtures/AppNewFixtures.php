@@ -135,13 +135,13 @@ class AppNewFixtures extends Fixture
             'Atelier d\'écriture',
             'Festival de BD'
         ];
-        // Création de 5 events passés
+        // Création de 20 events passés
         $randomStart = random_int(7,25);
         $randomEnd = random_int(1,3);
         $randomEndCurrent = random_int(5,13);
         $randomLimitdate = random_int(2,10);
         $randomStartCurrent = random_int(0,1);
-        for ($count = 0; $count < 5; $count++) {
+        for ($count = 0; $count < 20; $count++) {
             $PastEvents = new Event();
             $PastEvents->setName($events[random_int(0,count($events)-1)]);
             $PastEvents->setDescription($PastEvents->getName());
@@ -172,13 +172,13 @@ class AppNewFixtures extends Fixture
             $PastEventsCanceled->setPlace($this->getReference('place_' . rand(0, 39)));
             $PastEventsCanceled->setStatus(StatusEnum::ANNULEE);
             for ($count1 = 0; $count1 < 5; $count1++) {
-                $PastEvents->addUser($this->getReference('user_' . rand(0,19)));
+                $PastEventsCanceled->addUser($this->getReference('user_' . rand(0,19)));
             }
             $manager->persist($PastEventsCanceled);
         }
 
-        // Création de 5 events ouverts
-        for ($count = 0; $count < 5; $count++) {
+        // Création de 25 events ouverts
+        for ($count = 0; $count < 25; $count++) {
             $OpenEvents = new Event();
             $OpenEvents->setName($events[random_int(0,count($events)-1)]);
             $OpenEvents->setDescription($OpenEvents->getName());
@@ -190,7 +190,7 @@ class AppNewFixtures extends Fixture
             $OpenEvents->setPlace($this->getReference('place_' . rand(0, 39)));
             $OpenEvents->setStatus(StatusEnum::OUVERTE);
             for ($count1 = 0; $count1 < 5; $count1++) {
-                $PastEvents->addUser($this->getReference('user_' . rand(0,19)));
+                $OpenEvents->addUser($this->getReference('user_' . rand(0,19)));
             }
             $manager->persist($OpenEvents);
         }
@@ -208,13 +208,13 @@ class AppNewFixtures extends Fixture
             $OpenEventsCanceled->setPlace($this->getReference('place_' . rand(0, 39)));
             $OpenEventsCanceled->setStatus(StatusEnum::ANNULEE);
             for ($count1 = 0; $count1 < 5; $count1++) {
-                $PastEvents->addUser($this->getReference('user_' . rand(0,19)));
+                $OpenEventsCanceled->addUser($this->getReference('user_' . rand(0,19)));
             }
             $manager->persist($OpenEventsCanceled);
         }
 
-        // Création de 5 events ouverts créés
-        for ($count = 0; $count < 5; $count++) {
+        // Création de 10 events ouverts créés
+        for ($count = 0; $count < 10; $count++) {
             $OpenEventsCreated = new Event();
             $OpenEventsCreated->setName($events[random_int(0,count($events)-1)]);
             $OpenEventsCreated->setDescription($OpenEventsCreated->getName());
@@ -228,8 +228,8 @@ class AppNewFixtures extends Fixture
             $manager->persist($OpenEventsCreated);
         }
 
-        // Création de 5 events en cours
-        for ($count = 0; $count < 5; $count++) {
+        // Création de 10 events en cours
+        for ($count = 0; $count < 10; $count++) {
             $CurrentEvents = new Event();
             $CurrentEvents->setName($events[random_int(0,count($events)-1)]);
             $CurrentEvents->setDescription($CurrentEvents->getName());
@@ -241,7 +241,7 @@ class AppNewFixtures extends Fixture
             $CurrentEvents->setPlace($this->getReference('place_' . rand(0, 39)));
             $CurrentEvents->setStatus(StatusEnum::EN_COURS);
             for ($count1 = 0; $count1 < 5; $count1++) {
-                $PastEvents->addUser($this->getReference('user_' . rand(0,19)));
+                $CurrentEvents->addUser($this->getReference('user_' . rand(0,19)));
             }
             $manager->persist($CurrentEvents);
         }
