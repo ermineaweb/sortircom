@@ -98,7 +98,7 @@ class Event
 	public function getDuration(): String
 	{
 		// TODO améliorer la fonction
-		return $this->start->diff($this->end, true)->format("%R%a Jours");
+		return $this->start->diff($this->end, true)->format("%a Jour(s)");
 	}
 	
 	/*
@@ -115,7 +115,7 @@ class Event
 	public function getTimeRemaining(): array
 	{
 		$now = new \DateTime();
-		$time = $now->diff($this->limitdate)->format("%R%a");
+		$time = $now->diff($this->limitdate)->format("%a Jour(s)");
 		$style = "primary";
 		if ($time == 0) {
 			$time = "Aujourd'hui dernier jour";

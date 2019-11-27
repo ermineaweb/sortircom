@@ -18,11 +18,16 @@
         </tr>
         <tr>
             <th>Date limite d'inscription</th>
-            <td>{{ event.limitdate ? event.limitdate|date('d/m/Y') : '' }}</td>
+            <td>
+                {{ event.limitdate ? event.limitdate|date('d/m/Y') : '' }}
+                <h4>
+                    <span class="badge badge-{{ event.timeremaining['style'] }}">{{ event.timeremaining['time'] }}</span>
+                </h4>
+            </td>
         </tr>
         <tr>
             <th>Places disponibles</th>
-            <td>{{ event.maxsize }}</td>
+            <td>{{ event.actualSize }} / {{ event.maxsize }}</td>
         </tr>
         <tr>
             <th>Description</th>
@@ -35,7 +40,8 @@
             <td>
                 <ul class="list-group">
                     {% for user in event.users %}
-                        <li class="list-group-item"><a href="{{ path('user_show', {'id': user.id}) }}">{{ user.username }}</a></li>
+                        <li class="list-group-item"><a
+                                    href="{{ path('user_show', {'id': user.id}) }}">{{ user.username }}</a></li>
                     {% else %}
                         <li class="list-group-item">Aucun participant pour le moment :-(</li>
                     {% endfor %}
@@ -43,23 +49,25 @@
             </td>
         </tr>
         {% if event.status == 5 %}
-        <tr>
-            <th>Motif d'annulation</th>
-            <td>{{ event.cancel }}</td>
-        </tr>
+            <tr>
+                <th>Motif d'annulation</th>
+                <td>{{ event.cancel }}</td>
+            </tr>
         {% endif %}
         </tbody>
     </table>
 
-    <!-- Si l'utilisateur est connecté et qu'il n'est pas déjà inscrit, il peut s'inscrire -->
-    {% if app.user %}
-        <a href="{{ path('event_inscription', {id : event.id }) }}">S'inscrire à la sortie</a>
-    {% endif %}
-    <a href="{{ path('event_withdraw', {id : event.id}) }}">Se désinscrire de la sortie</a>
-
-    <a href="{{ path('event_index') }}">Revenir à la liste des sorties</a>
-    <a href="{{ path('event_edit', {'id': event.id}) }}">edit</a>
-
-    {{ include('event/_delete_form.html.twig') }}
+    <div class="container text-center">
+        <!-- Si l'utilisateur est connecté et qu'il n'est pas déjà inscrit, il peut s'inscrire -->
+        {% if app.user and app.user.id == event.creator.id %}
+            <a class="btn btn-info" href="{{ path('event_edit', {'id': event.id}) }}">Modifier la sortie</a>
+            {{ include('event/_delete_form.html.twig') }}
+        {% else %}
+            <a class="btn btn-primary" href="{{ path('event_inscription', {id : event.id }) }}">S'inscrire à la
+                sortie</a>
+            <a class="btn btn-info" href="{{ path('event_withdraw', {id : event.id}) }}">Se désinscrire de la sortie</a>
+        {% endif %}
+        <a class="btn btn-info" href="{{ path('event_index') }}">Revenir à la liste des sorties</a>
+    </div>
 
 {% endblock %}
