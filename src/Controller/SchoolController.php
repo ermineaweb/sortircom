@@ -37,19 +37,11 @@ class SchoolController extends AbstractController
         $form = $this->createForm(SchoolType::class, $school);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid() && $this->getUser()->getRoles === 'ROLE_ADMIN') {
+        if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->persist($school);
             $this->entityManager->flush();
 
             return $this->redirectToRoute('school_index');
-        } else if($form->isSubmitted() && $form->isValid() && $this->getUser()->getRoles !== 'ROLE_ADMIN'){
-            $this->addFlash(Alert::WARNING, Messages::ADMIN_WARNING);
-
-            return $this->render('school/manage.html.twig', [
-                'school' => $school,
-                'form' => $form->createView(),
-                'schools' => $schoolRepository->findAll(),
-            ]);
         }
 
         return $this->render('school/manage.html.twig', [
@@ -70,7 +62,7 @@ class SchoolController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="school_edit", methods={"GET","POST"}, requirements={"id":"\d+"})
+     * @Route("/edit/{id}", name="school_edit", methods={"GET","POST"}, requirements={"id":"\d+"})
      */
     public function edit(Request $request, School $school): Response
     {
