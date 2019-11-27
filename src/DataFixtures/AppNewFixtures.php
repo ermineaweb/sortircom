@@ -4,8 +4,10 @@
 namespace App\DataFixtures;
 
 use App\Entity\City;
+use App\Entity\Event;
 use App\Entity\Place;
 use App\Entity\School;
+use App\Entity\StatusEnum;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -19,6 +21,7 @@ class AppNewFixtures extends Fixture
     {
         $this->encoder = $passwordEncoder;
     }
+
     /**
      * Load data fixtures with the passed EntityManager
      */
@@ -37,7 +40,7 @@ class AppNewFixtures extends Fixture
             'ENI La Roche-sur-Yon',
             'ENI Niort'
         ];
-        foreach ($schools as $key =>$name) {
+        foreach ($schools as $key => $name) {
             $school = new School();
             $school->setName($name);
             $manager->persist($school);
@@ -63,7 +66,7 @@ class AppNewFixtures extends Fixture
             'Saint-Nazaire'
         ];
 
-        foreach ($cities as $key =>$name) {
+        foreach ($cities as $key => $name) {
             $city = new City();
             $city->setName($name);
             $city->setZipcode($faker->postcode);
@@ -72,7 +75,7 @@ class AppNewFixtures extends Fixture
         }
 
         // Création de 20 Users
-        for ($count = 0; $count <20; $count++) {
+        for ($count = 0; $count < 20; $count++) {
             $user = new User();
             $user->setUsername($faker->userName);
             $user->setLastname($faker->lastName);
@@ -83,7 +86,7 @@ class AppNewFixtures extends Fixture
             $user->setAvatar("avatar.jpg");
             $user->setAdmin(false);
             $user->setActive(true);
-            $user->setSchool($this->getReference('school_'.rand(0,7)));;
+            $user->setSchool($this->getReference('school_' . rand(0, 7)));;
             $this->addReference('user_' . $count, $user);
             $manager->persist($user);
         }
@@ -99,19 +102,57 @@ class AppNewFixtures extends Fixture
         $admin->setAvatar("avatar.jpg");
         $admin->setAdmin(true);
         $admin->setActive(true);
-        $admin->setSchool($this->getReference('school_'.rand(0,7)));
+        $admin->setSchool($this->getReference('school_' . rand(0, 7)));
         $manager->persist($admin);
 
         // Création de 40 Places
-        for ($count = 0; $count <20; $count++) {
+        for ($count = 0; $count < 40; $count++) {
             $place = new Place();
-            $place->setName($faker->streetName);
+            $place->setName($faker->company);
             $place->setCity($this->getReference('city_' . rand(0, 14)));
             $place->setAddress($faker->streetName);
             $place->setLongitude($faker->longitude);
             $place->setLatitude($faker->latitude);
-            $this->addReference('place_' . rand(0,39));
+            $this->addReference('place_' . $count, $place);
             $manager->persist($place);
         }
+
+        // Création de 200 events
+        $events = [
+            'Conférence',
+            'Sortie en kayak',
+            'Découverte nature',
+            'Océanopolis',
+            'Exposition',
+            'Concert',
+            'Pièce de théâtre',
+            'Randonnée',
+            'Café débat',
+            'Visite patrimoine',
+            'Projection-débat film',
+            'Atelier d\'art plastique',
+            'Atelier cuisine',
+            'Atelier d\'écriture',
+            'Festival de BD'
+        ];
+        // Création de 50 events passées
+        $random = random_int(1,3);
+        for ($count = 0; $count < 50; $count++) {
+            $sortiePassee = new Event();
+            $sortiePassee->setName(shuffle($events));
+            $sortiePassee->setDescription($sortiePassee->getName());
+            $sortiePassee->setMaxsize(random_int(5, 20));
+            $sortiePassee->setStart($faker->dateTimeThisMonth());
+            $sortiePassee->setEnd(dateTimeInInterval($sortiePassee->getStart(), $interval = '+ '. '$random'. 'days'));
+            $sortiePassee->setLimitdate(dateTimeInInterval($sortiePassee->getStart(), $interval = '- '. '$random'. 'days'));
+            $sortiePassee->setCreator($this->getReference('user_' . rand(0, 19)));
+            $sortiePassee->setPlace($this->getReference('place_' . rand(0, 39)));
+            $sortiePassee->setStatus(StatusEnum::PASSEE);
+            $manager->persist($sortiePassee);
+        }
+
+
+
+        $manager->flush();
     }
 }
