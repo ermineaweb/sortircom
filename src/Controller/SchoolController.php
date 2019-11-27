@@ -5,7 +5,10 @@ namespace App\Controller;
 use App\Entity\School;
 use App\Form\SchoolType;
 use App\Repository\SchoolRepository;
+use App\Technical\Alert;
+use App\Technical\Messages;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -59,7 +62,7 @@ class SchoolController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="school_edit", methods={"GET","POST"}, requirements={"id":"\d+"})
+     * @Route("/edit/{id}", name="school_edit", methods={"GET","POST"}, requirements={"id":"\d+"})
      */
     public function edit(Request $request, School $school): Response
     {
