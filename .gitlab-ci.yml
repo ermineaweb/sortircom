@@ -32,7 +32,7 @@ before_script:
   # installer composer en mode silence (-s)
   - curl -sS https://getcomposer.org/installer | php
   # installe les vendors sans messages (-q)
-  - php composer.phar install
+  - php composer.phar install --ignore-platform-reqs
   # on passe en environnement de test
   - cp .env.gitlab .env
 
