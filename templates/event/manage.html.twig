@@ -109,6 +109,14 @@
                         <!-- Afficher -->
                         <a href="{{ path('event_show', {'id': event.id}) }}"><i
                                     class="icone-actions fa fa-search-plus"></i></a>
+                        <!-- S'inscrire -->
+                        {% if app.user and app.user in event.users %}
+                            <a href="{{ path('event_withdraw', {'id': event.id}) }}"><i
+                                        class="icone-actions fa fa-candy-cane"></i></a>
+                        {% else %}
+                        <a href="{{ path('event_inscription', {'id': event.id}) }}"><i
+                                    class="icone-actions fa fa-search-plus"></i></a>
+                            {% endif %}
                         {% if app.user == event.creator and event.status == 0 %}
                             <!-- Modifier -->
                             <a href="{{ path('event_edit', {'id': event.id}) }}"><i
