@@ -22,4 +22,4 @@
 .idea/
 
 # compose
-composer.lock
+#composer.lock

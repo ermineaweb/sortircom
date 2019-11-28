@@ -46,11 +46,11 @@ security:
     access_control:
         # Route /ville
         # Seul l'administrateur à accès à l'écran de CRUD des villes
-        - { path: '^/ville/{id}', roles: ROLE_USER, methods: GET }
-        - { path: '^/ville/{id}', roles: ROLE_ADMIN, methods: DELETE }
-        - { path: '^/ville/{id}/modifier', roles: ROLE_ADMIN }
-        - { path: '^/ville/', roles: ROLE_USER, methods: GET }
-        - { path: '^/ville/', roles: ROLE_ADMIN, methods: POST}
+#        - { path: '^/ville/{id}', roles: ROLE_USER, methods: GET }
+#        - { path: '^/ville/{id}', roles: ROLE_ADMIN, methods: DELETE }
+#        - { path: '^/ville/{id}/modifier', roles: ROLE_ADMIN }
+#        - { path: '^/ville/', roles: ROLE_USER, methods: GET }
+#        - { path: '^/ville/', roles: ROLE_ADMIN, methods: POST}
 
         # Route /place
         # Seul l'administrateur à accès à l'écran de CRUD des lieux
@@ -63,11 +63,11 @@ security:
 
         # Route /school
         # Seul l'administrateur à accès à l'écran de CRUD des écoles
-        - { path: '^/school/{id}', roles: ROLE_ADMIN, methods: DELETE }
-        - { path: '^/school/edit/{id}', roles: ROLE_ADMIN }
-        - { path: '^/school/{id}', roles: ROLE_USER, methods: GET }
-        - { path: '^/school', roles: ROLE_ADMIN, methods: POST }
-        - { path: '^/school', roles: ROLE_USER, methods: GET }
+#        - { path: ^/school/$, roles: ROLE_ADMIN, methods: DELETE }
+#        - { path: ^/school/edit/, roles: ROLE_ADMIN }
+#        - { path: ^/school/$, roles: ROLE_USER, methods: GET }
+#        - { path: ^/school/$, roles: ROLE_ADMIN, methods: POST }
+#        - { path: ^/school/$, roles: ROLE_USER, methods: GET }
 
         # Route /sortie
         # Les utilisateurs ont accès à l'écran de CRUD des sorties

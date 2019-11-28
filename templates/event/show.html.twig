@@ -39,12 +39,17 @@
             </th>
             <td>
                 <ul class="list-group">
-                    {% for user in event.users %}
-                        <li class="list-group-item"><a
-                                    href="{{ path('user_show', {'id': user.id}) }}">{{ user.username }}</a></li>
+                    {% if app.user and ((app.user in event.users) or (app.user.id == event.creator.id)) %}
+                        {% for user in event.users %}
+                            <li class="list-group-item"><a href="{{ path('user_show', {'id': user.id}) }}">{{ user.username }}</a></li>
+                        {% else %}
+                            <li class="list-group-item">Aucun participant pour le moment :-(</li>
+                        {% endfor %}
                     {% else %}
-                        <li class="list-group-item">Aucun participant pour le moment :-(</li>
-                    {% endfor %}
+                        <li class="list-group-item">
+                            Vous ne pouvez pas voir les participants tant que vous n'êtes pas inscrits
+                        </li>
+                    {% endif %}
                 </ul>
             </td>
         </tr>

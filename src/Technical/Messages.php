@@ -17,6 +17,7 @@ abstract class Messages
 	public const EVENT_SUCCESS_CANCEL = "L'annulation de la sortie est effectuée";
 	public const EVENT_ERROR_CANCEL = "Vous devez indiquer un motif d'annulation de la sortie";
 	public const EVENT_ERROR_NEW = "Votre sortie n'a pas pu être ajoutée";
+	public const EVENT_ERROR_LIMITDATE = "La date d'inscription doit être inférieure à la date de début";
 	public const EVENT_ERROR_NEW_DATE = "La date de la sortie doit être supérieure à la date du jour";
 	public const EVENT_ERROR_MAXSIZE = "Le nombre de participants doit être supérieur à 0";
 	

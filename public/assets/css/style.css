@@ -73,3 +73,29 @@ h2 {
 .btn-info {
     background: rebeccapurple;
 }
+
+/*
+on gère la page d'accueil ici
+ */
+.sorties {
+    /*width: 200px;*/
+    height: 26em;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    margin: 20px;
+}
+
+
+table#table-events thead tr{
+    display:block;
+}
+
+table#table-events  th,table td{
+}
+
+table#table-events   tbody{
+    display:block;
+    height:320px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}

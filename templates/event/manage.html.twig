@@ -68,65 +68,87 @@
 
                     <button class="btn btn-info" type="submit" name="Rechercher"> Rechercher</button>
                 </div>
+
+                <div class="col">
+                        <i class="icone-actions fa fa-search-plus"></i> Afficher la sortie
+                    <br>
+                        <i class="icone-actions fa fa-bus"></i> S'inscrire
+                    <br>
+                        <i class="icone-actions fa fa-bomb"></i> Se désinscrire
+                    <br>
+                        <i class="icone-actions fa fa-edit"></i> Modifier
+                    <br>
+                        <i class="icone-actions fa fa-check-circle"></i> Publier
+                    <br>
+                        <i class="icone-actions fa fa-trash"></i> Supprimer
+                    <br>
+                        <i class="icone-actions fa fa-window-close"></i> Annuler
+                </div>
+
             </div>
             <div>
 
             </div>
         </form>
 
+<div class="sorties">
 
-        <table class="table text-center">
+        <table class="table text-cente" id="table-events">
             <thead>
             <tr>
-                <th>Nom de la sortie</th>
-                <th>Date de la sortie</th>
-                <th>Temps restant pour s'inscrire</th>
-                <th>Inscrits/places</th>
-                <th>Etat</th>
-                <th>Organisateur</th>
-                <th>Actions</th>
+                <th width="20%">Nom de la sortie</th>
+                <th width="10%">Date de la sortie</th>
+                <th width="20%">Temps restant pour s'inscrire</th>
+                <th width="10%">Inscrits/places</th>
+                <th width="10%">Etat</th>
+                <th width="10%">Organisateur</th>
+                <th width="20%">Actions</th>
             </tr>
             </thead>
-            <tbody>
+
+            <tbody id="table">
             {% for event in paginator %}
+                {% if app.user and (app.user.id == event.creator.id or event.status != 0) %}
                 <tr>
-                    <td>{{ event.name }}</td>
-                    <td>{{ event.start ? event.start|date('d/m/Y à H:i') : '' }}</td>
-                    <td>
+                    <td width="20%">{{ event.name }}</td>
+                    <td width="10%">{{ event.start ? event.start|date('d/m/Y à H:i') : '' }}</td>
+                    <td width="20%">
                         <h4>
                             <span class="badge badge-{{ event.timeremaining['style'] }}">{{ event.timeremaining['time'] }}</span>
                         </h4>
                     </td>
-                    <td>{{ event.actualsize }} / {{ event.maxsize }}</td>
-                    <td>
+                    <td width="10%">{{ event.actualsize }} / {{ event.maxsize }}</td>
+                    <td width="10%">
                         <h4>
                             <span class="badge badge-{{ statusstyles[event.status] }}">{{ statusenum[event.status] }}</span>
                         </h4>
                     </td>
-                    <td><a href="{{ path('user_show', {'id': event.creator.id}) }}">{{ event.creator }}</a></td>
-                    <td>
+                    <td width="10%"><a href="{{ path('user_show', {'id': event.creator.id}) }}">{{ event.creator }}</a></td>
+                    <td width="20%">
                         <!-- Afficher -->
-                        <a href="{{ path('event_show', {'id': event.id}) }}"><i
-                                    class="icone-actions fa fa-search-plus"></i></a>
+                        <a href="{{ path('event_show', {'id': event.id}) }}"><i class="icone-actions fa fa-search-plus"></i></a>
+                        <!-- S'inscrire -->
+                        {% if app.user and app.user in event.users %}
+                            <a href="{{ path('event_withdraw', {'id': event.id}) }}"><i class="icone-actions fa fa-bomb"></i></a>
+                        {% else %}
+                        <a href="{{ path('event_inscription', {'id': event.id}) }}"><i class="icone-actions fa fa-bus"></i></a>
+                            {% endif %}
                         {% if app.user == event.creator and event.status == 0 %}
                             <!-- Modifier -->
-                            <a href="{{ path('event_edit', {'id': event.id}) }}"><i
-                                        class="icone-actions fa fa-edit"></i></a>
+                            <a href="{{ path('event_edit', {'id': event.id}) }}"><i class="icone-actions fa fa-edit"></i></a>
                             <!-- Publier -->
-                            <a href="{{ path('event_publish', {'id': event.id}) }}"><i
-                                        class="icone-actions fa fa-check-circle"></i></a>
+                            <a href="{{ path('event_publish', {'id': event.id}) }}"><i class="icone-actions fa fa-check-circle"></i></a>
                             <!-- Supprimer -->
-                            <a href="{{ path('event_delete', {'id': event.id}) }}"><i
-                                        class="icone-actions fa fa-trash-alt"></i></a>
+                            <a href="{{ path('event_delete', {'id': event.id}) }}"><i class="icone-actions fa fa-trash"></i></a>
 
                         {% endif %}
                         {% if app.user == event.creator and event.status == 1 %}
                             <!-- Annuler -->
-                            <a href="{{ path('event_cancel', {'id': event.id}) }}"><i
-                                        class="icone-actions fa fa-window-close"></i></a>
+                            <a href="{{ path('event_cancel', {'id': event.id}) }}"><i class="icone-actions fa fa-window-close"></i></a>
                         {% endif %}
                     </td>
                 </tr>
+                {% endif %}
             {% else %}
                 <tr>
                     <td colspan="8">Aucune sortie ne correspond à vos critères.</td>
@@ -135,7 +157,11 @@
             </tbody>
         </table>
 
+</div>
+
     {% endblock %}
+
+    {#
     {% if paginator|length>0 %}
         <div class="center">
             <nav aria-label="paginator">
@@ -152,5 +178,10 @@
             </nav>
         </div>
     {% endif %}
+    #}
 
+{% endblock %}
+
+{% block javascripts %}
+<script src="{{ asset('assets/js/search.js') }}"></script>
 {% endblock %}

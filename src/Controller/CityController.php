@@ -12,8 +12,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
+ * @IsGranted("ROLE_ADMIN")
  * @Route("/ville", name="city_")
  */
 class CityController extends AbstractController
@@ -88,7 +90,7 @@ class CityController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/modifier", name="edit", methods={"GET","POST"})
+     * @Route("/modifier/{id}", name="edit", methods={"GET","POST"})
      */
     public function edit(Request $request, EntityManagerInterface $entityManager, City $city): Response
     {
