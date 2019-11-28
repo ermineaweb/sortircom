@@ -73,3 +73,14 @@ h2 {
 .btn-info {
     background: rebeccapurple;
 }
+
+/*
+on gère la page d'accueil ici
+ */
+.sorties {
+    /*width: 200px;*/
+    height: 26em;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    margin: 20px;
+}

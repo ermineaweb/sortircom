@@ -16,7 +16,7 @@ use function Doctrine\ORM\QueryBuilder;
  */
 class EventRepository extends ServiceEntityRepository
 {
-    const PAGINATION = 10;
+    const PAGINATION =1000;
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Event::class);
@@ -46,8 +46,6 @@ class EventRepository extends ServiceEntityRepository
        /* $queryBuilder->addSelect('sch');
         $queryBuilder->innerJoin('event.creator', 'creator');
         $queryBuilder->innerJoin('creator.school', 'sch');*/
-       $queryBuilder->orderBy('event.start', 'ASC');
-       $queryBuilder->orderBy('event.status', 'ASC');
         /*if ($school !=null){
             $queryBuilder->andWhere('school.name =:school');
             $queryBuilder->setParameter('school', $school);
@@ -64,15 +62,9 @@ class EventRepository extends ServiceEntityRepository
             }
             if ($pastevents !=null) {
                 $queryBuilder->andWhere("DATE_DIFF(CURRENT_DATE(), event.start) <= 31");
-            }
-
-           /* if ($eventscreated !=null || $registered !=null || $notregistered != null) {
-                $queryBuilder->andWhere('event.creator =:user');
-                $queryBuilder->setParameter('user', $user);
-                $queryBuilder->orWhere('user.id =:userId');
-                $queryBuilder->setParameter('userId', $userId);
-                $queryBuilder->orWhere($queryBuilder->expr()->isNull('user.id'));
-            }*/
+            } else {
+				$queryBuilder->andWhere('DATE_DIFF(CURRENT_DATE(), event.limitdate) < 0');
+			}
             if ($eventscreated !=null) {
                 $queryBuilder->andWhere('event.creator =:user');
                 $queryBuilder->setParameter('user', $user);
@@ -84,10 +76,12 @@ class EventRepository extends ServiceEntityRepository
             if ($notregistered !=null) {
                 $queryBuilder->andWhere($queryBuilder->expr()->isNull('user.id'));
             }
+		$queryBuilder->orderBy('event.status', 'ASC');
+		$queryBuilder->orderBy('event.limitdate', 'ASC');
+		
         $queryBuilder->setFirstResult(($page-1)*EventRepository::PAGINATION);
             $queryBuilder->setMaxResults(EventRepository::PAGINATION);
         $query = $queryBuilder->getQuery();
-        dump($query);
         return new Paginator($query, $fetchJoinCollection = true);
     }
 

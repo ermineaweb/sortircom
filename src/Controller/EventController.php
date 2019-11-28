@@ -107,6 +107,7 @@ class EventController extends AbstractController
 			$eventCreation->setEvent($event);
 			$eventCreation->setUser($this->getUser());
 			$eventCreation->creation();
+			return $this->redirectToRoute("home");
 		}
 		
 		return $this->render('event/new.html.twig', [

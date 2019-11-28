@@ -115,7 +115,7 @@ class Event
 	public function getTimeRemaining(): array
 	{
 		$now = new \DateTime();
-		$time = $now->diff($this->limitdate)->format("%a Jour(s)");
+		$time = $now->diff($this->limitdate)->format("%R%a jour(s)");
 		$style = "primary";
 		if ($time == 0) {
 			$time = "Aujourd'hui dernier jour";

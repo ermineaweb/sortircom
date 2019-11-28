@@ -75,7 +75,8 @@
         </form>
 
 
-        <table class="table text-center">
+<div class="sorties">
+        <table class="table text-cente">
             <thead>
             <tr>
                 <th>Nom de la sortie</th>
@@ -87,7 +88,7 @@
                 <th>Actions</th>
             </tr>
             </thead>
-            <tbody>
+            <tbody id="table">
             {% for event in paginator %}
                 <tr>
                     <td>{{ event.name }}</td>
@@ -135,7 +136,11 @@
             </tbody>
         </table>
 
+</div>
+
     {% endblock %}
+
+    {#
     {% if paginator|length>0 %}
         <div class="center">
             <nav aria-label="paginator">
@@ -152,5 +157,10 @@
             </nav>
         </div>
     {% endif %}
+    #}
 
+{% endblock %}
+
+{% block javascripts %}
+<script src="{{ asset('assets/js/search.js') }}"></script>
 {% endblock %}
