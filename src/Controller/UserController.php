@@ -108,12 +108,13 @@ class UserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $password = $encoder->encodePassword($user, $user->getPassword());
             $user->setPassword($password);
+            /*
             $avatarFile = $form['avatar']->getData();
             if ($avatarFile) {
                 $avatarFileName = $fileUpLoader->upload($avatarFile);
                 $user->setAvatar($avatarFileName);
             }
-
+*/
             $entityManager->flush();
             $this->addFlash(Alert::SUCCESS,Messages::USER_SUCCESS_EDIT);
             return $this->redirectToRoute('user_show', ['id' => $user->getId()]);
