@@ -16,6 +16,6 @@
 
     <button class="btn btn-info">{{ button_label|default('Confirmer l\'annulation de la sortie ') }}</button>
 
-    <button class="btn btn-info" type="reset" name="Annuler">Je ne souhaite pas annuler la sortie</button>
+    <a href="{{ path('home') }}" class="btn btn-info">Je ne souhaite pas annuler la sortie</a>
     {{ form_end(form) }}
 {% endblock %}
