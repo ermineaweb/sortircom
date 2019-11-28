@@ -97,7 +97,6 @@ class Event
 	 */
 	public function getDuration(): String
 	{
-		// TODO améliorer la fonction
 		return $this->start->diff($this->end, true)->format("%a Jour(s)");
 	}
 	
