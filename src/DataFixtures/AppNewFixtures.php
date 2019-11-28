@@ -196,7 +196,7 @@ class AppNewFixtures extends Fixture
             $OpenEvents = new Event();
             $OpenEvents->setName($events[random_int(0,count($events)-1)]);
             $OpenEvents->setDescription($OpenEvents->getName());
-            $OpenEvents->setMaxsize(random_int(2, 20));
+            $OpenEvents->setMaxsize(random_int(5, 20));
             $OpenEvents->setStart($faker->dateTimeInInterval($startDate = 'now','+ '. $randomStart. ' days'));
             $OpenEvents->setEnd($faker->dateTimeInInterval($OpenEvents->getStart(), $interval = '+ '. $randomEnd. ' days'));
             $OpenEvents->setLimitdate($faker->dateTimeInInterval($OpenEvents->getStart(), $interval = '- '. $randomLimitdate. ' days'));
@@ -214,7 +214,7 @@ class AppNewFixtures extends Fixture
             $OpenEventsCanceled = new Event();
             $OpenEventsCanceled->setName($events[random_int(0,count($events)-1)]);
             $OpenEventsCanceled->setDescription($OpenEventsCanceled->getName());
-            $OpenEventsCanceled->setMaxsize(random_int(2, 20));
+            $OpenEventsCanceled->setMaxsize(random_int(5, 20));
             $OpenEventsCanceled->setStart($faker->dateTimeInInterval($startDate = 'now','+ '. $randomStart. ' days'));
             $OpenEventsCanceled->setEnd($faker->dateTimeInInterval($OpenEventsCanceled->getStart(), $interval = '+ '. $randomEnd. ' days'));
             $OpenEventsCanceled->setLimitdate($faker->dateTimeInInterval($OpenEventsCanceled->getStart(), $interval = '- '. $randomLimitdate. ' days'));
@@ -232,7 +232,7 @@ class AppNewFixtures extends Fixture
             $OpenEventsCreated = new Event();
             $OpenEventsCreated->setName($events[random_int(0,count($events)-1)]);
             $OpenEventsCreated->setDescription($OpenEventsCreated->getName());
-            $OpenEventsCreated->setMaxsize(random_int(2, 20));
+            $OpenEventsCreated->setMaxsize(random_int(5, 20));
             $OpenEventsCreated->setStart($faker->dateTimeInInterval($startDate = 'now', '+ '. $randomStart. ' days'));
             $OpenEventsCreated->setEnd($faker->dateTimeInInterval($OpenEventsCreated->getStart(), $interval = '+ '. $randomEnd. ' days'));
             $OpenEventsCreated->setLimitdate($faker->dateTimeInInterval($OpenEventsCreated->getStart(), $interval = '- '. $randomLimitdate. ' days'));
@@ -247,7 +247,7 @@ class AppNewFixtures extends Fixture
             $CurrentEvents = new Event();
             $CurrentEvents->setName($events[random_int(0,count($events)-1)]);
             $CurrentEvents->setDescription($CurrentEvents->getName());
-            $CurrentEvents->setMaxsize(random_int(2, 20));
+            $CurrentEvents->setMaxsize(random_int(5, 20));
             $CurrentEvents->setStart($faker->dateTimeInInterval($startDate = 'now','- '.$randomStartCurrent. ' days'));
             $CurrentEvents->setEnd($faker->dateTimeInInterval($CurrentEvents->getStart(), $interval = '+ '. $randomEndCurrent. ' days'));
             $CurrentEvents->setLimitdate($faker->dateTimeInInterval($CurrentEvents->getStart(), $interval = '- '. $randomLimitdate. ' days'));

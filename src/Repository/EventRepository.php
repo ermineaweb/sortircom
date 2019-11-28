@@ -39,9 +39,9 @@ class EventRepository extends ServiceEntityRepository
                                   $user = null,
                                   $userId = null) : Paginator
     {
-        $queryBuilder = $this->createQueryBuilder('event');
-        $queryBuilder->addSelect('user');
-        $queryBuilder->leftJoin('event.users', 'user');
+        $queryBuilder = $this->createQueryBuilder('e');
+        $queryBuilder->addSelect('u');
+        $queryBuilder->leftJoin('e.users', 'u');
         //$queryBuilder->addSelect('sch');
        /* $queryBuilder->addSelect('sch');
         $queryBuilder->innerJoin('event.creator', 'creator');
@@ -50,34 +50,34 @@ class EventRepository extends ServiceEntityRepository
             $queryBuilder->andWhere('school.name =:school');
             $queryBuilder->setParameter('school', $school);
         }*/
-        $queryBuilder->andWhere("DATE_DIFF(CURRENT_DATE(), event.end) <= 31");
+        $queryBuilder->andWhere("DATE_DIFF(CURRENT_DATE(), e.end) <= 31");
             if ($search !=null) {
-                $queryBuilder->andWhere('event.name like :val');
+                $queryBuilder->andWhere('e.name like :val');
                 $queryBuilder->setParameter('val', '%'.$search.'%');
             }
             if ($start !=null && $end !=null) {
-                $queryBuilder->andWhere('event.start BETWEEN :start AND :end');
+                $queryBuilder->andWhere('e.start BETWEEN :start AND :end');
                 $queryBuilder->setParameter('start', \DateTime::createFromFormat('Y-m-d', $start));
                 $queryBuilder->setParameter('end', \DateTime::createFromFormat('Y-m-d', $end));
             }
             if ($pastevents !=null) {
-                $queryBuilder->andWhere("DATE_DIFF(CURRENT_DATE(), event.start) <= 31");
+                $queryBuilder->andWhere("DATE_DIFF(CURRENT_DATE(), e.start) <= 31");
             } else {
-				$queryBuilder->andWhere('DATE_DIFF(CURRENT_DATE(), event.limitdate) < 0');
+				$queryBuilder->andWhere('DATE_DIFF(CURRENT_DATE(), e.limitdate) < 0');
 			}
             if ($eventscreated !=null) {
-                $queryBuilder->andWhere('event.creator =:user');
+                $queryBuilder->andWhere('e.creator =:user');
                 $queryBuilder->setParameter('user', $user);
             }
             if ($registered !=null) {
-                $queryBuilder->andWhere('user.id =:userId');
-                $queryBuilder->setParameter('userId', $userId);
+                $queryBuilder->andWhere(':user MEMBER OF e.users' );
+                $queryBuilder->setParameter('user', $user);
             }
             if ($notregistered !=null) {
-                $queryBuilder->andWhere($queryBuilder->expr()->isNull('user.id'));
+                $queryBuilder->andWhere($queryBuilder->expr()->isNull('u.id'));
             }
-		$queryBuilder->orderBy('event.status', 'ASC');
-		$queryBuilder->orderBy('event.limitdate', 'ASC');
+		$queryBuilder->orderBy('e.status', 'ASC');
+		$queryBuilder->orderBy('e.limitdate', 'ASC');
 		
         $queryBuilder->setFirstResult(($page-1)*EventRepository::PAGINATION);
             $queryBuilder->setMaxResults(EventRepository::PAGINATION);
