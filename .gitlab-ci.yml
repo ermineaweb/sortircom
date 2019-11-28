@@ -33,6 +33,7 @@ before_script:
   - curl -sS https://getcomposer.org/installer | php
   # installe les vendors sans messages (-q)
   - php composer.phar install -q
+  - php composer.phar selfupdate
   # on passe en environnement de test
   - cp .env.gitlab .env
 
