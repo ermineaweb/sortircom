@@ -23,7 +23,6 @@ use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 
-
 /**
  * @Route("/sortie", name="event_")
  */
@@ -39,7 +38,7 @@ class EventController extends AbstractController
 	}
 	
 	/**
-     * @IsGranted("IS_AUTHENTICATED_FULLY")
+	 * @IsGranted("IS_AUTHENTICATED_FULLY")
 	 * @Route("/{page}", name="index", methods={"GET","POST"}, requirements={"page"="\d+"})
 	 */
 	public function index(
@@ -83,21 +82,21 @@ class EventController extends AbstractController
 			'statusstyles' => StatusEnum::getStatusStyles(),
 		]);
 	}
-
-    /**
-     * Cette route permet de créer une sortie :
-     * - si la date de début de la sortie est supérieure à la date actuelle
-     * - si le nombre maximum de participants est supérieur à 0
-     * Alors :
-     * - l'utilisateur en cours devient le créateur de l'annonce
-     * - le statut de la sortie devient créee
-     * @Route("/creer", name="new", methods={"GET","POST"})
-     * @param Request $request
-     * @param CityRepository $cityRepository
-     * @param PlaceRepository $placeRepository
-     * @param EventCreation $eventCreation
-     * @return Response
-     */
+	
+	/**
+	 * Cette route permet de créer une sortie :
+	 * - si la date de début de la sortie est supérieure à la date actuelle
+	 * - si le nombre maximum de participants est supérieur à 0
+	 * Alors :
+	 * - l'utilisateur en cours devient le créateur de l'annonce
+	 * - le statut de la sortie devient créee
+	 * @Route("/creer", name="new", methods={"GET","POST"})
+	 * @param Request $request
+	 * @param CityRepository $cityRepository
+	 * @param PlaceRepository $placeRepository
+	 * @param EventCreation $eventCreation
+	 * @return Response
+	 */
 	public function new(Request $request, CityRepository $cityRepository, PlaceRepository $placeRepository, EventCreation $eventCreation): Response
 	{
 		$event = new Event();
@@ -105,13 +104,9 @@ class EventController extends AbstractController
 		$form->handleRequest($request);
 		
 		if ($form->isSubmitted() && $form->isValid()) {
-
-            $eventCreation->setEvent($event);
-            $eventCreation->setUser($this->getUser());
-            $eventCreation->creation();
-
-
-				return $this->redirectToRoute('event_new');
+			$eventCreation->setEvent($event);
+			$eventCreation->setUser($this->getUser());
+			$eventCreation->creation();
 		}
 		
 		return $this->render('event/new.html.twig', [

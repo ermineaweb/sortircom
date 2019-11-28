@@ -75,7 +75,7 @@ class AppNewFixtures extends Fixture
         }
 
         // Création de 20 Users
-        for ($count = 0; $count < 20; $count++) {
+        for ($count = 0; $count < 60; $count++) {
             $user = new User();
             $user->setUsername($faker->userName);
             $user->setLastname($faker->lastName);
@@ -101,6 +101,20 @@ class AppNewFixtures extends Fixture
         $admin->setPhone($faker->phoneNumber);
         $admin->setAvatar("avatar.jpg");
         $admin->setAdmin(true);
+        $admin->setActive(true);
+        $admin->setSchool($this->getReference('school_' . rand(0, 7)));
+        $manager->persist($admin);
+        
+        // Création d'1 user lambda
+        $admin = new User();
+        $admin->setUsername("rom");
+        $admin->setLastname("amic");
+        $admin->setFirstname("romain");
+        $admin->setEmail("rom@mail.com");
+        $admin->setPassword($this->encoder->encodePassword($admin, "123"));
+        $admin->setPhone($faker->phoneNumber);
+        $admin->setAvatar("avatar.jpg");
+        $admin->setAdmin(false);
         $admin->setActive(true);
         $admin->setSchool($this->getReference('school_' . rand(0, 7)));
         $manager->persist($admin);
@@ -245,8 +259,6 @@ class AppNewFixtures extends Fixture
             }
             $manager->persist($CurrentEvents);
         }
-
-        $manager->flush();
 
         /*
          * php bin/console d:d:d --force
