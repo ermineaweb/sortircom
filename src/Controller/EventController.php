@@ -24,6 +24,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 
 /**
+ * @IsGranted("IS_AUTHENTICATED_FULLY")
  * @Route("/sortie", name="event_")
  */
 class EventController extends AbstractController
@@ -38,7 +39,6 @@ class EventController extends AbstractController
 	}
 	
 	/**
-	 * @IsGranted("IS_AUTHENTICATED_FULLY")
 	 * @Route("/{page}", name="index", methods={"GET","POST"}, requirements={"page"="\d+"})
 	 */
 	public function index(
