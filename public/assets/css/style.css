@@ -84,3 +84,18 @@ on gère la page d'accueil ici
     overflow-y: scroll;
     margin: 20px;
 }
+
+
+table#table-events thead tr{
+    display:block;
+}
+
+table#table-events  th,table td{
+}
+
+table#table-events   tbody{
+    display:block;
+    height:320px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}

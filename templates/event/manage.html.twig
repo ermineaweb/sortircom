@@ -91,41 +91,40 @@
             </div>
         </form>
 
-
-
-
 <div class="sorties">
-        <table class="table text-cente">
+
+        <table class="table text-cente" id="table-events">
             <thead>
             <tr>
-                <th>Nom de la sortie</th>
-                <th>Date de la sortie</th>
-                <th>Temps restant pour s'inscrire</th>
-                <th>Inscrits/places</th>
-                <th>Etat</th>
-                <th>Organisateur</th>
-                <th>Actions</th>
+                <th width="20%">Nom de la sortie</th>
+                <th width="10%">Date de la sortie</th>
+                <th width="20%">Temps restant pour s'inscrire</th>
+                <th width="10%">Inscrits/places</th>
+                <th width="10%">Etat</th>
+                <th width="10%">Organisateur</th>
+                <th width="20%">Actions</th>
             </tr>
             </thead>
 
             <tbody id="table">
             {% for event in paginator %}
+                {% if app.user and (app.user.id == event.creator.id or event.status != 0) %}
                 <tr>
-                    <td>{{ event.name }}</td>
-                    <td>{{ event.start ? event.start|date('d/m/Y à H:i') : '' }}</td>
-                    <td>
+                    <td width="20%">{{ event.name }}</td>
+                    <td width="10%">{{ event.start ? event.start|date('d/m/Y à H:i') : '' }}</td>
+                    <td width="20%">
                         <h4>
                             <span class="badge badge-{{ event.timeremaining['style'] }}">{{ event.timeremaining['time'] }}</span>
                         </h4>
                     </td>
-                    <td>{{ event.actualsize }} / {{ event.maxsize }}</td>
-                    <td>
+                    <td width="10%">{{ event.actualsize }} / {{ event.maxsize }}</td>
+                    <td width="10%">
                         <h4>
                             <span class="badge badge-{{ statusstyles[event.status] }}">{{ statusenum[event.status] }}</span>
                         </h4>
                     </td>
-                    <td><a href="{{ path('user_show', {'id': event.creator.id}) }}">{{ event.creator }}</a></td>
-                    <td>
+                    <td width="10%"><a href="{{ path('user_show', {'id': event.creator.id}) }}">{{ event.creator }}</a></td>
+                    <td width="20%">
                         <!-- Afficher -->
                         <a href="{{ path('event_show', {'id': event.id}) }}"><i class="icone-actions fa fa-search-plus"></i></a>
                         <!-- S'inscrire -->
@@ -149,6 +148,7 @@
                         {% endif %}
                     </td>
                 </tr>
+                {% endif %}
             {% else %}
                 <tr>
                     <td colspan="8">Aucune sortie ne correspond à vos critères.</td>
