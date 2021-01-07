@@ -33,15 +33,6 @@ php bin/console d:d:c
 php bin/console make:migration
 php bin/console d:m:m
 
-```
-#### Push
-```
-git add .
-git commit -m "un court message pour s'y retrouver"
-git pull
-git push
-```
-
 ---------------------------------------------------------------------------
 ## Security
 [Top](#Index)
